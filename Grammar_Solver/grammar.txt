@@ -1,0 +1,13 @@
+<Communication>::=  <Feelings> <Interaction>
+	<Feelings>::=        <Time> <Person> <Emotions>|<Alone>
+		<Time>::=    Today | This <Weather> <Period>
+			<Weather>::= sunny | cloudy | rainy | moody | windy
+			<Period>::=  morning | afternoon | night | May day | spring time		
+		<Person>::=    Happy Baihan| I|Despicable me| Guess who
+		<Emotions>::=  <Happy> | <Unhappy>
+			<Happy>::= feels awesome! | am so happy. | wants to kiss you! | believes it's the best day ever!!!
+			<Unhappy>::= feels blue. | feels bad. | don't want to smile at all. | am angry now actually! | don't know what life is...
+		<Alone>::=         Leave me along! | I don't want to say anything right now!
+	<Interaction>::=     <Wish> | <Inquiry>
+		<Wish>::=    Have a wonderful day! | You looks great today, do you know that??? | Do well!
+		<Inquiry>::= And you? | How are you, my friend? | How are you doing? | Are you happy?
