@@ -1,15 +1,3 @@
-/*
- * ImageEnhancer.java
- * (c) By Steve Tanimoto,  January 2, 2016,
- * with contributions by Si J. Liu, 
- * and originally inspired by a tutorial example at Oracle.com.
- * This image-editing application includes support for semi-automated grading
- * when used in the CSE 373 course assignment on applying stacks and queues.
- * [CSE 373, Autumn 2016, Assignment 1.]
- *
- * CSE 373 Students: Add and modify code where indicated in order to add 
- * the Undo and Redo functionality specified on the assignment's web page.
- */
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -32,7 +20,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class ImageEnhancer extends Component implements ActionListener {
+public class IEApp extends Component implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	String startingImage = "AYPE-Rainier-Vista.jpg";
     BufferedImage biTemp; // Used when reading in an image.
@@ -141,7 +129,7 @@ public class ImageEnhancer extends Component implements ActionListener {
     			ConvolveOp.EDGE_NO_OP, null);
     }
 
-    public ImageEnhancer() {
+    public IEApp() {
     	createMenu();
     	setUpImageTransformations();
         try {
@@ -205,10 +193,10 @@ public class ImageEnhancer extends Component implements ActionListener {
         return;     	
     }
 
-    private ImageEnhancer image_enhancer_instance;
-    public ImageEnhancer getImageEnhancer() { // For use by the autograder
+    private IEApp image_enhancer_instance;
+    public IEApp getIEApp() { // For use by the autograder
     		if(image_enhancer_instance == null) {
-    			image_enhancer_instance = new ImageEnhancer();
+    			image_enhancer_instance = new IEApp();
     		}
     		return image_enhancer_instance;
     }
@@ -217,16 +205,16 @@ public class ImageEnhancer extends Component implements ActionListener {
 	}
 
     public static void main(String s[]) {
-    	new ImageEnhancer().run(); // Called from below, and by the autograder.
+    	new IEApp().run(); // Called from below, and by the autograder.
     }
     
     public void run() {
-        JFrame f = new JFrame("ImageEnhancer without Undo or Redo"); // Students should update this.
+        JFrame f = new JFrame("IEApp without Undo or Redo"); // Students should update this.
         f.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {System.exit(0);}
         });
-        image_enhancer_instance = new ImageEnhancer(); 
-        f.setJMenuBar(ImageEnhancer.menuBar);
+        image_enhancer_instance = new IEApp(); 
+        f.setJMenuBar(IEApp.menuBar);
         f.add("Center", image_enhancer_instance);
         f.pack();
         f.setVisible(true);
