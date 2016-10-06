@@ -1,9 +1,8 @@
-
-/*
- * ImageEnhancerWithUndoAndRedo.java
- * (c) By Steve Tanimoto,  January 2, 2016,
- * with contributions by Si J. Liu, 
- * and originally inspired by a tutorial example at Oracle.com.
+/* ImageEnhancerWithUndoAndRedo.java
+ * by Baihan Lin for CSE 373 Assignment 1, Autumn, 2016.
+ * Section BC.
+ * This program is an enhanced version of one provided by Oracle.com and
+ * subsequently modified by S. Tanimoto, instructor for the course.
  * This image-editing application includes support for semi-automated grading
  * when used in the CSE 373 course assignment on applying stacks and queues.
  * [CSE 373, Autumn 2016, Assignment 1.]
