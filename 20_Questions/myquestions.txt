@@ -1,0 +1,13 @@
+Q:Can we drink it?
+Q:Do you feel sad with it?
+A:tears
+A:tea
+Q:Is it abstract?
+Q:Is it useful?
+A:ArrayList
+Q:Is it cool?
+A:astronomy
+A:philosphy
+Q:Is it intelligent?
+A:brain
+A:computer
