@@ -1,0 +1,91 @@
+text=[beegghorsu]
+        bee, text=[gghorsu]
+                bee
+                go, text=[ghrsu]
+                        bee
+                        go
+                        gush, text=[r]
+                                bee
+                                go
+                                gush
+                                shrug
+                        shrug, text=[]
+                                print [bee, go, shrug]
+                gush, text=[gor]
+                        bee
+                        go, text=[r]
+                                bee
+                                go
+                                gush
+                                shrug
+                        gush
+                        shrug
+                shrug, text=[go]
+                        bee
+                        go, text=[]
+                                print [bee, shrug, go]
+                        gush
+                        shrug
+        go, text=[beeghrsu]
+                bee, text=[ghrsu]
+                        bee
+                        go
+                        gush, text=[r]
+                                bee
+                                go
+                                gush
+                                shrug
+                        shrug, text=[]
+                                print [go, bee, shrug]
+                go
+                gush, text=[beer]
+                        bee, text=[r]
+                                bee
+                                go
+                                gush
+                                shrug
+                        go
+                        gush
+                        shrug
+                shrug, text=[bee]
+                        bee, text=[]
+                                print [go, shrug, bee]
+                        go
+                        gush
+                        shrug
+        gush, text=[beegor]
+                bee, text=[gor]
+                        bee
+                        go, text=[r]
+                                bee
+                                go
+                                gush
+                                shrug
+                        gush
+                        shrug
+                go, text=[beer]
+                        bee, text=[r]
+                                bee
+                                go
+                                gush
+                                shrug
+                        go
+                        gush
+                        shrug
+                gush
+                shrug
+        shrug, text=[beego]
+                bee, text=[go]
+                        bee
+                        go, text=[]
+                                print [shrug, bee, go]
+                        gush
+                        shrug
+                go, text=[bee]
+                        bee, text=[]
+                                print [shrug, go, bee]
+                        go
+                        gush
+                        shrug
+                gush
+                shrug
