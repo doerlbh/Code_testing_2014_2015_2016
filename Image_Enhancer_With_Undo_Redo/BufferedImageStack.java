@@ -1,10 +1,22 @@
-
-/* BufferedImageStack.java
- * by Baihan Lin for CSE 373 Assignment 1, Autumn, 2016.
+/**
+ * BufferedImageStack.java
+ * 
+ * by Baihan Lin 
+ * for CSE 373 Assignment 1, Autumn, 2016.
  * Section BC.
+ * 
+ * This class manages a stack (ADT) of BufferedImage objects using arrays to
+ * contain the elements within a stack of BufferedImage.
+ * 
+ * @author		Baihan Lin < sunnylin@uw.edu >
+ * @version 	1.2
+ * @since 		1.0 2016-10-01
+ * 
  */
 
+
 import java.awt.image.BufferedImage;
+import java.util.*;
 
 public class BufferedImageStack {
 
@@ -14,24 +26,26 @@ public class BufferedImageStack {
 	private int arraySize;
 	private static final int INITIAL_ARRAY_SIZE = 2;
 
+	/**
+	 * Class Constructor
+	 */
 	public BufferedImageStack() {
-		// TODO Auto-generated constructor stub
 		stackSize = 0;
 		arraySize = 2;
 		biArray = new BufferedImage[INITIAL_ARRAY_SIZE];
 		end = -1;
 	}
 
-	// enters the buffered image onto the stack and returns nothing. 
-	// If this would exceed the capacity of the array, then a new array 
-	// should be allocated having double the size of the old array, and 
-	// the old array's elements copied to the new array.
+	/**
+	 * This method is to push a BufferedImage into the stack.
+	 * If exceed the array capacity, extend to double capacity.
+	 * 
+	 * @param bi: a BufferedImage object.
+	 */
 	public void push(BufferedImage bi) {
-		// TODO
 		end++;
 		stackSize++;
 		if (end >= arraySize) {
-
 			BufferedImage[] temp = new BufferedImage[arraySize*2];
 			for(int i = 0; i < arraySize; i++) {
 				temp[i] = biArray[i];
@@ -43,31 +57,16 @@ public class BufferedImageStack {
 
 	}
 
-	//	get(int index): returns the buffered image at the position given by the index. 
-	// (This is not commonly available in a stack, but it facilitates the testing by 
-	// our autograder.) If the index is out of range, the method should throw an 
-	// TODO
-	// IndexOutOfBounds exception. (Note: get(0) gets the bottom element of the stack 
-	// -- the one that was pushed in first, but not yet popped out.)
-	public BufferedImage get(int index) {
-		// TODO
-		if (index >= arraySize || index < 0) {
-			throw new IndexOutOfBoundsException();
-		}
-		return biArray[index];
-	}
-
-
-	// throws an exception if the stack is empty; otherwise returns the top buffered image, 
-	// removing it from the stack. 
-	// TODO	
-	// The exception should be an instance of java.util.EmptyStackException. 
-	// In this assignment, you are not required to ever replace a large array by a smaller array 
-	// when the number of stack elements decreases because of pop operations.
-	public BufferedImage pop()  {
-		// TODO 
+	/**
+	 * This method is to pop the BufferedImage at the top of
+	 * the stack (last one pushed in).
+	 * 
+	 * @return biOut: popped-out BufferedImage.
+	 * @throws EmptyStackException When the stack is empty.
+	 */
+	public BufferedImage pop() throws EmptyStackException {
 		if (this.isEmpty()) {
-			throw new java.util.EmptyStackException();
+			throw new EmptyStackException();
 		}
 		BufferedImage biOut = biArray[end];
 		biArray[end] = null;
@@ -76,17 +75,48 @@ public class BufferedImageStack {
 		return biOut;
 	}
 
-	//returns the current size of the array being used to hold the stack elements. Like the get operation, this is not a normal stack operation, but may be used by the grading software to assure compliance with the specifications.
+	/**
+	 * This method is to get the BufferedImage at a specific 
+	 * index of this stack.
+	 * 
+	 * @param index: index integer.
+	 * @return biArray[index]: BufferedImage at some index.
+	 * @throws IndexOutOfBoundsException if index is out of range.
+	 */
+	public BufferedImage get(int index) throws IndexOutOfBoundsException {
+		if (index >= this.getSize() || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		return biArray[index];
+	}
+
+	/**
+	 * This method is to get the current size of the array 
+	 * used to hold stack elements.
+	 * 
+	 * @return arraySize: the current size of the array being 
+	 *         used to hold the stack elements.
+	 */
 	public int getArraySize()  {
 		return arraySize;
 	}
 
-	// returns the number elements currently in the stack.
+	/**
+	 * This method is to get the size (number elements) 
+	 * currently in the stack.
+	 * 
+	 * @return stackSize: the number elements currently in the stack.
+	 */
 	public int getSize() {
 		return stackSize;
 	}
 
-	// returns true if there are no items in the stack; false otherwise.
+	/**
+	 * This method is to show whether the stack is empty.
+	 * 
+	 * @return <code>true</code> is the stack is empty, 
+	 *         <code>false</code> if otherwise.
+	 */
 	public boolean isEmpty() {
 		if (stackSize == 0) {
 			return true;

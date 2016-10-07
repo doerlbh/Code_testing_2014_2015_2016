@@ -1,11 +1,24 @@
-/* ImageEnhancerWithUndoAndRedo.java
- * by Baihan Lin for CSE 373 Assignment 1, Autumn, 2016.
+/** ImageEnhancerWithUndoAndRedo.java
+ * 
+ * by Baihan Lin 
+ * for CSE 373 Assignment 1, Autumn, 2016.
  * Section BC.
+ * 
  * This program is an enhanced version of one provided by Oracle.com and
  * subsequently modified by S. Tanimoto, instructor for the course.
+ * 
  * This image-editing application includes support for semi-automated grading
  * when used in the CSE 373 course assignment on applying stacks and queues.
  * [CSE 373, Autumn 2016, Assignment 1.]
+ * 
+ * The modifications by Baihan Lin include adding an Undo feature and a Redo feature
+ * to this Java application for image enhancement, by implementing an abstract data type
+ * "stacks" with arrays as underlying algorithm.
+ * 
+ * @modifier	Baihan Lin < sunnylin@uw.edu >
+ * @version 	1.2
+ * @since 		1.0 2016-10-01
+ * 
  */
 
 import java.awt.Component;
@@ -51,11 +64,10 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 
 	private ImageEnhancerWithUndoAndRedo image_enhancer_instance;
 
-	// TODO
 	// CSE 373 Students: Here, you should declare two variables to hold instances
 	//  of your stack class, with one for Undo and one for Redo.
-	private BufferedImageStack undoStack;
-	private BufferedImageStack redoStack;
+	private BufferedImageStack undoStack; // for undo
+	private BufferedImageStack redoStack; // for redo
 
 
 	// A 3x3 filtering kernel for high-pass filtering:
@@ -159,12 +171,10 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 			System.exit(1);
 		}
 
-		// TODO
 		//  CSE 373 Students: Add code to create empty stack instances for the Undo stack 
 		//  and the Redo stack, and put your code for this here:
-
-		undoStack = new BufferedImageStack();
-		redoStack = new BufferedImageStack();
+		undoStack = new BufferedImageStack(); // for undo
+		redoStack = new BufferedImageStack(); // for redo
 	}
 
 	public Dimension getPreferredSize() {
@@ -194,12 +204,10 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 	// We handle menu selection events here: //
 	public void actionPerformed(ActionEvent e) {
 
-		// TODO comment this?
-		System.out.println("The actionEvent is "+e); // This can be useful when debugging.
+		//		System.out.println("The actionEvent is "+e); // This can be useful when debugging.
 
 		if (e.getSource()==exitItem) { System.exit(0); }
 
-		// TODO
 		//  CSE 373 Students: Add code in this method to save the current buffered image for
 		//	undoing and dispose of any redoable actions.
 		//  Also add code to enable and disable the Undo and Redo menu items, and to process
@@ -207,15 +215,22 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 
 		checkUndoAndRedo();
 
+		// first consider undo and redo options
 		if (e.getSource()==undoItem) { 
-			undo(); checkUndoAndRedo();
+			redoItem.setEnabled(true);
+			redoStack.push(dePointer(biWorking));
+			biFiltered = undoStack.pop(); 
+			checkUndoAndRedo();
 		} else if (e.getSource()==redoItem) { 
-			redo(); checkUndoAndRedo();
+			biFiltered = redoStack.pop(); 
+			checkUndoAndRedo();
 		} else {
-			redoItem.setEnabled(false); // only if the last two options are not selected, redo grayed
-			//			redoStack.setEmpty(); // only if the last two options are not selected, redoStack emptied
+			
+			// then consider other options
+			
+			redoItem.setEnabled(false); // unless redo & undo selected, redo grayed
 			redoStack = new BufferedImageStack(); // redoStack emptied
-			// TODO
+			
 			undoItem.setEnabled(true);
 			undoStack.push(dePointer(biWorking));
 
@@ -235,21 +250,12 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 		return;     	
 	}
 
-	private void redo() {
-		// TODO 
-		biFiltered = redoStack.pop();
-	}
-
-	private void undo() {
-		// TODO
-		redoItem.setEnabled(true);
-		redoStack.push(dePointer(biWorking));
-		biFiltered = undoStack.pop();
-
-	}
-
+	/**
+     * This method is a helper function to enable and disable 
+     * the Undo and Redo menu items based on their stacks
+     * 
+     */
 	private void checkUndoAndRedo() {
-		// TODO 
 		if (!undoStack.isEmpty()) {
 			undoItem.setEnabled(true);
 		} else {
@@ -263,10 +269,13 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 
 	}
 
-	// TODO
-	// a helper method to create a duplicate of existing BufferedImage instead of just
-	// a pointer towards the BufferedImage.
-
+	/**
+     * This method is a helper function to create a duplicate of existing 
+     * BufferedImage instead of just a pointer towards the BufferedImage.
+     * 
+     * @param biPointer: a BufferedImage to be copied.
+     * @return biReal: a duplicated BufferedImage.
+     */
 	private static BufferedImage dePointer(BufferedImage biPointer) {
 		BufferedImage biReal = new BufferedImage(biPointer.getWidth(), biPointer.getHeight(), biPointer.getType());
 		Graphics g = biReal.getGraphics();
