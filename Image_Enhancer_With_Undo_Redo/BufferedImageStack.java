@@ -16,15 +16,16 @@
 
 
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.EmptyStackException;
+
 
 public class BufferedImageStack {
 
-	private BufferedImage[] biArray;
-	private int stackSize;
-	private int end; // end of the array, or the last item into the stack
-	private int arraySize;
-	private static final int INITIAL_ARRAY_SIZE = 2;
+	private BufferedImage[] biArray; // array to hold stack elements
+	private int stackSize; // size of the stack elements
+	private int end; // end of the array, or the index of the last item in stack
+	private int arraySize; // size of the array holding elements
+	private static final int DEFAULT_ARRAY_SIZE = 2; // default array size
 
 	/**
 	 * Class Constructor
@@ -32,7 +33,7 @@ public class BufferedImageStack {
 	public BufferedImageStack() {
 		stackSize = 0;
 		arraySize = 2;
-		biArray = new BufferedImage[INITIAL_ARRAY_SIZE];
+		biArray = new BufferedImage[DEFAULT_ARRAY_SIZE];
 		end = -1;
 	}
 

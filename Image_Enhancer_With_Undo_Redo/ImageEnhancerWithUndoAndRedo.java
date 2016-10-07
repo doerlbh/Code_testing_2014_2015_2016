@@ -66,8 +66,8 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 
 	// CSE 373 Students: Here, you should declare two variables to hold instances
 	//  of your stack class, with one for Undo and one for Redo.
-	private BufferedImageStack undoStack; // for undo
-	private BufferedImageStack redoStack; // for redo
+	private BufferedImageStack undoStack; // stacks for undo actions (BufferedImage)
+	private BufferedImageStack redoStack; // stacks for redo actions (BufferedImage)
 
 
 	// A 3x3 filtering kernel for high-pass filtering:
@@ -213,26 +213,30 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 		//  Also add code to enable and disable the Undo and Redo menu items, and to process
 		//  these items when the user selects them.
 
+		// enable or disable redo and undo options based on their stack sizes
 		checkUndoAndRedo();
 
 		// first consider undo and redo options
 		if (e.getSource()==undoItem) { 
-			redoItem.setEnabled(true);
+			
 			redoStack.push(dePointer(biWorking));
 			biFiltered = undoStack.pop(); 
 			checkUndoAndRedo();
+			
 		} else if (e.getSource()==redoItem) { 
+			
 			biFiltered = redoStack.pop(); 
 			checkUndoAndRedo();
+			
 		} else {
 			
-			// then consider other options
+			// then consider other options than redo and undo
 			
 			redoItem.setEnabled(false); // unless redo & undo selected, redo grayed
 			redoStack = new BufferedImageStack(); // redoStack emptied
 			
-			undoItem.setEnabled(true);
-			undoStack.push(dePointer(biWorking));
+			undoItem.setEnabled(true); // after an action, undo is activated
+			undoStack.push(dePointer(biWorking)); 
 
 			if (e.getSource()==blurItem) { blur(); }
 			if (e.getSource()==sharpenItem) { sharpen(); }
@@ -252,7 +256,8 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 
 	/**
      * This method is a helper function to enable and disable 
-     * the Undo and Redo menu items based on their stacks
+     * the Undo and Redo menu items based on whether their 
+     * stacks are empty
      * 
      */
 	private void checkUndoAndRedo() {
@@ -299,7 +304,7 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 	}
 
 	public void run() {
-		JFrame f = new JFrame("Image Enhancer with Undo or Redo"); // Students should update this.
+		JFrame f = new JFrame("ImageEnhancer with Undo or Redo"); // Students should update this.
 		f.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {System.exit(0);}
 		});
@@ -311,7 +316,6 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 	}
 
 	public void printNumbersOfElementsInBothStacks() {
-		// TODO
 		//  CSE 373 Students: Uncomment this code that prints out the numbers of elements
 		//  in each of the two stacks (Undo and Redo):
 		System.out.println("The Undo stack contains " + undoStack.getSize() + " elements.");
