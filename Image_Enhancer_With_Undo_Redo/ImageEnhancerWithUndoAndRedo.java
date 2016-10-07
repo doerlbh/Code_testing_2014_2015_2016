@@ -215,6 +215,9 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 			redoItem.setEnabled(false); // only if the last two options are not selected, redo grayed
 			//			redoStack.setEmpty(); // only if the last two options are not selected, redoStack emptied
 			redoStack = new BufferedImageStack(); // redoStack emptied
+			// TODO
+			undoItem.setEnabled(true);
+			undoStack.push(dePointer(biWorking));
 
 			if (e.getSource()==blurItem) { blur(); }
 			if (e.getSource()==sharpenItem) { sharpen(); }
@@ -222,9 +225,6 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 			if (e.getSource()==photoNegItem) { photoneg(); }
 			if (e.getSource()==thresholdItem) { threshold(); }
 
-			// TODO
-			undoItem.setEnabled(true);
-			undoStack.push(biWorking);
 		}
 
 		gWorking.drawImage(biFiltered, 0, 0, null); // Draw the pixels from biFiltered into biWorking.
@@ -243,8 +243,9 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 	private void undo() {
 		// TODO
 		redoItem.setEnabled(true);
-		redoStack.push(biWorking);
+		redoStack.push(dePointer(biWorking));
 		biFiltered = undoStack.pop();
+
 	}
 
 	private void checkUndoAndRedo() {
@@ -260,6 +261,18 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
 			redoItem.setEnabled(false);
 		}
 
+	}
+
+	// TODO
+	// a helper method to create a duplicate of existing BufferedImage instead of just
+	// a pointer towards the BufferedImage.
+
+	private static BufferedImage dePointer(BufferedImage biPointer) {
+		BufferedImage biReal = new BufferedImage(biPointer.getWidth(), biPointer.getHeight(), biPointer.getType());
+		Graphics g = biReal.getGraphics();
+		g.drawImage(biPointer, 0, 0, null);
+		g.dispose();
+		return biReal;
 	}
 
 	public ImageEnhancerWithUndoAndRedo getImageEnhancerWithUndoAndRedo() { // For use by the autograder

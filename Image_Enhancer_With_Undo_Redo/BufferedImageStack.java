@@ -19,7 +19,7 @@ public class BufferedImageStack {
 		stackSize = 0;
 		arraySize = 2;
 		biArray = new BufferedImage[INITIAL_ARRAY_SIZE];
-		end = 0;
+		end = -1;
 	}
 
 	// enters the buffered image onto the stack and returns nothing. 
@@ -31,20 +31,29 @@ public class BufferedImageStack {
 		end++;
 		stackSize++;
 		if (end >= arraySize) {
-			
+
 			BufferedImage[] temp = new BufferedImage[arraySize*2];
-			 for(int i = 0; i < arraySize; i++) {
-	              temp[i] = ;
-	         }
-			 arraySize = arraySize * 2; 
+			for(int i = 0; i < arraySize; i++) {
+				temp[i] = biArray[i];
+			}
+			arraySize = arraySize * 2; 
 			biArray = temp;
 		}
 		biArray[end] = bi;
+
 	}
 
-	//	get(int index): returns the buffered image at the position given by the index. (This is not commonly available in a stack, but it facilitates the testing by our autograder.) If the index is out of range, the method should throw an IndexOutOfBounds exception. (Note: get(0) gets the bottom element of the stack -- the one that was pushed in first, but not yet popped out.)
+	//	get(int index): returns the buffered image at the position given by the index. 
+	// (This is not commonly available in a stack, but it facilitates the testing by 
+	// our autograder.) If the index is out of range, the method should throw an 
+	// TODO
+	// IndexOutOfBounds exception. (Note: get(0) gets the bottom element of the stack 
+	// -- the one that was pushed in first, but not yet popped out.)
 	public BufferedImage get(int index) {
-		// TODO 
+		// TODO
+		if (index >= arraySize || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
 		return biArray[index];
 	}
 
@@ -85,11 +94,5 @@ public class BufferedImageStack {
 		return false;
 	}
 
-	//	public void setEmpty() {
-	//		// TODO Auto-generated method stub
-	//		stackSize = 0;
-	//		arraySize = 2;
-	//		biArray = new BufferedImage[INITIALARRAYSIZE];
-	//		end = 0;
-	//	}
+
 }
