@@ -54,13 +54,12 @@ for($j=1; $j<$max+1; $j++) {
 ## specify that all variables are binary
 print "bin ";
 for($i=1; $i<$max+1; $i++) {
-	if ($i>1) { print ","; } ## prepend a comma after the first variable
+	if ($i>1) { print " ,"; } ## prepend a comma after the first variable
 	print "+y_",$i;
 }
 for($j=1; $j<$max+1; $j++) {
-	print ",";
 	for($i=1; $i<$max+1; $i++) {
-		print "x_",$j,"_",$i;
+		print ", x_",$j,"_",$i;
 	}
 }
 print ";\n";
