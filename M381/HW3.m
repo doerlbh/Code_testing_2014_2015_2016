@@ -23,7 +23,7 @@ E
 
 
 
-fid = fopen('/Users/DoerLBH/Dropbox/Courses/4-1-2016Aut/MATH381/HW/lp3.txt','wt');
+fid = fopen('/Users/DoerLBH/Dropbox/git/Code_testing/M381/lp3.txt','wt');
 fprintf(fid, 'Happy');
 fclose(fid);
 
