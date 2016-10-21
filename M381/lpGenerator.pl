@@ -50,6 +50,7 @@ for($j=1; $j<$max+1; $j++) {
 	}
 }
 
+## constraint 4
 ## specify that all variables are binary
 print "bin ";
 for($i=1; $i<$max+1; $i++) {
