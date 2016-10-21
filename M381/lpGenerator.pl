@@ -1,7 +1,6 @@
 
 #!/usr/local/bin/perl
 
-#
 # Baihan Lin, Oct 2016
 #
 # A perl script to generate an lpsolve-format IP (integer program) 
@@ -31,47 +30,25 @@ for($j=0; $j<$max; $j++) {
 }
 
 ## constraint 3
-for($j=0; $j<$boardSizeY; $j++) {
-	for($i=0; $i<$boardSizeX; $i++) {
+for($j=0; $j<$max; $j++) {
+	for($i=0; $i<$max; $i++) {
 
+		# prime number check
+		$n=$j^2+$i^2+$i*$j+4;
+		$d=0; # 0 is prime, 1 is not
 		for($c=2;$c<=$n-1;$c++) {
-			if($n%$c==0)
-
-
-
-
-		
-		## find all the locations from which (i,j) could be attacked;
-		## add each one to the constraint for (i,j): (i,j) must be attacked!
-		
-		for($k=0; $k<8; ++$k) { # eight possible square could attack (i,j)
-			$xChangeAbs=2-(int($k/2) % 2);
-			if ($k<4) { $xDelta=$xChangeAbs; }
-				else {$xDelta = -$xChangeAbs; }
-				
-			$yChangeAbs=3-$xChangeAbs;
-			if (($k % 2)==0) { $yDelta = $yChangeAbs; }
-				else { $yDelta = -$yChangeAbs; }
-					
-			$targetX=$i+$xDelta;
-			$targetY=$j+$yDelta;
-			
-			if (($targetX>=0) && ($targetX<$boardSizeX) && ($targetY>=0) && ($targetY<$boardSizeY)) {
-				
-				## target is an actual square on the board, so add this location to the constraint
-				
-				print "+x_",$targetX,"_",$targetY;
+			if($n%$c==0) {
+				$d=1;
+				break;
 			}
-			
 		}
-		
-		## finish the constraint
-		
-		print ">=1;\n";
-		
- 	}
- }
-
+		if($d==0){
+			for($k=0; $k<$max; $k++) {
+				print "x_",$j,"_",$k," +", "x_",$i,"_",$k,"<=1;\n";
+			}
+		}
+	}
+}
 
 ## specify that all variables are binary
 print "bin ";
