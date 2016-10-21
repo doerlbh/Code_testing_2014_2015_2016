@@ -11,7 +11,7 @@ E = [];
 
 % get edges and the corresponding graph appears
 for j = 1:max
-    for k = j:max
+    for k = j+1:max
         if (isprime(j^2+k^2+j*k+4))
             E = [E;[j k]];
         end
