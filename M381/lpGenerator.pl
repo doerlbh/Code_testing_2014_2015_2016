@@ -9,29 +9,29 @@ $max=12;
 
 ## print out objective function
 print "min:";
-	for($i=0; $i<$max; $i++) {
+	for($i=1; $i<$max+1; $i++) {
 		print "+y_",$i;
 	}
 print ";\n";
 
 ## constraint 1
-for($j=0; $j<$max; $j++) {
-	for($i=0; $i<$max; $i++) {
+for($j=1; $j<$max+1; $j++) {
+	for($i=1; $i<$max+1; $i++) {
 		print "+x_",$j,"_",$i;
 	}
 	print "=1;\n"
 }
 
 ## constraint 2
-for($j=0; $j<$max; $j++) {
-	for($i=0; $i<$max; $i++) {
+for($j=1; $j<$max+1; $j++) {
+	for($i=1; $i<$max+1; $i++) {
 		print "x_",$j,"_",$i," -", "y_",$i,"<=0;\n";
 	}
 }
 
 ## constraint 3
-for($j=0; $j<$max; $j++) {
-	for($i=0; $i<$max; $i++) {
+for($j=1; $j<$max+1; $j++) {
+	for($i=1; $i<$max+1; $i++) {
 
 		# prime number check
 		$n=$j^2+$i^2+$i*$j+4;
@@ -43,7 +43,7 @@ for($j=0; $j<$max; $j++) {
 			}
 		}
 		if($d==0){
-			for($k=0; $k<$max; $k++) {
+			for($k=1; $k<$max+1; $k++) {
 				print "x_",$j,"_",$k," +", "x_",$i,"_",$k,"<=1;\n";
 			}
 		}
@@ -52,13 +52,13 @@ for($j=0; $j<$max; $j++) {
 
 ## specify that all variables are binary
 print "bin ";
-for($i=0; $i<$max; $i++) {
-	if ($i>0) { print ","; } 
+for($i=1; $i<$max+1; $i++) {
+	if ($i>1) { print ","; } ## prepend a comma after the first variable
 	print "+y_",$i;
 }
-for($j=0; $j<$max; $j++) {
-	for($i=0; $i<$max; $i++) {
-	if ($i+$j>0) { print ","; } ## prepend a comma after the first variable
+for($j=1; $j<$max+1; $j++) {
+	print ",";
+	for($i=1; $i<$max+1; $i++) {
 		print "x_",$j,"_",$i;
 	}
 }
