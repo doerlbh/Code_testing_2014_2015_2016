@@ -16,9 +16,9 @@ def is_number(s):
     except ValueError:
         return False
     
-gender = 3; # int of gender: 2 - male, 3 - male
+gender = 2; # int of gender: 2 - male, 3 - female
      
-with open('./NewNew_Data1.csv') as f:
+with open('./NewNew_Data.csv') as f:
     reader = csv.reader(f)
     next(reader) # skip headers
     next(reader)
@@ -27,7 +27,7 @@ with open('./NewNew_Data1.csv') as f:
     nRows = 0;
     for row in reader:
         # stores each item's 
-        # Group Name, male prefrence, female preference, protein(g), fat(g),
+        # Food Name, Group Name, male prefrence, female preference, protein(g), fat(g),
         # carb(g), energy(kcal), sat fat (g), trans fat(g), cholesterol(mg), sodium(mg),
         # potassium(mg), calcium(mg), Vitamin D(mcg), Vitamin E(mg), Vitamin B6(mg),
         # Vitamin B12(mcg), Vitamin C(mg) 
@@ -49,20 +49,20 @@ with open('./NewNew_Data1.csv') as f:
     print(';')
     print('')
     
-    # male (age 19-30) calorie requirement: 2800kcal
-    # female (age 19-30) calorie requirement: 2200kcal
+    # male (age 19-30) calorie requirement: 2200-2800kcal
+    # female (age 19-30) calorie requirement: 1800-2200kcal
     
     # protein: 4 grams per kcal, 10% to 35% of daily calories
-    # male protein requirement: 70g to 245g
-    # female protein requirement: 55g to 192.5g  
+    # male protein requirement: 55g to 245g
+    # female protein requirement: 45g to 192.5g  
     
     # fat: 9 grams per kcal, 20% to 35% of daily calories
-    # male fat requirement: 62.2g to 108.9g 
-    # female fat requirement: 48.9g to 85.6g  
+    # male fat requirement: 48.9g to 108.9g 
+    # female fat requirement: 40g to 85.6g  
        
     # carbs: 4 grams per kcal, 45% to 65% of daily calories
-    # male carb requirement: 315g to 455g
-    # female carb requirement: 247.5g to 357.5g  
+    # male carb requirement: 247.5g to 455g
+    # female carb requirement: 202.5g to 357.5g  
     
     # saturated fat: up to 7% of daily calories
     # male: limit to 21.8g
@@ -81,24 +81,26 @@ with open('./NewNew_Data1.csv') as f:
     # Vitamin D: 600 IU to 4000 IU, 15mcg to 100mcg
     # Vitamin E: 22 IU to 1500 IU, 0.55mcg to 37.5mcg, 0.00055mg to 0.0375mg
     # Vitamin B6: 1.3mg to 100mg
-    # Vitamin B12: from 2.4mcg
+    # Vitamin B12: from 2.4mcg 
     # Vitamin C: male: 90 to 2000mg | female: 75 to 2000mg
     
     # According to the nutrient requirements above, set each nutrient's 
     # daily recommended minimum and maximum values based on gender 
     if gender == 2:
-        calorie_min = 2800
-        protein_min = 70
+        calorie_min = 2200
+        calorie_max = 2800
+        protein_min = 55
         protein_max = 245
-        fat_min = 62.2
+        fat_min = 48.9
         fat_max = 108.9
-        carb_min = 315
+        carb_min = 247.5
         carb_max = 455
         sat_max = 21.8
         trans_max = 3.1
         VitC_min = 90
     elif gender == 3:
-        calorie_min = 2200
+        calorie_min = 1800
+        calorie_max = 2200
         protein_min = 55
         protein_max = 192.5
         fat_min = 48.9
@@ -129,7 +131,12 @@ with open('./NewNew_Data1.csv') as f:
         print('+', data[i][7], 'x_', i, sep='', end='')
     print('>=', calorie_min, ';', sep='')
     print('')
-
+    
+    for i in range(len(data)):
+        print('+', data[i][7], 'x_', i, sep='', end='')
+    print('<=', calorie_max, ';', sep='')
+    print('')
+    
     # protein requirement
     for i in range(len(data)):
         print('+', data[i][4], 'x_', i, sep='', end='')
@@ -144,12 +151,12 @@ with open('./NewNew_Data1.csv') as f:
     # fat requirement
     for i in range(len(data)):
         print('+', data[i][5], 'x_', i, sep='', end='')
-    print('>=', protein_min, ';', sep='')
+    print('>=', fat_min, ';', sep='')
     print('')
     
     for i in range(len(data)):
         print('+', data[i][5], 'x_', i, sep='', end='')
-    print('<=', protein_max, ';', sep='')    
+    print('<=', fat_max, ';', sep='')    
     print('')
     
     # carbs requirement
@@ -242,7 +249,7 @@ with open('./NewNew_Data1.csv') as f:
         print('+', data[i][17], 'x_', i, sep='', end='')
     print('>=', VitB12_min, ';', sep='')
     print('')
-    
+
     # Vitamin C requirement
     for i in range(len(data)):
         print('+', data[i][18], 'x_', i, sep='', end='')

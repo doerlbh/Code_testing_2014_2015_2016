@@ -1,0 +1,666 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{esint}
+
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage[all]{xy}
+\usepackage{epstopdf}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+  \theoremstyle{definition}
+  \newtheorem{xca}[thm]{\protect\exercisename}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+\makeatother
+
+%\usepackage{babel}
+%  \providecommand{\exercisename}{Exercise}
+%\providecommand{\theoremname}{Theorem}
+
+
+% these packages make it easy to include figures in the text. 
+\usepackage{float}
+\restylefloat{figure}
+
+
+
+
+\begin{document}
+{\Large Name: Solution Set}  \\
+\begin{center}
+\Large AMATH 352 \hskip 2in Homework Set 2\\
+{\bf Due: Wednesday, January 20th, in class}. 
+\end{center}
+\bigskip
+
+
+
+
+\begin{enumerate}
+%\subsection{Exercises}
+\item There are two important methods we can use to find the root of $f(x) = 0$. 
+The first is called Newton's method. We take an initial $x_0$ somewhere close 
+to the root, and then we define
+\[
+x^{k+1} = x^k - \frac{f(x^k)}{f'(x^k)}.
+\]
+The second method is called the {\it secant} method. In this exercise, you will 
+study and implement both methods. 
+
+\bigskip
+
+\begin{enumerate}
+
+\item If $f$ is differentiable, there is a unique tangent line at the point $x_k$. 
+Write down the equation of this tangent line, and show that the next iteration of Newton's method 
+is precisely the x-intercept for this line. Explain why this makes sense. \\
+
+Tangent line equation: $y = f'(x^k)(x - x^k) + f(x^k)$ \\
+Plug in $(x^{k+1}, 0)$ to find the x-intercept of the tangent line by solving for $x^{k+1}$:
+\begin{align} \nonumber
+0 &= f'(x^k)(x^{k+1} - x^k) + f(x^k) \\ \nonumber
+x^{k+1} - x^{k} &= -\frac{f(x^k)}{f'(x^k)} \\ \nonumber
+x^{k+1} &= x^k - \frac{f(x^k)}{f'(x^k)}
+\end{align}
+
+This makes sense because each successive x-intercept of the tangent line should get closer and closer to the actual root of the function. 
+\bigskip 
+
+\item Now, suppose instead you are not sure that $f$ is differentiable. 
+Rather than using a {\it tangent} line, you can always use the secant line. 
+Given two points $x_k$ and $x_{k-1}$, write down the 
+equation for the secant line through $(x^k, f(x^k)), (x^{k-1}, f(x^{k-1}))$.
+Derive the secant method by taking $x^{k+1}$ as the x-intercept 
+for this line. \\
+
+Secant line equation: $y = \frac{f(x^k) - f(x^{k-1})}{x^k - x^{k-1}}(x - x^k) + f(x^k)$ \\
+Plug in $(x^{k+1}, 0)$ to find the x-intercept by solving for $x^{k+1}$:
+\begin{align} \nonumber
+0 &= \frac{f(x^k) - f(x^{k-1})}{x^k - x^{k-1}}(x^{k+1} - x^k) + f(x^k) \\ \nonumber
+-\frac{f(x^k)(x^k - x^{k-1})}{f(x^k) - f(x^{k-1})} &= x^{k+1} - x^k \\ \nonumber
+x^{k+1} &= x^k -\frac{f(x^k)(x^k - x^{k-1})}{f(x^k) - f(x^{k-1})}
+\end{align}
+
+\bigskip
+\item Implement both methods in matlab. Give your code here for both methods. 
+You can either paste the code you used for specific functions (see next parts), 
+or you can write a code for a generic function specified by the user. I will discuss
+Matlab functions in class on Friday. \\
+
+Here is my code for the next part of the problem. \\
+
+\begin{verbatim}
+Newton Code:
+xk = 2;
+tolerance = 1e-5;
+for j = 1:100000
+    fxk = log(xk) - exp(-3*xk);
+    fpxk = 1/xk + 3*exp(-3*xk);
+    xkp1 = xk - (fxk / fpxk);
+    error = abs(log(xkp1) - exp(-3*xkp1));
+    if (error < tolerance)
+       break;
+    end
+    xk = xkp1;
+end
+
+Secant Code:
+xkm1 = 2;
+xk = 1.7;
+tolerance = 1e-5;
+for j = 1:100000
+    fxk = log(xk) - exp(-3*xk);
+    fxkm1 = log(xkm1) - exp(-3*xkm1);
+    xkp1 = xk - (fxk * (xk - xkm1)) / (fxk - fxkm1);
+    error = abs(log(xkp1) - exp(-3*xkp1));
+    if (error < tolerance)
+       break;
+    end
+    xkm1 = xk;
+    xk = xkp1;
+end
+\end{verbatim}
+
+\bigskip
+
+{\bf Alternate answer using functions: }
+\begin{verbatim}
+Newton Code:
+function [root, iter] = newton(f, x0, maxerr)
+syms x;
+fprime(x) = diff(f);
+iter = 0;
+f(x) = f;
+while abs(f(x0)) >= maxerr
+    x0 = x0 - (f(x0)/fprime(x0));
+    iter = iter + 1;
+end
+root = x0;
+	
+Secant Code:
+function [root, iter] = secant(f, x0, x1, maxerr)
+syms x;
+iter = 0;
+f(x) = f;
+while abs(f(x1)) >= maxerr
+    x2 = x1 - ((x1 - x0)/(f(x1) - f(x0)))*f(x1);
+    iter = iter + 1;
+    x0 = x1;
+    x1 = x2;
+end
+root = x1;
+\end{verbatim}
+
+
+
+
+\bigskip
+
+\item Use Newton's method AND Secant method to find $x$ so that $\ln(x) = e^{-3x}$. Start with $x_0 = 2$,
+and iterate until $|f(x)| < \epsilon$, for three values of $\epsilon: 1\times 10^{-5}$, 
+$1\times 10^{-7}$, and $1\times 10^{-10}$. 
+For SECANT, you also need a second point; use $x_1 = 1.7$.
+Report your  root (using significant figures
+as appropriate given your $\epsilon$), 
+and your iteration count, for each epsilon in the table below:
+
+\begin{table}[H]
+\caption{Newton's method (left) and Secant method (right) results:}
+\begin{tabular}{|c|c|c|}\hline
+$\epsilon$ & root & iterations \\ \hline
+$1\times 10^{-5}$ & 1.0445 & 5 \\ \hline
+$1\times 10^{-7}$ & 1.044525 & 5 \\ \hline
+$1\times 10^{-10}$ & 1.0445245851& 6 \\ \hline
+\end{tabular}
+\begin{tabular}{|c|c|c|}\hline
+$\epsilon$ & root & iterations \\ \hline
+$1\times 10^{-5}$ & 1.0445 & 6 \\ \hline
+$1\times 10^{-7}$ & 1.044525 & 6 \\ \hline
+$1\times 10^{-10}$ & 1.044524585 & 7 \\ \hline
+\end{tabular}
+\end{table}
+\bigskip
+
+\item Use the Secant method to find $x$ so that 
+\[
+2\left|\sin\left(\frac{3x}{5}\right) \right| = 1 + 2|\ln(x)|
+\]
+Use $x_0 = 2.5$ and $x_1  = 2.3$. Iterate until $|f(x^k) - f^{x^{k+1}}|<\epsilon$, 
+and report your your roots and iterations below.  
+
+\begin{tabular}{|c|c|c|}\hline
+$\epsilon$ & root & iterations \\ \hline
+$1\times 10^{-5}$ & 1.1421 & 6 \\ \hline
+$1\times 10^{-7}$ & 1.142114 & 7 \\ \hline
+$1\times 10^{-10}$ & 1.142113785 & 7 \\ \hline
+\end{tabular}
+
+\end{enumerate}
+
+
+
+\bigskip
+
+\item
+Show that the set $\mathcal{P}_n$ of all polynomials with real coefficients
+of degree $n$ or fewer is a subspace of $C^0(\mathbb{R},\mathbb{R})$. 
+What is its dimension?  \\
+
+$\mathcal{P}_n$ is contained in $C^0(\mathbb{R},\mathbb{R})$ because all polynomials with real coefficients are continuous and map real numbers to real numbers. Since $C^0(\mathbb{R},\mathbb{R})$ is a linear space, only the closure conditions need to be checked to prove that $\mathcal{P}_n$ is a subspace. Checking these two conditions:
+\begin{itemize}
+	\item If $f, g \in \mathcal{P}_n$, then $f + g \in \mathcal{P}_n$ because the sum of two polynomials with degree $n$ (or fewer) is still a polynomial with degree $n$ (or fewer).
+	\begin{align} \nonumber
+	f &= c_1 x^n + c_2 x^{n - 1} + ... + c_n x + c_{n+1} \\ \nonumber
+	g &= d_1 x^n + d_2 x^{n - 1} + ... + d_n x + d_{n+1} \\ \nonumber
+	f + g &= c_1 x^n + d_1 x^n + c_2 x^{n - 1} + d_2 x^{n - 1} + ... + c_n x + d_n x + c_{n+1} +  d_{n+1} \\ \nonumber
+		  &= (c_1 + d_1)x^n + (c_2 + d_2)x^{n - 1} + ... + (c_n + d_n)x + (c_{n + 1} + d_{n + 1})
+	\end{align}
+	where $c_1, ... , c_{n+1} \in \mathbb{R}$ and $d_1, ... , d_{n+1} \in \mathbb{R}$ \\
+	\item If $\alpha \in \mathbb{R}$ and $f \in \mathcal{P}_n$, then $\alpha f \in \mathcal{P}_n$ because multiplying a 	polynomial of degree $n$ (or fewer) by a scalar $\alpha$ is still a polynomial of degree $n$ (or fewer). 
+	\begin{align} \nonumber
+	f &= c_1 x^n + c_2 x^{n - 1} + ... + c_n x + c_{n+1} \\ \nonumber
+	\alpha f &= \alpha (c_1 x^n + c_2 x^{n - 1} + ... + c_n x + c_{n+1}) \\ \nonumber
+			  &= \alpha c_1 x^n + \alpha c_2 x^{n - 1} + ... + \alpha c_n x + \alpha c_{n+1} \\ \nonumber	
+	\end{align}
+	where $c_1, ... , c_{n+1} \in \mathbb{R}$. \\
+\end{itemize}
+The dimension of $\mathcal{P}_n$ is $n + 1$, because there are $n + 1$ terms in a polynomial of degree $n$. Therefore, $n + 1$ functions are needed to describe it. For example, if $n = 2$, then the following 3 functions would define $\mathcal{P}_n$ (ie: all elements of $\mathcal{P}_n$ can be written as a linear combination of these functions): $x^2$, $x$, and $1$.
+\bigskip
+
+
+\item Check the linear dependency of the vectors
+\[
+\vect{x}^{(1)}=\begin{bmatrix}1\\
+2\\
+3
+\end{bmatrix},\quad\vect{x}^{(2)}=\begin{bmatrix}-2\\
+1\\
+1.5
+\end{bmatrix},\quad\vect{x}^{(3)}=\begin{bmatrix}1\\
+0\\
+0
+\end{bmatrix}.
+\]
+
+We want to solve the following system to see if the solution is trivial (ie: $\alpha = \beta = \gamma = 0$) or non-trivial (ie: $\alpha$, $\beta$, and $\gamma$ not all zero):
+
+\begin{center}
+$
+\begin{bmatrix}
+	1 & -2 & 1 \\
+	2 & 1 & 0 \\
+	3 & 1.5 & 0
+\end{bmatrix}
+\begin{bmatrix}
+	\alpha \\
+	\beta \\
+	\gamma
+\end{bmatrix}
+=
+\begin{bmatrix}
+	0  \\
+	0  \\
+ 	0
+\end{bmatrix}
+$
+\end{center}
+
+or, in augmented matrix form:
+$$
+\left[\begin{array}{rrr|r}
+1 & -2 & 1 & 0 \\
+2 & 1 & 0 & 0 \\
+3 & 1.5 & 0 & 0
+\end{array}\right]
+$$ 
+
+After some row-reducing, this is what the augmented matrix ends up looking like:
+
+$$
+\left[\begin{array}{rrr|r}
+1 & -2 & 1 & 0 \\
+0 & 5 & -2 & 0 \\
+0 & 0 & 0 & 0
+\end{array}\right]
+$$ 
+
+From the second row, $\beta = \frac{2}{5} \gamma$. Plugging this relationship into the first row, $\alpha = -\frac{1}{5} \gamma$. From these two equations, we can see that $\gamma$ is free to vary. For example, if I picked $\gamma = 1$, then $\alpha = -\frac{1}{5}$ and $\beta = \frac{2}{5}$, so a solution to this system would be $(-\frac{1}{5}, \frac{2}{5}, 1)$. This is just one example of a non-trivial solution to the system, but because $\gamma$ is free to vary, there are many more. Since there are non-trivial solutions to the system, the original three vectors must be linearly dependent. 
+
+\bigskip
+\item
+\begin{enumerate}
+\item Show that the functions $1$, $\cos(\pi x)$, and $\sin(\pi x)$ are
+linearly independent on $[-1, 1]$. \\
+
+Three equations that we can use are (the second and third are from differentiating the first equation once and twice, respectively):
+\begin{align} \nonumber
+\alpha + \beta \cos(\pi x) + \gamma \sin(\pi x) &= 0 \\ \nonumber
+-\beta \pi \sin(\pi x) + \gamma \pi \cos(\pi x) &= 0 \\ \nonumber
+-\beta \pi^2 \cos(\pi x) - \gamma \pi^2 \sin(\pi x) &= 0
+\end{align}
+
+Using the third equation and taking $x = 0$, 
+\begin{align} \nonumber
+-\beta \pi^2 \cos(0) - \gamma \pi^2 \sin(0) &= 0 \\ \nonumber
+-\beta \pi^2 &= 0 \\ \nonumber
+\beta &= 0
+\end{align}
+
+Plugging $\beta = 0$ into the second equation gives $\gamma \pi \cos(\pi x) = 0$. Using $x = 0$ again, the equation gives $\gamma = 0$. Finally, plugging in $\beta = \gamma = 0$ into the first equation means that $\alpha = 0$, so $\alpha = \beta = \gamma = 0$. Plugging in other values of $x$ such as 1 or -1 gives the same result ($\alpha = \beta = \gamma = 0$), so this shows that $1$, $\cos(\pi x)$, and $\sin(\pi x)$ are linearly independent on $[-1, 1]$. \\
+
+\item  Show that the functions $1$, $\cosh t$, and $\sinh t$ are linearly
+independent when $t$ belongs to $\mathbb{R}$. \\
+
+Three equations that we can use are (the second and third are from differentiating the first equation once and twice, respectively):
+\begin{align} \nonumber
+\alpha + \beta \cosh t+ \gamma \sinh t &= 0 \\ \nonumber
+\beta \sinh t + \gamma \cosh t &= 0 \\ \nonumber
+\beta \cosh t + \gamma \sinh t &= 0
+\end{align}
+
+Using the third equation and taking $x = 0$, 
+\begin{align} \nonumber
+\beta \cosh(0) + \gamma \sinh(0) &= 0 \\ \nonumber
+\beta &= 0
+\end{align}
+
+Plugging $\beta = 0$ into the second equation gives $\gamma \cosh t = 0$. Since $\cosh t$ is never 0, this means that $\gamma = 0$. Finally, plugging in $\beta = \gamma = 0$ into the first equation means that $\alpha = 0$, so $\alpha = \beta = \gamma = 0$ and this shows that $1$, $\cosh t$, and $\sinh t$ are linearly independent when $t \in \mathbb{R}$. \\
+\end{enumerate}
+
+\bigskip
+
+
+\item
+Explain why the following sets are not a real linear space:
+\begin{enumerate}
+\item $\mathbb{Z}=\left\{ 0,1,-1,2,-2,\cdots\right\} \subset\mathbb{R}$,
+the set of all signed integers. \\
+This is not a real linear space because it is not closed under scalar multiplication. When $\alpha \in \mathbb{R}, z \in \mathbb{Z}$, $\alpha z$ is not necessarily in $\mathbb{Z}$. For example if, $\alpha = 0.5$ and $z = 3$, $\alpha z = (0.5)(3) = 1.5$ and $1.5 \notin \mathbb{Z}$ because 1.5 is not an integer. \\
+
+\item The set of all vectors of the form $\left[\begin{array}{c}
+r-s\\
+r+2s\\
+1
+\end{array}\right]$, for $r,s\in\mathbb{R}$ \\
+This is not a real linear space because it is not closed under addition and multiplication. When $x, y$ are in the set, $x + y$ is not. For example, if $x = \begin{bmatrix} -1 \\ 2 \\ 1 \end{bmatrix}$ (found by letting $r = 0$ and $s = 1$) and $y = \begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix}$ (found by letting $r = 1$ and $s = 0$), $x + y = \begin{bmatrix} 0 \\ 3 \\ 2 \end{bmatrix}$ and this is not in the set (which can most easily be seen from the fact that the last entry in the vector is 2, not 1). Also, if $x$ is in the set and $\alpha \in \mathbb{R}$, $\alpha x$ is not necessarily in the set. For example, if $x = \begin{bmatrix} -1 \\ 2 \\ 1 \end{bmatrix}$ and $\alpha = 0$, then $\alpha x = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}$ and $\alpha x$ does not belong to the original set (which can most easily be seen from the fact that the last entry in the vector is 0, not 1). \\
+
+\item The set of all vectors $\left[\begin{array}{c}
+x_{1}\\
+x_{2}\\
+x_{3}
+\end{array}\right]$, such that $x_{1}+x_{2}x_{3}=1$ \\
+This is not a real linear space because it is not closed under multiplication and addition. When $\alpha \in \mathbb{R}$ and $x$ is an element of the set, $\alpha x$ is not necessarily also in the set. For example, if $x = \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}$ and $\alpha = 2$, then $\alpha x = 2 \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix} = \begin{bmatrix} 0 \\ 2 \\ 2 \end{bmatrix}$, and this new vector does not satisfy the above condition because $0 + (2)(2) \neq 1$. Also, if $x, y$ are in the set, $x + y$ is not necessarily also in the set. For example, if $x = \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}$ and $y = \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}$, then $x + y = \begin{bmatrix} 1 \\ 1 \\ 2 \end{bmatrix}$. $x + y$ is not in the original set because $1 + (1)(2) \neq 1$. \\
+
+\item The set of all non-negative functions: $f(x)\geq0$ \\
+This is not a real linear space because it is not closed under multiplication. When $\alpha \in \mathbb{R}$ and $f(x)$ is an element of the set, $\alpha x$ is not necessarily also in the set. For example, if $f(x) = x^2$ and $\alpha = -2$, then $\alpha f(x) = -2x^2$, and this is not in the set because $-2x^2$ is not a non-negative function. \\
+
+\item $\mathcal{S}=\left\{ f\in C^{1}(\mathbb{R},\mathbb{R})\,:\;f''(t)=2,\;\forall t\in\mathbb{R}\right\}$ \\
+This is not a real linear space because it is not closed under multiplication and addition. If $f(t)$ is in the set and $\alpha \in \mathbb{R}$, then $\alpha f$ is not necessarily also in the set. For example, if $\alpha = 0$, then $\alpha f = 0$. In this case, $\alpha f$ is not in the set because the second derivative of 0 is 0, not 2. Also, when $f(t), g(t)$ are in the set, $f(t) + g(t)$ is not because $(f + g)''(t) = f''(t) + g''(t) = 2 + 2 = 4 \neq 2$.
+\end{enumerate}
+
+\bigskip 
+
+\item Suppose that $x, y, z \in \mathbb{R}^n$ are linearly independent. 
+\begin{enumerate} 
+\item Prove that $(x+y), (x+z), (y+z)$ are linearly independent. \\
+Putting these in a matrix gives:
+
+\begin{center}
+$
+\begin{bmatrix}
+	1 & 1 & 0 \\
+	1 & 0 & 1 \\
+	0 & 1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+	x \\
+	y \\
+	z
+\end{bmatrix}
+=
+\begin{bmatrix}
+	0  \\
+	0  \\
+ 	0
+\end{bmatrix}
+$
+\end{center}
+
+or, in augmented matrix form:
+$$
+\left[\begin{array}{rrr|r}
+1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 \\
+0 & 1 & 1 & 0
+\end{array}\right]
+$$ 
+
+After some row-reducing, this is what the augmented matrix ends up looking like:
+$$
+\left[\begin{array}{rrr|r}
+1 & 1 & 0 & 0 \\
+0 & -1 & 1 & 0 \\
+0 & 0 & 2 & 0
+\end{array}\right]
+$$ 
+
+\begin{itemize}
+	\item Starting from the bottom row, $2z = 0$ so $z = 0$.
+	\item Plugging $z = 0$ in to the second row gives $-y + 0 = 0$, so $y = 0$. 
+	\item Finally, plugging $y = 0$ into the top row gives $x + 0 = 0$, so $x = 0$. 
+\end{itemize}
+Since $x = y = z = 0$, $(x+y), (x+z), (y+z)$ are linearly independent. \\
+
+\item Are $x, (x+y), (x+z), (y+z)$ linearly independent? Justify your answer. \\
+$x, (x+y), (x+z), (y+z)$ are not linearly independent because
+\begin{align} \nonumber
+\frac{1}{2} (x + y) - \frac{1}{2} (y + z) + \frac{1}{2} (x + z) &= \frac{1}{2}x + \frac{1}{2}y - \frac{1}{2}y - \frac{1}{2}z + \frac{1}{2}x + \frac{1}{2}z \\ \nonumber
+&= x
+\end{align}
+
+
+Since $x = \frac{1}{2} (x + y) - \frac{1}{2} (y + z) + \frac{1}{2} (x + z)$, this means that $x - \frac{1}{2} (x + y) + \frac{1}{2} (y + z) - \frac{1}{2} (x + z) = 0$. In other words, there is a non-trivial linear combination of the four functions that is equal to zero, and by definition, this means that $x, (x+y), (x+z), (y+z)$ are linearly dependent. 
+\end{enumerate}
+
+\bigskip
+
+\item Which of the following sets $W$ are subpaces of $V$? Justify your answer. 
+
+\begin{enumerate}
+\item $V = \mathbb{R}^3$, $W  = \{x \in \mathbb{R}^3 : x_1  = 2x_2^2  + 3x_3\}$ \\
+This is not a subspace, because it is not closed under multiplication and addition. If $\alpha \in \mathbb{R}, x \in W$, then $\alpha  x$ is not necessarily in $W$. For example, if $x = \begin{bmatrix} 8 \\ 1 \\ 2 \end{bmatrix}$ and $\alpha = 2$, then $\alpha x = \begin{bmatrix} 16 \\ 2 \\ 4 \end{bmatrix}$ and $16 \neq 2(2)^2 + 3(4)$. Also, if $x, y \in W$, $x + y$ is not necessarily also an element of $W$. For example, if $x = \begin{bmatrix} 8 \\ 1 \\ 2 \end{bmatrix}$ and $y = \begin{bmatrix} 5 \\ 1 \\ 1 \end{bmatrix}$, then $x + y = \begin{bmatrix} 13 \\ 2 \\ 3 \end{bmatrix}$. $x + y \notin W$ because $13 \neq 2(2)^2 + 3(3)$. \\
+
+\item $V = \mathbb{R}^4$, $W = \{x \in \mathbb{R}^4: x_1+2x_2 = 0, x_3 - x_4 = 0\}$. \\
+This is a subspace. 
+\begin{itemize}
+	\item If $x, y \in W$, then $x + y \in W$ because
+		\begin{align} \nonumber
+		(x_1 + y_1) + 2(x_2 + y_2) &= 0 \\ \nonumber
+		x_1 + 2x_2 + y_1 + 2y_2 &= 0 \\ \nonumber
+		0 + 0 &= 0
+		\end{align}
+	and
+		\begin{align} \nonumber
+		(x_3 + y_3) - (x_4 + y_4) &= 0 \\ \nonumber
+		x_3 - x_4 + y_3 - y_4 &= 0 \\ \nonumber
+		0 - 0 &= 0
+		\end{align}
+	\item If $\alpha \in \mathbb{R}$ and $x \in W$, then $\alpha x \in W$ because
+		\begin{align} \nonumber
+		\alpha x_1 + 2\alpha x_2 &= 0 \\ \nonumber
+		\alpha (x_1 + 2x_2) &= 0 \\ \nonumber
+		\alpha (0) &= 0
+		\end{align}
+	and
+		\begin{align} \nonumber
+		\alpha x_3 - \alpha x_4 &= 0 \\ \nonumber
+		\alpha (x_3 - x_4) &= 0 \\ \nonumber
+		\alpha (0) &= 0
+		\end{align}
+\end{itemize}
+\end{enumerate}
+
+\bigskip
+
+\item Which of the following sets $W$ are subpaces of $V$? Justify your answer. 
+
+\begin{enumerate}
+\item $V = \mathcal{P}_2$, $W = \{p \in \mathcal{P}_2 : p(1) = 0.\}$ \\
+This is a subspace. 
+\begin{itemize}
+	\item If $f, g \in W$, then $f + g \in W$ because the sum of two polynomials of degree 2 (or fewer) is still a polynomial of degree 2 (or fewer). 
+	\begin{align} \nonumber
+		f &= c_1x^2 + c_2x + c_3 \\ \nonumber
+		g &= d_1x^2 + d_2x + d_3 \\ \nonumber
+		f + g &= c_1x^2 + d_1x^2 + c_2x + d_2x + c_3 + d_3 \\ \nonumber
+				&= (c_1 + d_1)x^2 + (c_2 + d_2)x + (c_3 + d_3)
+	\end{align}
+	where $c_1, c_2, c_3, d_1, d_2, d_3 \in \mathbb{R}$. To check that $f + g \in W$: 
+	\begin{align} \nonumber
+	(f + g)(1) &= f(1) + g(1) \\ \nonumber
+				&= 0 + 0 = 0
+	\end{align}
+	\item If $\alpha \in \mathbb{R}, f \in W$, then $\alpha f \in W$ because multiplying a polynomial of degree 2 (or fewer) by a scalar is still a polynomial of degree 2 (or fewer). 
+	\begin{align} \nonumber
+	\alpha f &= \alpha (c_1x^2 + c_2x + c_3) \\ \nonumber
+				&= \alpha c_1x^2 + \alpha c_2x + \alpha c_3
+	\end{align}
+	To check that $\alpha f \in W$:
+	\begin{align} \nonumber
+	\alpha f(1) &= \alpha \cdot 0 \\ \nonumber
+				&= 0
+	\end{align}
+\end{itemize}
+
+\item $V = C^{1}(\mathbb{R}, \mathbb{R})$, $W = \{f\in V: f'(2) = 1.\}$ \\
+This is not a subspace because $W$ is not closed under multiplication and addition. If $\alpha \in \mathbb{R}, f \in W$, then $\alpha f$ is not necessarily an element of $W$. For example, if $f = x$ and $\alpha = 4$, then $\alpha f = 4x$. However, $\alpha f$ is not an element of $W$ because its derivative at $x = 2$ is 4, not 1. Also, if $f, g \in W$, then $f + g$ is not an element of $W$ because $(f + g)'(2) = f'(2) + g'(2) = 1 + 1 = 2 \neq 1$. 
+\end{enumerate}
+
+\bigskip
+
+
+\item Find the basis and dimension for the following linear space: 
+\[
+S = \left\{ x\in\mathbb{R}^3: x_1 + 3x_2 + 2x_3 = 0.\right\} 
+\]
+
+Solving for $x_1$ in the equation gives $x_1 = -3x_2 - 2x_3$. If I let $x_2 = \alpha$ and $x_3 = \beta$, then $x_1 = -3\alpha - 2\beta$. Rewriting with vectors, \\
+
+\begin{center}
+$\begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix} = \alpha \begin{bmatrix} -3 \\ 1 \\ 0 \end{bmatrix} + \beta \begin{bmatrix} -2 \\ 0 \\ 1 \end{bmatrix}$
+\end{center}
+
+So a basis for $S$ is 
+
+\begin{center}
+$\Bigg\{\begin{bmatrix} -3 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} -2 \\ 0 \\ 1 \end{bmatrix} \Bigg\}$
+\end{center}
+
+and the dimension is 2 because there are 2 vectors in the basis. 
+
+\bigskip 
+\item Basis and Span. 
+
+\begin{enumerate}
+\item Write down a basis for $V = \{x\in \mathbb{R}^4: x_3 - x_4 = 0\}$.
+
+The only condition on $x_1, x_2, x_3$ and $x_4$ is that $x_3 = x_4$. $x_1$ and $x_2$ are both free to vary. This gives the following vectors as a basis: \\
+
+\begin{center}
+$\Bigg\{\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 0 \\ 1 \\ 1 \end{bmatrix}\Bigg\}$
+\end{center}
+
+\bigskip
+\item Write down a basis for $V = \{p \in \mathcal{P}_3: p(1) = 0\}$. \\
+
+A general formula for any polynomial in $V$ is $p(x) = \alpha + \beta x + \gamma x^2 + \delta x^3$. Evaluating the polynomial at $x = 1$ gives us:
+\begin{align} \nonumber
+0 &= \alpha + \beta + \gamma + \delta \\ \nonumber
+\alpha &= -\beta - \gamma - \delta
+\end{align}
+
+Treating $\alpha$ as the constrained variable gives $1 - x^3$, $1 - x^2$, and $1 - x$ as a basis for $V$.
+
+\bigskip
+\item Is $f(x) = 1 + 2x + 3x^2$ in the span of $x(x-1), x(x+2), (x-1)(x+2)$? \\
+Yes. Multiplying things out: 
+\begin{align} \nonumber
+x(x-1) &= x^2 - x \\ \nonumber
+x(x+1) &= x^2 + x \\ \nonumber
+(x-1)(x-2) &= x^2 - x + 2
+\end{align}
+
+We want to determine if there is a linear combination of the above polynomials that is equal to $1 + 2x + 3x^2$:
+\begin{align} \nonumber
+1 + 2x + 3x^2 &= a(x^2 - x) + b(x^2 + 2x) + c(x^2 + x -2) \\ \nonumber
+                    &= (a + b + c)x^2 + (-a + 2b + c)x - 2c
+\end{align} 
+Equating coefficients gives the following:
+\begin{align} \nonumber
+a + b + c &= 3 \\ \nonumber
+-a + 2b + c &= 2 \\ \nonumber
+-2c &= 1
+\end{align}
+
+\begin{itemize}
+	\item Starting with the last equation gives $c = -\frac{1}{2}$.
+	\item Adding the first two equations gives $3b + 2c = 5$, and plugging in the previously found value of $c = -\frac{1}{2}$ gives $3b + 2(-\frac{1}{2}) = 5$, so $b = 2$.
+	\item Finally, using the first equation and plugging in $c = -\frac{1}{2}$ and $b = 2$ gives $a + 2 - \frac{1}{2} = 3$, so $a = \frac{3}{2}$. 
+\end{itemize}
+  Putting this together, $1 + 2x + 3x^2 = \frac{3}{2}(x^2 - x) + 2(x^2 + 2x) - \frac{1}{2}(x^2 + x -2)$. In other words, $1 + 2x + 3x^2$ can be expressed as a linear combination of $x(x-1), x(x+2), (x-1)(x+2)$, so it is in the span of $x(x-1), x(x+2), (x-1)(x+2)$. 
+
+\bigskip
+\item Suppose that $x$ is orthogonal to both $y$ and $z$. 
+Show that $x$ cannot be in the span of $y$ and $z$. \\
+
+We are allowed to assume that $x$ is non-zero. If $x$ is in the span of $y$ and $z$, then this means that $x = ay + bz$ for some $a, b \in \mathbb{R}$. If $x$ is orthogonal to $y$ and $z$, then:
+\begin{align} \nonumber
+\langle ay+bz, y \rangle &= 0 \\ \nonumber
+\langle ay+bz, z \rangle &= 0
+\end{align}
+
+However, when I calculate $\|x\|_2^2 = \langle x, x \rangle = \langle ay + bz, ay + bz \rangle$:
+\begin{align} \nonumber
+\langle ay + bz, ay + bz \rangle &= \langle ay + bz, ay \rangle + \langle ay + bz, bz \rangle \\ \nonumber
+                                            &= a \langle ay + bz, y \rangle + b \langle ay + bz, z \rangle \\ \nonumber
+                                            &= a \cdot 0 + b \cdot 0 \\ \nonumber
+									   &= 0
+\end{align}
+
+Since $\|x\|_2^2$ is zero, this means that $x$ must be the zero vector. However, I started out by assuming that $x$ is non-zero, so this can't be the case. Since there is a contradiction, $x$ can't be in orthogonal to $y$ and $z$ and also in the span of $y$ and $z$. 
+
+\end{enumerate}
+
+\bigskip 
+ 
+
+\item{\bf Bonus: 1.5 pt total.} Convexity. Recall that a set $C$ is {\it convex} if whenever $x\in C$ and $y\in C$,
+the line segment from $x$ to $y$ is contained in $C$. Algebraically, we say 
+\[
+\lambda x + (1-\lambda)y \in C \quad \mathrm{when} \quad x,y \in C, \quad \lambda \in [0,1].
+\]
+A function is {\it convex} when 
+\[
+f(\lambda x + (1-\lambda)y) \leq \lambda f(x) + (1-\lambda) f(y), \quad \mathrm{for all} \quad \lambda \in [0,1]
+\]
+
+\bigskip
+\begin{enumerate}
+\item Show that if $f, g$ are convex, then $h(x) = f(x)+\alpha g(x)$ is convex for any $\alpha > 0$.  
+ If $f, g$ are convex, then 
+\begin{align} \nonumber
+f(\lambda x + (1 - \lambda) y) &\leq \lambda f(x) + (1 - \lambda)f(y) \\ \nonumber
+g(\lambda x + (1 - \lambda)y) &\leq \lambda g(x) + (1 - \lambda)g(y)
+\end{align}
+Therefore,
+\begin{align} \nonumber
+h(\lambda x + (1 - \lambda)y) &= f(\lambda x + (1 - \lambda) y) + \alpha g(\lambda x + (1 - \lambda)y) \\ \nonumber
+									&\leq \lambda f(x) + (1 - \lambda)f(y) + \alpha (\lambda g(x) + (1 - \lambda)g(y)) \\ \nonumber
+									&\leq \lambda (f(x) + \alpha g(x)) + (1 - \lambda)(f(y) + \alpha g(y)) \\ \nonumber
+									&\leq \lambda h(x) + (1 - \lambda) h(y)
+\end{align}
+So $h(x)$ is convex. 
+\item Show that if $f, g$ are convex, then $h(x) = \max(f(x), g(x))$ is convex. 
+
+\begin{align} \nonumber
+h(\lambda x + (1 - \lambda)y) &= \max(f(\lambda x + (1 - \lambda y), g(\lambda x + (1 - \lambda)y)) \\ \nonumber
+									&\leq \max(\lambda f(x) + (1 - \lambda)f(y), \lambda g(x) + (1 - \lambda)g(y)) \\ \nonumber
+									&\leq \max(\lambda f(x), \lambda g(x)) + \max((1 - \lambda)f(y), (1 - \lambda)g(y)) \\ \nonumber
+									&\leq \lambda \max(f(x), g(x)) + (1 - \lambda)\max(f(y), g(y)) \\ \nonumber
+									&\leq \lambda h(x) + (1 - \lambda) h(y)
+\end{align}
+so $h(x)$ is convex. 
+
+\item Show that the following function is convex:
+\[
+\delta_C(x) := \begin{cases} 0 & x \in C \\ \infty & x \not\in C \end{cases}. 
+\]
+This is called the {\it convex indicator} function. 
+
+If $(\lambda x + (1 - \lambda)y) \in C$, then
+\begin{align} \nonumber
+\delta_C(\lambda x + (1 - \lambda)y) &= 0 \\ \nonumber
+											&\leq \lambda \delta_C(x) + (1 - \lambda)\delta_C(y)
+\end{align}
+because $\lambda \delta_C(x) + (1 - \lambda)\delta_(y)$ has to be either 0 or $\infty$.
+
+\end{enumerate}
+
+\end{enumerate}
+\end{document}  

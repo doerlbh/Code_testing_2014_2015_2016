@@ -1,0 +1,455 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage[all]{xy}
+\usepackage{epstopdf}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+
+% these packages make it easy to include figures in the text. 
+\usepackage{float}
+\restylefloat{figure}
+
+
+
+
+\begin{document}
+{\Large Name: Solution Set}  \\
+\begin{center}
+\Large AMATH 352 \hskip 2in Homework Set 1\\
+{\bf Due: Monday, January 11th, in class}. 
+\end{center}
+\bigskip
+
+\noindent
+Matlab code can easily be pasted in a `verbatim' environment. 
+Below, I paste the code to compute the $150$th term in a Fibonacci 
+recurrence relation. 
+
+\begin{verbatim}
+xk = 1;
+xk1 = 1;
+for k = 1:150
+    xk2 = xk1 + xk;
+    xk = xk1;
+    xk1 = xk2;
+end
+myTheta = xk2/xk1
+\end{verbatim}
+
+\noindent 
+You can check the accuracy of my code by running it and then looking at the value of \verb{myTheta{. 
+It should be close to the golden ratio, $1.618$. As you do the problems below, if you are typesetting, please paste your code
+into a verbatim environment just as I did above. If you are not typesetting, please print out your code (label problem numbres)
+and turn it in with your written homework in class.  
+
+\bigskip
+
+\begin{enumerate}
+
+\item[Problem 1:] Coding recurrences. 
+
+\begin{enumerate}
+\item Let $f_k = k\sum_{i=3}^k \frac{i+1}{i-1}$. Compute  $f_{20}$ and $f_{100}$. \\
+\begin{verbatim}
+Paste code for f100 here: 
+
+sum = 0;
+k = 100;
+for i = 3:k
+    sum = sum + ((i + 1) / (i - 1));
+end
+sum = sum * k;
+
+\end{verbatim}
+Answer: 
+
+ $f_{20} = 461.9096$ and $f_{100} = 1.0635e+04$
+
+
+\bigskip 
+
+\item Consider the tri-fibonacci sequence starting with $x_1 = 0, x_2 = 0, x_3 = 1$, and 
+$x_{n+3} = x_{n+2} + x_{n+1} + x_n$. Compute $\frac{x_{100}}{x_{99}}$. 
+
+\begin{verbatim}
+
+Paste code here: 
+
+x = zeros(1, 100);
+x(1) = 0; x(2) = 0; x(3) = 1;
+for n = 1:97
+    x(n + 3) = x(n + 2) + x(n + 1) + x(n);
+end
+ratio = x(100) / x(99);
+
+\end{verbatim}
+Answer: 
+$\frac{x_{100}}{x_{99}} = 1.8393$
+
+\bigskip 
+
+\end{enumerate}
+
+\item[Problem 2:]  Let 
+$x = \begin{bmatrix} e  \\ 5^{1/3} \\-6\pi \\ 42\end{bmatrix}, \quad
+y = \begin{bmatrix} 4 \\ 2 \\ -5 \\ 20\end{bmatrix}$. 
+Compute 
+\begin{enumerate}
+\item $\|x\|_1 = 65.2778$, $\|x\|_2 = 46.1478$, $\|x\|_{64} = 42$, $\|x\|_\infty = 42$\\
+\begin{verbatim}
+x = [exp(1); 5^(1/3); -6*pi; 42];
+y = [4; 2; -5; 20];
+norm1 = norm(x, 1);
+norm2 = norm(x, 2);
+norm64 = norm(x, 64);
+normInf = norm(x, inf);
+
+\end{verbatim}
+\item Angle between $x,y$ and dot product $\langle x, y\rangle$. \\
+Answer:
+\begin{itemize}
+\item Angle = 0.2269 radians or 12.9993 degrees
+\item Dot product = 948.5409 \\
+\end{itemize}
+\begin{verbatim}
+Code: 
+
+dotProduct = dot(x, y);
+cosTheta = dotProduct / (norm(x, 2) * norm(y, 2));
+thetaRadians = acos(cosTheta);
+thetaDegrees = rad2deg(thetaRadians);
+
+\end{verbatim}
+ 
+\end{enumerate}
+
+\item[Problem 3:] You can also easily include figures in a document. Below, I am including a 
+random figure to illustrate. 
+\begin{figure}[H]
+\includegraphics[width=0.5\textwidth]{StSimple}
+\end{figure}
+The code I use to include the figure assumes that the figure file (in my case, \verb{StSimple.pdf{) 
+is in the same directory as the .tex file. 
+\bigskip
+
+Plot the function $f(x) =  \frac{40}{1 + (x-4)^2} + 5\sin\left( \frac{20x}{\pi} \right)$ in the domain $0 \leq x \leq 10$. Please make
+sure you have sampled enough points for the plot. Save the plot as a pdf file, and either include it (as I did above) or 
+print out the resulting figure and attach it to your homework. Also include your code below (or print it with the figure). 
+
+\begin{figure}[H]
+\includegraphics[trim = 1in 3in 1in 3in, clip, scale=0.5]{Exercise3}
+\end{figure}
+
+\begin{verbatim}
+Code: 
+
+x = linspace(0, 10, 10000); % 10000 is arbitrary; I just picked a big number
+forties = 40 * ones(1, length(x));
+fx = forties ./ (1 + (x - 4).^2) + 5 * sin((20 / pi) * x);
+plot(x, fx, 'LineWidth', 4);
+
+\end{verbatim}
+
+\bigskip
+
+\item[Problem 4:] Linear systems. 
+\bigskip
+
+\begin{enumerate}
+\item Solve the following system. Explain the steps you use. 
+\[
+\begin{aligned}
+2x-y + 3z &= 1 \\
+4x+2y+5z & = 4\\
+2x + 2z & = 6
+\end{aligned}
+\]
+Answer:  \\
+First, I put the equations into an augmented matrix: \\
+$$
+  \left[\begin{array}{rrr|r}
+    2 & -1 & 3 & 1 \\
+    4 & 2 & 5 & 4 \\
+    2 & 0 & 2 & 6
+  \end{array}\right]
+$$ \\
+Then I used Gaussian Elimination to get this matrix into echelon form: \\
+$$
+  \left[\begin{array}{rrr|r}
+    2 & -1 & 3 & 1 \\
+    0 & 4 & -1 & 2 \\
+    0 & 0 & -3/4 & 9/2
+  \end{array}\right]
+$$ \\
+After this, it is easy to solve the system through back substitution. \\
+\begin{itemize}
+\item Starting with the last row, I know that $-\frac{3}{4}z = \frac{9}{2}$, so $z = -6$.
+\item From the second row, I know that $4y - (-6) = 2$, so $y = -1$.
+\item Finally, using the first row, I know that $2x - (-1) + 3(-6) = 1$, so $x = 9$. \\
+\end{itemize}
+All together, the solution to this system of equations is (9, -1, -6). 
+\bigskip 
+
+\item Find coefficients $(a, b, c)$ that satisfy the following system, or state that 
+there is no solution. If you believe there is no solution, justify your answer. Explain the steps you use. 
+\[
+a \begin{bmatrix} 2\\6\\3\end{bmatrix} + 
+b\begin{bmatrix} -3\\-1\\-2.5\end{bmatrix} + 
+c\begin{bmatrix} 3 \\ 5 \\ 3.5\end{bmatrix} =
+\begin{bmatrix} 1\\7\\3\end{bmatrix}
+\]
+Answer: \\
+This system has no solutions. Again, I started by putting the equations into an augmented matrix:
+
+$$
+  \left[\begin{array}{rrr|r}
+    2 & -3 & 3 & 1 \\
+    6 & -1 & 5 & 7 \\
+    3 & -2.5 & 3.5 & 3
+  \end{array}\right]
+$$ \\
+But after row reducing, I ended up with this matrix: \\
+$$
+  \left[\begin{array}{rrr|r}
+    2 & -3 & 3 & 1 \\
+    0 & 8 & -4 & 4 \\
+    0 & 0 & 0 & 0.5
+  \end{array}\right]
+$$ \\
+The last row corresponds to the equation $0a + 0b + 0c = 0.5$, which is impossible. This means that there
+are no solutions to the system.
+
+\end{enumerate}
+
+\bigskip
+
+\item[Problem 5:] By hand, compute the $1$, $2$, and $\infty$ norms of \( \begin{bmatrix} 1\\ 1\\ -2\end{bmatrix} \) and 
+ \( \begin{bmatrix} 1\\ 3\\ -5\end{bmatrix} \). Briefly explain the steps you use. \\
+Answer: 
+
+I'll call the first vector $x$ and the second vector $y$. For the vector $x$: \\
+\begin{itemize}
+\item $\|x\|_1 = |1| + |1| + |-2| = 1 + 1 + 2 = 4$, 
+\item $\|x\|_2 = \sqrt{1^2 + 1^2 + (-2)^2} = \sqrt{6}$, 
+\item $\|x\|_\infty = 2$ because $-2$ has the largest absolute value among 1, 1, and -2. \\
+\end{itemize} 
+
+For the vector $y$:
+\begin{itemize}
+\item $\|y\|_1 = |1| + |3| + |-5| = 1 + 3 + 5 = 9$, 
+\item $\|y\|_2 = \sqrt{1^2 + 3^2 + (-5)^2} = \sqrt{35}$, 
+\item $\|y\|_\infty = 5$ because $-5$ has the largest absolute value among 1, 3, and -5. 
+\end{itemize}
+ 
+
+\bigskip
+
+\item[Problem 6:] For $x\in \mathbb{R}^3$, prove that 
+\[
+\|x\|_\infty \leq \|x\|_2 \leq \|x\|_1
+\]
+Carefully explain your arguments. \\
+Answer: 
+
+The 2-norm has to be larger than or equal to the infinity norm because the 2-norm adds non-negative numbers 
+to whatever the infinity norm is. For example, if $|x_1|$ is the infinity norm, 
+$|x_1| \leq \sqrt{x_1^2 + x_2^2 + x_3^2}$ because $\sqrt{x_2^2 + x_3^2}$ is non-negative.
+
+To see that the 1-norm has to be greater than the 2-norm... 
+\begin{align} \nonumber
+\|x\|_1 &= |x_1| + |x_2| + |x_3| \\ \nonumber
+\|x\|_2 &= \sqrt{|x_1|^2 + |x_2|^2 + |x_3|^2} \\ \nonumber
+\end{align}
+If I square both the 1-norm and the 2-norm, I get: 
+\begin{align} \nonumber
+\|x\|_1^2 &= (|x_1| + |x_2| + |x_3|)^2 \\ \nonumber
+              &= |x_1|^2 + |x_1||x_2| + |x_1||x_3| + |x_1||x_2| + |x_2|^2 + |x_2||x_3| + |x_3||x_1| + |x_3||x_2| + |x_3|^2 \\ \nonumber
+              &= |x_1|^2 + |x_2|^2 + |x_3|^2 + 2|x_1||x_2| + 2|x_1||x_3| + 2|x_2||x_3|
+\end{align}
+and
+\begin{align} \nonumber
+\|x\|_2^2 &= (\sqrt{|x_1|^2 + |x_2|^2 + |x_3|^2})^2 \\ \nonumber
+              &= |x_1|^2 + |x_2|^2 + |x_3|^2
+\end{align}
+
+I included the absolute value bars for everything to remind myself that $|x_1|, |x_2|,$ and $|x_3|$ are all non-negative. Hence, $2|x_1||x_2| + 2|x_1||x_3| + 2|x_2||x_3|$ is non-negative. Using this and the above, we see that 
+\begin{align} \nonumber
+|x_1|^2 + |x_2|^2 + |x_3|^2 &\leq |x_1|^2 + |x_2|^2 + |x_3|^2 + 2|x_1||x_2| + 2|x_1||x_3| + 2|x_2||x_3| \\ \nonumber
+\|x\|_2^2 &\leq \|x\|_1^2
+\end{align}
+
+Taking the square root of both sides of the inequality shows that $\|x\|_2$ must be less than or equal to $\|x\|_1$ as well.
+\bigskip
+
+\item[Problem 7:] Determine whether each of the following functions is a norm. Justify your answer. \\
+
+\begin{enumerate}
+\item $x\in \mathbb{R}^3$, $\|x\| = 4|x_1| + |x_1 - x_2 +x_3| + |x_2+x_3|$.\\
+Answer:
+
+This is a norm. 
+\begin{itemize}
+\item We are always summing up non-negative numbers, so the norm is always non-negative.
+\item If $x$ is the zero vector, then $x_1, x_2,$ and $x_3$ are all zero, so the norm is equal to zero as well. If the norm is equal to zero, then $x_1, x_2,$ and $x_3$ must all be zero, so $x$ must be the zero vector. 
+\item $\|\alpha x\| = |\alpha|\|x\|$ because
+\begin{align} \nonumber
+\|\alpha x\| &= 4|\alpha x_1| + |\alpha x_1 - \alpha x_2 + \alpha x_3| + |\alpha x_2+\alpha x_3| \\ \nonumber
+                &= |\alpha| (4|x_1| + |x_1 - x_2 +x_3| + |x_2+x_3|) \\ \nonumber
+                &= |\alpha|\|x\|
+\end{align}
+\item $\|x+y\| \leq \|x\| + \|y\|$ because
+\begin{align} \nonumber
+\|x+y\| &= 4|x_1 + y_1| + |x_1 + y_1 - x_2 - y_2 + x_3 + y_3| + |x_2 + y_2 + x_3 + y_3| \\ \nonumber
+\|x\| + \|y\| &= 4|x_1| + 4|y_1| + |x_1 - x_2 + x_3| + |y_1 - y_2 + y_3| + |x_2 + x_3| + |y_2 + y_3| 
+\end{align}
+Since the triangle inequality holds for scalars (ie: $|a + b| \leq |a| + |b|$), 
+\begin{align} \nonumber
+4|x_1 + y_1| &\leq 4|x_1| + 4|y_1| \\ \nonumber
+|x_1 + y_1 - x_2 - y_2 + x_3 + y_3| &\leq |x_1 - x_2 + x_3| + |y_1 - y_2 + y_3| \\ \nonumber
+|x_2 + y_2 + x_3 + y_3| &\leq |x_2 + x_3| + |y_2 + y_3|
+\end{align}
+So, combining these, 
+\begin{align} \nonumber
+4|x_1 + y_1| + |x_1 + y_1 - x_2 - y_2 + x_3 + y_3| + |x_2 + y_2 + x_3 + y_3| &\leq \\ \nonumber
+4|x_1| + 4|y_1| + |x_1 - x_2 + x_3| + |y_1 - y_2 + y_3| + |x_2 + x_3| + |y_2 + y_3| \\ \nonumber
+\|x+y\| &\leq \|x\| + \|y\| \\ \nonumber
+\end{align}
+\end{itemize}
+
+\item $x\in\mathbb{R}^2$, $\|x\| = \|x\|_2 - \|x\|_1$. \\
+Answer: 
+
+This is not a norm, because $\|x\|$ is not always non-negative for any given $x\in \mathbb{R}^3$. For example, if $x = \begin{bmatrix} -1 \\ 2\\ -4\end{bmatrix}$, then $\|x\|_2 = \sqrt{21}$ and $\|x\|_1 = 7$, so $\|x\| = \|x\|_2 - \|x\|_1 = \sqrt{21} - 7 \approx -2.417$ which is not positive. In general, the 2-norm is $\leq$ the 1-norm, so this norm can only be 0 or negative. \\
+
+\item $x \in \mathbb{R}^2$, $\|x\| = \|x\|_2 + \|x\|_1$. \\
+Answer: 
+
+This is a norm. 
+\begin{itemize}
+\item The 2-norm and 1-norm are both non-negative, so adding them also results in a non-negative number.
+\item Both the 2-norm and the 1-norm are 0 when $x$ is the zero vector, and 0 + 0 is still 0. If the norm is equal to zero, that means that the 2-norm and the 1-norm both must be 0, and this happens when $x$ is the zero vector. 
+\item Since $\|\alpha x\|_1 = |\alpha|\|x\|_1$ and $\|\alpha x\|_2 = |\alpha|\|x\|_2$, 
+\begin{align} \nonumber
+\|\alpha x\| &= \|\alpha x\|_2 + \|\alpha x\|_1 \\ \nonumber
+                 &= |\alpha|\|x\|_2 + |\alpha|\|x\|_1 \\ \nonumber
+                &= |\alpha|(\|x\|_2 + \|x\|_1) \\ \nonumber
+                &= |\alpha|\|x\|
+\end{align}
+\item $\|x + y\| = \|x + y\|_2 + \|x + y\|_1$. We already know that 
+\begin{align} \nonumber
+\|x + y\|_2 &\leq \|x\|_2 + \|y\|_2 \\ \nonumber
+\|x + y\|_1 &\leq \|x\|_1 + \|y\|_1
+\end{align}
+so, adding the above,
+\begin{align} \nonumber
+\|x + y\|_2 + \|x + y\|_1 &\leq \|x\|_2 + \|y\|_2 + \|x\|_1 + \|y\|_1 \\ \nonumber
+\|x + y\| &\leq \|x\| + \|y\|
+\end{align}
+\end{itemize}
+
+\item $x \in \mathbb{R}^2$, $\|x\| = $ number of nonzeros in $x$. \\
+Answer: 
+
+This is not a norm, because $\|\alpha x\|$ is not always equal to $|\alpha|\|x\|$. For example, if $x = \begin{bmatrix} -1 \\ 2\\ 0\end{bmatrix}$ and $\alpha = 2$, then $\|\alpha x\| = 2$ and $|\alpha|\|x\| = (2)(2) = 4$. Since $2 \neq 4$, $\|\alpha x\| \neq |\alpha|\|x\|$.
+
+\bigskip 
+
+\end{enumerate}
+
+\item[Problem 8:] For any vectors $x,y \in \mathbb{R}^m$, prove that 
+\begin{enumerate}
+\item $\|x+y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$
+
+Answer: 
+\begin{align} \nonumber
+\|x+y\|^2 &= (\sqrt{(x_1 + y_1)^2 + ... + (x_m + y_m)^2})^2 \\ \nonumber
+              &= (x_1 + y_1)^2 + ... + (x_m + y_m)^2 \\ \nonumber
+              &= x_1^2 + 2x_1y_1 + y_1^2 + ... + x_m^2 + 2x_my_m + y_m^2
+\end{align}
+Grouping together terms,
+\begin{align} \nonumber
+x_1^2 + ... + x_m^2 &= \|x\|^2 \\ \nonumber
+2x_1y_1 + ... + 2x_my_m &= 2\langle x, y \rangle \\ \nonumber
+y_1^2 + ... + y_m^2 &= \|y\|^2 
+\end{align} 
+So, adding the three above, 
+\begin{align} \nonumber
+\|x+y\|^2 &= x_1^2 + 2x_1y_1 + y_1^2 + ... + x_m^2 + 2x_my_m + y_m^2 \\ \nonumber
+              &= \|x\|^2 + 2\langle x, y \rangle + \|y\|^2 \\ \nonumber
+\end{align}
+
+\item $\|x + y\|^2 + \|x-y\|^2 = 2\|x\|^2 + 2\|y\|^2$.
+
+Answer: 
+\begin{align} \nonumber
+\|x-y\|^2 &= (\sqrt{(x_1 - y_1)^2 + ... + (x_m - y_m)^2})^2 \\ \nonumber
+              &= (x_1 - y_1)^2 + ... + (x_m - y_m)^2 \\ \nonumber
+		     &= x_1^2 - 2x_1y_1 + y_1^2 + ... + x_m^2 - 2x_my_m + y_m^2 
+\end{align}
+Grouping together terms,
+\begin{align} \nonumber
+x_1^2 + ... + x_m^2 &= \|x\|^2 \\ \nonumber
+-2x_1y_1 - ... - 2x_my_m &= -2\langle x, y \rangle \\ \nonumber
+y_1^2 + ... + y_m^2 &= \|y\|^2 
+\end{align} 
+So, adding the three above, 
+\begin{align} \nonumber
+\|x+y\|^2 &= x_1^2 - 2x_1y_1 + y_1^2 + ... + x_m^2 - 2x_my_m + y_m^2 \\ \nonumber
+              &= \|x\|^2 - 2\langle x, y \rangle + \|y\|^2 \\ \nonumber
+\end{align}
+From the previous problem, $\|x+y\|^2 = \|x\|^2 + 2\langle x, y \rangle + \|y\|^2$, so 
+\begin{align} \nonumber
+\|x+y\|^2 + \|x-y\|^2 &= \|x\|^2 + 2\langle x, y \rangle + \|y\|^2 + \|x\|^2 - 2\langle x, y \rangle + \|y\|^2 \\ \nonumber
+                               &= 2\|x\|^2 + 2\|y\|^2
+\end{align}
+\end{enumerate}
+
+\bigskip
+
+\item[Problem 9:] Inner products
+
+\begin{enumerate}
+\item Find $\alpha$ so that $\begin{bmatrix} \alpha \\ -4\\ -3\end{bmatrix}$ and $\begin{bmatrix} -1 \\ 2\\ -4\end{bmatrix}$
+are orthogonal. 
+
+Answer: \\
+Taking the dot product gives $-\alpha - 8 + 12 = -\alpha + 4$. To be orthogonal, the dot product must equal zero, so 
+$-\alpha + 4 = 0$. This gives $\alpha = 4$. 
+
+\item Find the angle $\theta$ (in degrees) between $\begin{bmatrix} 1 \\ -1\\ 1\end{bmatrix}$ and $\begin{bmatrix} -1 \\ 1\\ 1\end{bmatrix}$.
+
+Answer: \\
+The dot product of the two vectors is (-1) + (-1) + 1 = -1. The 2-norm of the first vector is $\sqrt{1^2 + (-1)^2 + 1^2} = \sqrt{3}$, and the 2-norm of the second vector is $\sqrt{(-1)^2 + 1^2 + 1^2} = \sqrt{3}$. Thus, $\cos \theta = \frac{-1}{\sqrt{3} \sqrt{3}} = \frac{-1}{3}$ and $\arccos(\frac{-1}{3}) = 1.9106$ radians = 109.4693 degrees.
+
+
+\end{enumerate}
+\bigskip 
+
+\item[Problem 10:]  If $\|x\|_2 = 1$ and $\|y\|_2 = 3$, what are the smallest and largest possible values of $\|x+y\|_2$ and $\langle x, y \rangle$?
+
+Answer: 
+\begin{itemize}
+\item $\|x+y\|_2$ has to be less than or equal to $\|x\|_2 + \|y\|_2$. In this case, $\|x\|_2 + \|y\|_2 = 1 + 3 = 4$, so $\|x+y\|_2 \leq 4$ and the largest value of $\|x+y\|_2$ is 4. The 2-norm of a vector can also be thought of as the square root of the dot product of the vector with itself: $\|x+y\|_2 = \sqrt{\langle x + y, x + y \rangle}$. $\langle x + y, x + y \rangle$ can also be written as $\|x+y\|_2\|x+y\|_2 \cos \theta$. $\cos \theta$ (and therefore the dot product) takes its smallest value (-1) when $\theta = \pi$. When $\theta = \pi$, the two vectors are going opposite directions, so we can subtract their lengths from each other to get $|\|x\|_2 - \|y\|_2| = |1 - 3| = |-2| = 2$. Thus, the smallest possible value of $\|x+y\|_2$ is 2. \\
+\item $|\langle x, y \rangle|$ has to be less than or equal to $\|x\|_2\|y\|_2$. Removing the absolute value bars on $|\langle x, y \rangle|$ gives the inequality $-\|x\|_2\|y\|_2 \leq \langle x, y \rangle \leq \|x\|_2\|y\|_2$. In this case, $\|x\|_2\|y\|_2$ = (1)(3) = 3, so the largest value of $\langle x, y \rangle$ is 3 and the smallest value is -3.
+\end{itemize}
+
+\bigskip
+
+\item[{\bf Bonus: 1 pt}]. Suppose I give you any $x$ in $\mathbb{R}^n$. What's the maximum value of $\langle x, y \rangle$ as $y$ ranges over 
+the 1-norm ball, $\mathbb{B}_1 = \{y: \|y\|_1 \leq 1\}$?\\
+ If $x = \begin{bmatrix} 1\\ 0 \\ 3 \\ -4\end{bmatrix}$, what vector $y\in \mathbb{B}_1$ 
+achieves this max? 
+
+Answer: \\
+The max value of the dot product is the infinity norm of $x$. In this case, the vector $y = \begin{bmatrix} 0\\ 0 \\ 0 \\ -1\end{bmatrix}$ maximizes the dot product (4). 
+
+
+\end{enumerate}
+
+
+\end{document}  
