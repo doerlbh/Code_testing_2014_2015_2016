@@ -16,7 +16,7 @@ def is_number(s):
     except ValueError:
         return False
     
-gender = 2; # int of gender: 2 - male, 3 - female
+gender = 3; # int of gender: 2 - male, 3 - female
      
 with open('./NewNew_Data.csv') as f:
     reader = csv.reader(f)

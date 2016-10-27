@@ -1,0 +1,17 @@
+
+Value of objective function: 21386.91706731
+
+Actual values of the variables:
+
+Food Name                                                   Group Name     Variable       100g of food to consume daily (opt value)
+
+Breakfast cereal, Ricicles, Kellogg's                       AI             x_427          0.493671                      
+Cockles, boiled                                             JM             x_765          0.0393378                     
+Coffee, instant, made up with water                         PAC            x_803          2333.99                       
+Cranberry fruit juice drink                                 PE             x_860          7.85123                       
+Fat spread, reduced fat (62-75%), polyunsaturated           OA             x_1094         1.44985                       
+Fruit juice drink/squash, diluted                           PCC            x_1169         159.699                       
+Jackfish, raw                                               JC             x_1325         0.021364                      
+Milk shake, powder                                          PAA            x_1623         0.25                          
+Spirits, 40% volume                                         QK             x_2579         0.641384                      
+Tea, black, infusion, average                               PAA            x_2677         2412.83                       
