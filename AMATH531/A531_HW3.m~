@@ -8,23 +8,21 @@ clear all; close all; clc;
 
 % part b)
 
-% define model parameters
 V = 100;
 alpha = 3*c^(-2)*t^(-1);
 beta = 0.6*c^(-2)*t^(-1);
 lamda = 2.95*t^(-1);
 delta = 0.25*t^(-1);
 
-% define concentration parameters
+% define
 a = 1*c;
 b = 1.5*c;
 c = 1; % as an example
 
-% define CME parameters
 B = lamda*b + alpha*a*m*(m-1); % birth rate
 D = delta*n + beta*n*(n-1)*(n-2); % death rate
 
-time_B = -log(rand)./
+lamda_n+0.01
 
 
 
