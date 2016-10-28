@@ -7,6 +7,7 @@
 # lp_solve lp_diet.txt > lp_output.txt
 
 import csv
+import string
 
 # checks if the string represents a number (int or float)
 def is_number(s):
@@ -16,9 +17,9 @@ def is_number(s):
     except ValueError:
         return False
     
-gender = 2; # int of gender: 2 - male, 3 - female
+gender = 3; # int of gender: 2 - male, 3 - female
      
-with open('./NewNew_Data_Test.csv') as f:
+with open('./Cleared_Data.csv') as f:
     reader = csv.reader(f)
     next(reader) # skip headers
     next(reader)
@@ -30,15 +31,15 @@ with open('./NewNew_Data_Test.csv') as f:
         # Food Name, Group Name, male prefrence, female preference, protein(g), fat(g),
         # carb(g), energy(kcal), sat fat (g), trans fat(g), cholesterol(mg), sodium(mg),
         # potassium(mg), calcium(mg), Vitamin D(mcg), Vitamin E(mg), Vitamin B6(mg),
-        # Vitamin B12(mcg), Vitamin C(mg) 
+        # Vitamin B12(mcg), Vitamin C(mg), and limits indicating whether the item is in drinks group 
         item = [row[1], row[3], row[4], row[5], row[11], row[12], row[13], row[14], row[29], row[47],
-                row[48], row[49], row[50], row[51], row[64], row[65], row[72], row[73], row[77]]
+                row[48], row[49], row[50], row[51], row[64], row[65], row[72], row[73], row[77], row[78]]
         nRows += 1;
         data.append(item)
         
     # Change non-number elements such as Tr and N to 0.0
     for i in range(len(data)):
-        for j in range(19):
+        for j in range(2,19):
             if (is_number(data[i][j]) == False):  
                 data[i][j] = 0.0
                 
@@ -83,6 +84,7 @@ with open('./NewNew_Data_Test.csv') as f:
     # Vitamin B6: 1.3mg to 100mg
     # Vitamin B12: from 2.4mcg 
     # Vitamin C: male: 90 to 2000mg | female: 75 to 2000mg
+    # Beverages: should be limited to 3000 g per day
     
     # According to the nutrient requirements above, set each nutrient's 
     # daily recommended minimum and maximum values based on gender 
@@ -122,7 +124,11 @@ with open('./NewNew_Data_Test.csv') as f:
     VitB6_min = 1.3
     VitB6_max = 100
     VitB12_min = 2.4
-    VitC_max = 2000    
+    VitC_max = 2000 
+    bev_max = 30
+    amount_max = 30
+    fruit_max = 2
+    group_max = 10
     
     # print out lp constraint for each daily nutrient requirement
         
@@ -260,3 +266,34 @@ with open('./NewNew_Data_Test.csv') as f:
         print('+', data[i][18], 'x_', i, sep='', end='')
     print('<=', VitC_max, ';', sep='')
     print('')
+    
+    # Beverages limit 
+    for i in range(len(data)):
+        if (data[i][19] == '0'):
+            print('+x_', i, sep='', end='')
+    print('<=', bev_max, ';', sep='')
+    print('')
+     
+    # amount of food limit 
+    for i in range(len(data)):
+        print('+x_', i, '<=', amount_max, ';', sep='', end='')
+    print('')
+    
+#     # vegetarian diet: no meat or fish
+#     for i in range(len(data)):
+#         if (data[i][1].startswith('M') or data[i][1].startswith('J')):
+#             print('+x_', i, sep='', end='')
+#     print('=0;')
+#     print('')
+#     
+    # amount of group limit
+    groups = string.ascii_uppercase
+    for j in range(len(groups)):
+        group_bool = 0
+        for i in range(len(data)):
+            if (data[i][1].startswith(groups[j])):
+                group_bool = 1
+                print('+x_', i, sep='', end='')
+        if group_bool == 1:
+            print('<=', group_max, ';', sep='')
+            print('')

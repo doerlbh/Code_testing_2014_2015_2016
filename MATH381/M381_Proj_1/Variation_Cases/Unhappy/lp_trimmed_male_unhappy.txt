@@ -1,0 +1,14 @@
+
+Value of objective function: 8.33620465
+
+Actual values of the variables:
+
+Food Name                                                                                           Group Name     Variable       100g of food to consume daily (opt value)
+
+Breakfast cereal, bran type cereal, fortified                                                       AI             x_408          5.64612                       
+Breakfast cereal, honey loops and hoops, including Honey and Nut Cheerios, fortified                AI             x_416          1.30292                       
+Breakfast cereal, instant hot oat, plain, raw, fortified                                            AI             x_417          0.0928571                     
+Chervil, dried                                                                                      H              x_635          0.0201999                     
+Creme fraiche, full fat                                                                             BJC            x_870          0.0115916                     
+Dressing, oil and lemon, homemade                                                                   WC             x_1031         0.30048                       
+Orange juice, ambient, UHT                                                                          FC             x_1760         0.0184186                     

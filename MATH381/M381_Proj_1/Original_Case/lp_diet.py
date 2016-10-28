@@ -18,7 +18,7 @@ def is_number(s):
     
 gender = 2; # int of gender: 2 - male, 3 - female
      
-with open('./NewNew_Data_Test.csv') as f:
+with open('./NewNew_Data.csv') as f:
     reader = csv.reader(f)
     next(reader) # skip headers
     next(reader)

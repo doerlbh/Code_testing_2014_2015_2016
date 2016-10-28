@@ -1,0 +1,16 @@
+
+Value of objective function: 15.27183148
+
+Actual values of the variables:
+
+Food Name                                                                                           Group Name     Variable       100g of food to consume daily (opt value)
+
+Bloater, flesh only, grilled                                                                        JC             x_352          0.0197297                     
+Cheese, Brie, rind only                                                                             BL             x_579          0.448212                      
+Cherries, West Indian, flesh only                                                                   FA             x_634          0.0303948                     
+Coffeemate, whitener powder                                                                         BAR            x_802          0.619319                      
+Courgette, dried                                                                                    DI             x_839          0.151279                      
+Jackfish, raw                                                                                       JC             x_1316         0.913868                      
+Milk, skimmed, dried, fortified                                                                     BAR            x_1635         1.74777                       
+Orange juice, ambient, UHT                                                                          FC             x_1760         0.0146341                     
+Pizza base, raw                                                                                     AE             x_1991         2.00951                       

@@ -1,8 +1,14 @@
 #!/usr/local/bin/
-# Baihan Lin
-# October 2016
+# Baihan Lin, October 2016
 
-#cat rslist | uniq -d > rslistuniq;
+# The following code was to generate proper data format of 
+# two columns of preference data for male and female 
+# corresponding to each food item. These two columns
+# are later copied and pasted into Excel sheet of all data.
+
+# Part I: Generate pattern matching arguments
+# input file: FoodGroup.list, pref.list, prefMF.list
+# output file: pref_ind_switch_final.sh
 
 rm pref*.run*;
 rm pref_ind_switch.sh*;
@@ -17,17 +23,16 @@ sed -i -e 's/^/ ]];then echo /' pref2.run;
 
 paste pref1.run pref2.run > pref_ind_switch.sh;
 sed -i '' 's#$# >> new_pref.out;#' pref_ind_switch.sh;
-#sed -i '' 's#$#;fi;#' pref_ind_switch.sh;
-
-#sed -i -e "s/$(print '\t')/ /" pref_ind_switch.sh;
 
 cat pref_ind_switch.sh | tr -d '\011' > pref_ind_switch_final.sh;
-#cat pref_ind_switch.sh > pref_ind_switch_final.sh;
 
 sed -i '' "s/+/ /" pref_ind_switch_final.sh;
 sed -i '' "s/+/ /" pref_ind_switch_final.sh;
 
-# copy here:
+
+# Part II: Generate columns with matched preference data
+# input file: pref_ind_switch_final.sh
+# output file: new_pref.out
 
 for j in `cat FoodGroup.list`; do
 	#sh pref_ind_switch_final.sh

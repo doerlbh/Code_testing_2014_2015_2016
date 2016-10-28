@@ -1,0 +1,22 @@
+
+Value of objective function: 1794.33880959
+
+Actual values of the variables:
+
+Food Name                                                   Group Name     Variable       100g of food to consume daily (opt value)
+
+Chicory, pale variety, boiled in unsalted water             DG             x_716          30                            
+Cranberries                                                 FA             x_853          30                            
+Duck, raw, meat only, weighed with fat, skin and bone       MCC            x_1049         2.94369                       
+Fennel, Florence, boiled in unsalted water                  DG             x_1089         8.29889                       
+Fruit juice drink/squash, no sugar added, diluted           PCC            x_1162         30                            
+Gourd, ridge, raw                                           DG             x_1199         21.6347                       
+Jackfish, raw                                               JC             x_1316         0.46012                       
+Jelly, sugar free, made with water                          BR             x_1327         30                            
+Lemon juice, fresh, weighed as whole fruit                  FC             x_1492         30                            
+Lime juice, fresh                                           FC             x_1520         15.6523                       
+Marrow, boiled in unsalted water                            DG             x_1575         30                            
+Mushrooms, white, raw                                       DG             x_1699         3.7122                        
+Orange juice, ambient, UHT                                  FC             x_1760         0.0189024                     
+Passion fruit, flesh and pips, weighed with skin            FA             x_1817         30                            
+Rock Salmon/Dogfish, raw                                    JA             x_2346         0.990351                      

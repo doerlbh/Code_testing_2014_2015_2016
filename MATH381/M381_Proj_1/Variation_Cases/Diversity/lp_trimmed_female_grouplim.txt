@@ -1,0 +1,21 @@
+
+Value of objective function: 558.85880275
+
+Actual values of the variables:
+
+Food Name                                                                       Group Name     Variable       100g of food to consume daily (opt value)
+
+Cider, low alcohol                                                              QC             x_753          10                            
+Coconut milk                                                                    GA             x_767          10                            
+Duck, roasted, meat only, weighed with fat, skin and bone                       MCC            x_1052         9.48769                       
+Eel, conger, flesh only, grilled, weighed with bones and skin                   JA             x_1058         6.35424                       
+Jackfish, raw                                                                   JC             x_1316         1.15385                       
+Jelly, sugar free, made with water                                              BR             x_1327         2.51637                       
+Lemon juice, fresh                                                              PE             x_1491         10                            
+Limes, flesh only, weighed with peel and pips                                   FA             x_1522         10                            
+Lollies, with real fruit juice                                                  BP             x_1548         7.48363                       
+Marrow, boiled in unsalted water                                                DG             x_1575         10                            
+Oregano, fresh                                                                  H              x_1768         2.74731                       
+Soup, carrot and orange, homemade                                               WAA            x_2516         0.625                         
+Soup, chicken noodle, dried, as served                                          WAE            x_2518         2.70183                       
+Turmeric, ground                                                                H              x_2743         2.65146                       

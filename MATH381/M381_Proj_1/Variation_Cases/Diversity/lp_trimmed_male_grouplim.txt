@@ -1,0 +1,23 @@
+
+Value of objective function: 618.16189370
+
+Actual values of the variables:
+
+Food Name                                                                       Group Name     Variable       100g of food to consume daily (opt value)
+
+Cardamom, ground                                                                H              x_517          1.12797                       
+Chicken, stir-fried with rice and vegetables, retail, reheated                  MR             x_695          0.500352                      
+Coconut milk                                                                    GA             x_767          10                            
+Duck, roasted, meat only, weighed with fat, skin and bone                       MCC            x_1052         9.49965                       
+Eel, conger, flesh only, grilled, weighed with bones and skin                   JA             x_1058         8.84615                       
+Jackfish, raw                                                                   JC             x_1316         1.15385                       
+Lager, alcohol-free                                                             QA             x_1360         10                            
+Lemon juice, fresh                                                              PE             x_1491         10                            
+Lemon juice, fresh, weighed as whole fruit                                      FC             x_1492         10                            
+Lollies, with real fruit juice                                                  BP             x_1548         10                            
+Marrow, boiled in unsalted water                                                DG             x_1575         10                            
+Oregano, fresh                                                                  H              x_1768         1.59442                       
+Rice, Thai fragrant, boiled in unsalted water                                   AC             x_2310         2.24167                       
+Soup, carrot and orange, homemade                                               WAA            x_2516         0.251388                      
+Soup, low calorie, canned                                                       WAC            x_2529         2.68501                       
+Turmeric, ground                                                                H              x_2743         4.1343                        

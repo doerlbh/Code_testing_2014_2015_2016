@@ -1,0 +1,21 @@
+
+Value of objective function: 1454.78168382
+
+Actual values of the variables:
+
+Food Name                                                                                           Group Name     Variable       100g of food to consume daily (opt value)
+
+Breakfast cereal, Ricicles, Kellogg's                                                               AI             x_427          1.5107                        
+Chicory, pale variety, boiled in unsalted water                                                     DG             x_716          9.32401                       
+Coconut milk, reduced fat, retail                                                                   GA             x_768          1.28691                       
+Coffee, cappuccino, latte                                                                           P              x_790          9.4863                        
+Eggs, duck, whole, raw                                                                              CA             x_1077         0.401817                      
+Fennel, Florence, boiled in unsalted water                                                          DG             x_1089         24.6649                       
+Fruit juice drink/squash, no sugar added, diluted                                                   PCC            x_1162         20.5137                       
+Jelly, sugar free, made with water                                                                  BR             x_1327         30                            
+Lemon juice, fresh, weighed as whole fruit                                                          FC             x_1492         30                            
+Lime juice, fresh                                                                                   FC             x_1520         27.4038                       
+Marrow, boiled in unsalted water                                                                    DG             x_1575         30                            
+Mushrooms, white, stewed in unsalted water                                                          DG             x_1700         3.71616                       
+Orange juice, ambient, UHT                                                                          FC             x_1760         0.0169221                     
+Passion fruit, flesh and pips, weighed with skin                                                    FA             x_1817         30                            
