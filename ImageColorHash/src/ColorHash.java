@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
  */
 
 public class ColorHash {
-	
+
 	// private fields
 	private hashPair[] hashTable; 	// array to hold hash table of key value pairs
 	private int tbs;				// size of hash table
@@ -21,30 +21,30 @@ public class ColorHash {
 	private double rlf; 			// rehash Load Factor
 	private int npair;				// number of hashPair in the hashTable
 	private int ncol;				// number of collisions when resizing the hashTable
-	private int crm; 				// defined binary number for collision Resolution Method
+	private int crm; 				// defined binary number for collision Resolution Method (below)
 
 	// private constants to assist collision resolution method
 	private static final int LINEAR_PROBING = 0; 	// defined number for Linear Probing
 	private static final int QUADRATIC_PROBING = 1; // defined number for Quadratic Probing
-	
+
 	// private inner class to represent the key-value pairs to assist hashTable
 	private class hashPair {	
-		
+
 		// private fields
 		private int key;
 		private long value;
 
-		// A constructor to generate a hash pair with input key and value
+		// Constructor to generate a hash pair with input key and value
 		public hashPair(int key, long value) {
 			this.key = key;
 			this.value = value;
 		}
-		
+
 		// public method to set the key of the hash pair to input key
 		public void setKey(int keyNew) {
 			key = keyNew;
 		}
-		
+
 		// public method to set the value of the hash pair to input value
 		public void setVal(long valueNew) {
 			value = valueNew;
@@ -54,22 +54,41 @@ public class ColorHash {
 		public int getKey() {
 			return key;
 		}
-		
+
 		// public method to retrieve the value of the hash pair
 		public long getValue() {
 			return value;
 		}		
 	}
-	
-	
+
+	/* Constructor to generate a hashTable with initial parameters implemented 
+	 * as one array of hashPair to represent a (key, value) pair, and supporting
+	 * two collision resolution methods: "Linear Probing" and "Quadratic Probing".
+	 */
 	public ColorHash(int tableSize, int bitsPerPixel, String collisionResolutionMethod, double rehashLoadFactor){
+
+		// create hashTable as an array of hashPair
 		hashTable = new hashPair[tableSize]; 
-		tbs = tableSize;
-		this.bpp 
-		
+
+		// initializing hashTable parameters
+		this.tbs = tableSize;
+		this.bpp = bitsPerPixel;
+		this.rlf = rehashLoadFactor;
+		this.npair = 0;
+		this.ncol = 0;
+
+		// transform collision resolution method into binary numbers
+		if (collisionResolutionMethod == "Linear Probing")  {
+			this.crm = 0;
+		} else if (collisionResolutionMethod == "Quadratic Probing"){
+			this.crm = 1;
+		}
 	}
-	
-	public ResponseItem colorHashPut(ColorKey key, long value){return null;}
+
+	public ResponseItem colorHashPut(ColorKey key, long value){
+
+	}
+
 	public ResponseItem increment(ColorKey key){return null;}
 	public ResponseItem colorHashGet(ColorKey key)  throws Exception{return null;}
 	public long getCount(ColorKey key){return -1L;}
