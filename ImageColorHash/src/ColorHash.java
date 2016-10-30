@@ -13,20 +13,59 @@ import java.awt.image.BufferedImage;
  */
 
 public class ColorHash {
-	// Implement this class, including whatever data members you need and all
-	// of the public methods below.  You may create any number of private methods
-	// if you find them to be helpful.
 	
-	private ColorKey[] colorKeyArray; // array to hold hash table of color keys
-	private static final int DEFAULT_TABLE_SIZE = 61; // default hash table size	
+	// private fields
+	private hashPair[] hashTable; 	// array to hold hash table of key value pairs
+	private int tbs;				// size of hash table
+	private int bpp; 				// bits Per Pixel
+	private double rlf; 			// rehash Load Factor
+	private int npair;				// number of hashPair in the hashTable
+	private int ncol;				// number of collisions when resizing the hashTable
+	private int crm; 				// defined binary number for collision Resolution Method
+
+	// private constants to assist collision resolution method
+	private static final int LINEAR_PROBING = 0; 	// defined number for Linear Probing
+	private static final int QUADRATIC_PROBING = 1; // defined number for Quadratic Probing
+	
+	// private inner class to represent the key-value pairs to assist hashTable
+	private class hashPair {	
+		
+		// private fields
+		private int key;
+		private long value;
+
+		// A constructor to generate a hash pair with input key and value
+		public hashPair(int key, long value) {
+			this.key = key;
+			this.value = value;
+		}
+		
+		// public method to set the key of the hash pair to input key
+		public void setKey(int keyNew) {
+			key = keyNew;
+		}
+		
+		// public method to set the value of the hash pair to input value
+		public void setVal(long valueNew) {
+			value = valueNew;
+		}		
+
+		// public method to retrieve the key of the hash pair
+		public int getKey() {
+			return key;
+		}
+		
+		// public method to retrieve the value of the hash pair
+		public long getValue() {
+			return value;
+		}		
+	}
+	
 	
 	public ColorHash(int tableSize, int bitsPerPixel, String collisionResolutionMethod, double rehashLoadFactor){
-		stackSize = 0;
-		arraySize = 2;
-		biArray = new BufferedImage[DEFAULT_ARRAY_SIZE];
-		
-		
-		
+		hashTable = new hashPair[tableSize]; 
+		tbs = tableSize;
+		this.bpp 
 		
 	}
 	
