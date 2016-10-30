@@ -20,7 +20,15 @@ public class ColorHash {
 	private ColorKey[] colorKeyArray; // array to hold hash table of color keys
 	private static final int DEFAULT_TABLE_SIZE = 61; // default hash table size	
 	
-	public ColorHash(int tableSize, int bitsPerPixel, String collisionResolutionMethod, double rehashLoadFactor){}
+	public ColorHash(int tableSize, int bitsPerPixel, String collisionResolutionMethod, double rehashLoadFactor){
+		stackSize = 0;
+		arraySize = 2;
+		biArray = new BufferedImage[DEFAULT_ARRAY_SIZE];
+		
+		
+		
+		
+	}
 	
 	public ResponseItem colorHashPut(ColorKey key, long value){return null;}
 	public ResponseItem increment(ColorKey key){return null;}
