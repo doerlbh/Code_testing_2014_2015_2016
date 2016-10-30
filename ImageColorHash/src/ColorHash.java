@@ -60,12 +60,26 @@ public class ColorHash {
 			return value;
 		}		
 	}
+	
+	/**
+	 * User-defined Exception
+	 * Thrown under attempts to use invalid Load Factor for certain 
+	 * collision resolution probing method.
+	 */
+	private class InvalidLoadFactorException extends Exception
+	{
+		public InvalidLoadFactorException() {}
+		public InvalidLoadFactorException(String message)
+		{
+			super(message);
+		}
+	}
 
 	/* Constructor to generate a hashTable with initial parameters implemented 
 	 * as one array of hashPair to represent a (key, value) pair, and supporting
 	 * two collision resolution methods: "Linear Probing" and "Quadratic Probing".
 	 */
-	public ColorHash(int tableSize, int bitsPerPixel, String collisionResolutionMethod, double rehashLoadFactor){
+	public ColorHash(int tableSize, int bitsPerPixel, String collisionResolutionMethod, double rehashLoadFactor) throws Exception{
 
 		// create hashTable as an array of hashPair
 		hashTable = new hashPair[tableSize]; 
@@ -79,9 +93,17 @@ public class ColorHash {
 
 		// transform collision resolution method into binary numbers
 		if (collisionResolutionMethod == "Linear Probing")  {
-			this.crm = 0;
+			if (rlf >= 1 || rlf <= 0){
+				throw new InvalidLoadFactorException("Invalid Load Factor to perform Linear Probing");
+			}
+			this.crm = LINEAR_PROBING;
 		} else if (collisionResolutionMethod == "Quadratic Probing"){
-			this.crm = 1;
+			if (rlf >= .5 || rlf <= 0){
+				throw new InvalidLoadFactorException("Invalid Load Factor to perform Quadratic Probing");
+			}
+			this.crm = QUADRATIC_PROBING;
+		} else {
+			throw new IllegalArgumentException("specified collision resolution method unsupported");
 		}
 	}
 
