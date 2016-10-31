@@ -19,13 +19,13 @@ public class ColorHash {
 	private int tbs;				// size of hash table
 	private int bpp; 				// bits Per Pixel
 	private double rlf; 			// rehash Load Factor
-	private int npair;				// number of hashPair in the hashTable
-	private int nColRehash;		// number of collisions to add during rehashing
-	private int crm; 				// defined binary number for collision Resolution Method (below)
+	private int nPair;				// number of hashPair in the hashTable
+	private int nColRehash;			// number of collisions to add during rehashing
+	private String crm; 			// defined collision resolution method (below)
 
-	// private constants to assist collision resolution method
-	private static final int LINEAR_PROBING = 0; 	// defined number for Linear Probing
-	private static final int QUADRATIC_PROBING = 1; // defined number for Quadratic Probing
+	// private string constants to define collision resolution method
+	private static final String LINEAR_PROBING = "Linear Probing"; 
+	private static final String QUADRATIC_PROBING = "Quadratic Probing"; 
 
 	// private inner class to represent the key-value pairs to assist hashTable
 	private class HashPair {	
@@ -79,16 +79,16 @@ public class ColorHash {
 		this.tbs = tableSize;
 		this.bpp = bitsPerPixel;
 		this.rlf = rehashLoadFactor;
-		this.npair = 0;
+		this.nPair = 0;
 		this.nColRehash = 0;
 
 		// transform collision resolution method into binary numbers
-		if (collisionResolutionMethod.equals("Linear Probing"))  {
+		if (collisionResolutionMethod.equals(LINEAR_PROBING))  {
 			if (rlf >= 1 || rlf <= 0){
 				throw new InvalidLoadFactorException("Invalid Load Factor to perform Linear Probing");
 			}
 			this.crm = LINEAR_PROBING;
-		} else if (collisionResolutionMethod.equals("Quadratic Probing")){
+		} else if (collisionResolutionMethod.equals(QUADRATIC_PROBING)){
 			if (rlf >= .5 || rlf <= 0){
 				throw new InvalidLoadFactorException("Invalid Load Factor to perform Quadratic Probing");
 			}
@@ -115,11 +115,11 @@ public class ColorHash {
 			if (dRehash){
 				probeState = doProbing(key);  // Probe in newly created hash table for a spot
 				nCol = nCol + nColRehash;
-				nCol = nCol + probeState[1];  // Add collisions from probing new table
+				nCol = nCol + probeState[1];  // Add collisions from doProbing new table
 				indHash = probeState[0];  // Save the newly found spot in the rehashed table
 			}
 			hashTable[indHash] = new HashPair(key, value); // Insert the key
-			npair++;
+			nPair++;
 
 		} else if (curHash.isKey(key)) { // Duplicate key found, update value
 			hashTable[indHash].setVal(value);
@@ -141,9 +141,9 @@ public class ColorHash {
 		int indHash = probeState[0];
 		nCol = probeState[1];
 
-		HashPair currentHash = hashTable[indHash];
+		HashPair curHash = hashTable[indHash];
 
-		if (currentHash == null) { // Empty spot found
+		if (curHash == null) { // Empty spot found
 			dRehash = ifRehash();
 			if (dRehash){
 				probeState = doProbing(key);
@@ -152,8 +152,8 @@ public class ColorHash {
 				indHash = probeState[0];
 			}
 			hashTable[indHash] = new HashPair(key, value);
-			npair++;
-		} else if (currentHash.isKey(key)) { // Duplicate key found, increment value
+			nPair++;
+		} else if (curHash.isKey(key)) { // Duplicate key found, increment value
 			value = hashTable[indHash].getVal() + 1;
 			hashTable[indHash].setVal(value);
 			dUpdate = true;
@@ -172,11 +172,11 @@ public class ColorHash {
 		int indHash = probeState[0];
 		nCol = probeState[1];
 
-		HashPair currentHash = hashTable[indHash];
+		HashPair curHash = hashTable[indHash];
 
-		if (currentHash == null) { 	// Empty spot
+		if (curHash == null) { 	// Empty spot
 			throw new MissingColorKeyException("ColorKey not found in Hash Table");
-		} else if (currentHash.isKey(key)) { // Key found, return the value
+		} else if (curHash.isKey(key)) { // Key found, return the value
 			value = hashTable[indHash].getVal();
 		}
 		return new ResponseItem(value, nCol, dRehash, dUpdate);
@@ -184,47 +184,85 @@ public class ColorHash {
 
 
 	public long getCount(ColorKey key){
-		
-		return -1L;
-		
+		long value = -1L;			// default value in case key not found
+		int nCol = 0;				// number of collisions involved
+
+		int[] probeState = doProbing(key); // Get insert/update position and numCollisions
+		int hashIndex = probeState[0];
+		nCol = probeState[1];
+
+		HashPair curHash = hashTable[hashIndex];
+
+		if (curHash == null) { // Key not found, so we return 0
+			value = 0L;
+		} else if (curHash.isKey(key)) { // Key found, return associated value
+			value = hashTable[hashIndex].getVal();
+		}
+
+		return value;
 	}
 
 
-	public ColorKey getKeyAt(long tableIndex){
-		
-		return null;
-		
+	public ColorKey getKeyAt(int tableIndex){
+		if (tableIndex >= getTableSize() || tableIndex < 0){
+			throw new IndexOutOfBoundsException();
+		}
+		return hashTable[tableIndex].getKey();
 	}
 
 
-	public long getValueAt(long tableIndex){
-		
-		return -1L;
-		
-	}
+	public long getValueAt(int tableIndex){
+		if (tableIndex >= getTableSize() || tableIndex < 0){
+			throw new IndexOutOfBoundsException();
+		}
 
+		if (hashTable[tableIndex] == null){
+			return -1L;
+		} else {
+			return hashTable[tableIndex].getVal();
+		}
+	}
 
 	public double getLoadFactor(){
-		
-		return -1.0;
-		
-	
+		return (nPair + 1.0) / hashTable.length; 
 	}
 
 
 	public int getTableSize(){
-		
-		
-		return -1;
-		
-	
+		return hashTable.length; 		
+		// - 1 ???
+
 	}
 
-
 	public void resize(){
-		
-		
-		
+		nColRehash = 0;
+
+		// new table size must be at least double the old size
+		int newTableSize = getTableSize() * 2;
+		// new table size must be a prime number
+		while (!IsPrime.isPrime(newTableSize)){ newTableSize++; }
+
+		// Create temps
+		try{
+			ColorHash tempCH = new ColorHash(newTableSize, bpp, crm, rlf);
+			HashPair[] tempHT = tempCH.getHashTable();
+
+			HashPair curHash;
+			for (int i = 0; i < getTableSize(); i++) {
+				curHash = hashTable[i];
+				if (curHash != null){
+					ResponseItem ri = tempCH.colorHashPut(curHash.getKey(), curHash.getVal());
+					nColRehash += ri.nCollisions;
+				}
+			}
+			hashTable = tempHT;
+		} catch (Exception InvalidLoadFactor) {
+			System.out.println(InvalidLoadFactor);
+		}		
+	}
+
+	private HashPair[] getHashTable(){
+		return hashTable;
 	}
 
 	/**
@@ -256,12 +294,12 @@ public class ColorHash {
 				existKey = true;
 			} else {  // Otherwise we have a collision, and will probe for a new spot using specified collision method
 				nCol++;
-				if (crm == 0){
+				if (crm.equals(LINEAR_PROBING)){
 					indHash++;
 					if (indHash == getTableSize()){
 						indHash = 0;
 					} // Wrap around array if needed
-				} else if (crm == 1){
+				} else if (crm.equals(QUADRATIC_PROBING)){
 					indHash = nCol * nCol + key.hashCode() % hashTable.length;
 					while(indHash >= getTableSize()){
 						indHash -= getTableSize();
@@ -277,7 +315,7 @@ public class ColorHash {
 	/**
 	 * User-defined Exception
 	 * Thrown under attempts to use invalid Load Factor for certain 
-	 * collision resolution probing method.
+	 * collision resolution doProbing method.
 	 */
 	private class InvalidLoadFactorException extends Exception
 	{
@@ -287,7 +325,7 @@ public class ColorHash {
 			super(message);
 		}
 	}
-	
+
 	/**
 	 * User-defined Exception
 	 * Thrown under attempts to find a ColorKey 
