@@ -109,12 +109,12 @@ public class ColorHash {
 	}
 
 	/**
-	 * a public method to insert a ColorKey with its value into hashTable
+	 * a public method to insert a ColorKey with its value into hashTable if 
+	 * not already existing, overwrite the value if already existing
 	 * 
-	 * If entry already exists for key, overwrite the value
-	 * @param key: The ColorKey to insert/update in hash table.
-	 * @param value: The value associated with the key
-	 * @return Returns a ResponseItem that contains information about the task.
+	 * @param key: The ColorKey to insert in the hashTable.
+	 * @param value: The value of the ColorKey
+	 * @return Returns a ResponseItem of the ColorKey.
 	 */
 	public ResponseItem colorHashPut(ColorKey key, long value){
 
