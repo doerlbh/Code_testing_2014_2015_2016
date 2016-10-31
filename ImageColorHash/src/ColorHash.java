@@ -56,7 +56,7 @@ public class ColorHash {
 		}
 
 		// public method to retrieve the value of the hash pair
-		public long getValue() {
+		public long getVal() {
 			return value;
 		}
 
@@ -65,19 +65,6 @@ public class ColorHash {
 		}		
 	}
 
-	/**
-	 * User-defined Exception
-	 * Thrown under attempts to use invalid Load Factor for certain 
-	 * collision resolution probing method.
-	 */
-	private class InvalidLoadFactorException extends Exception
-	{
-		public InvalidLoadFactorException() {}
-		public InvalidLoadFactorException(String message)
-		{
-			super(message);
-		}
-	}
 
 	/* Constructor to generate a hashTable with initial parameters implemented 
 	 * as one array of hashPair to represent a (key, value) pair, and supporting
@@ -143,6 +130,60 @@ public class ColorHash {
 	}
 
 
+	public ResponseItem increment(ColorKey key){
+
+		long value = 1;				// value
+		int nCol = 0;				// number of collisions involved
+		boolean dRehash = false;	// didRehash: true if operations caused a rehash
+		boolean dUpdate = false;	// didUpdate: true if operation caused value overwritten
+
+		int[] probeState = doProbing(key); // Get insert/update position and numCollisions
+		int indHash = probeState[0];
+		nCol = probeState[1];
+
+		HashPair currentHash = hashTable[indHash];
+
+		if (currentHash == null) { // Empty spot found
+			dRehash = ifRehash();
+			if (dRehash){
+				probeState = doProbing(key);
+				nCol += nColRehash;
+				nCol += probeState[1];
+				indHash = probeState[0];
+			}
+			hashTable[indHash] = new HashPair(key, value);
+			npair++;
+		} else if (currentHash.isKey(key)) { // Duplicate key found, increment value
+			value = hashTable[indHash].getVal() + 1;
+			hashTable[indHash].setVal(value);
+			dUpdate = true;
+		}
+		return new ResponseItem(value, nCol, dRehash, dUpdate);
+	}
+
+	public ResponseItem colorHashGet(ColorKey key) throws Exception{return null;}
+
+
+	public long getCount(ColorKey key){return -1L;}
+
+
+	public ColorKey getKeyAt(long tableIndex){return null;}
+
+
+	public long getValueAt(long tableIndex){return -1L;}
+
+
+	public double getLoadFactor(){return -1.0;}
+
+
+	public int getTableSize(){return -1;}
+
+
+	public void resize(){}
+
+	/**
+	 * Check if we are over the load factor and must rehash. If we are, then go ahead and rehash and set flag.
+	 */
 	private boolean ifRehash() {
 		if (getLoadFactor() >= rlf) {
 			resize();
@@ -187,14 +228,18 @@ public class ColorHash {
 		return probeState;
 	}
 
-	public ResponseItem increment(ColorKey key){return null;}
-	public ResponseItem colorHashGet(ColorKey key)  throws Exception{return null;}
-	public long getCount(ColorKey key){return -1L;}
-	public ColorKey getKeyAt(long tableIndex){return null;}
-	public long getValueAt(long tableIndex){return -1L;}
-	public double getLoadFactor(){return -1.0;}
-	public int getTableSize(){return -1;}
-	public void resize(){}
-
+	/**
+	 * User-defined Exception
+	 * Thrown under attempts to use invalid Load Factor for certain 
+	 * collision resolution probing method.
+	 */
+	private class InvalidLoadFactorException extends Exception
+	{
+		public InvalidLoadFactorException() {}
+		public InvalidLoadFactorException(String message)
+		{
+			super(message);
+		}
+	}
 
 }
