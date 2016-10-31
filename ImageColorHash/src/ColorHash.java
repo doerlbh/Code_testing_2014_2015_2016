@@ -1,6 +1,7 @@
 import java.awt.image.BufferedImage;
 
 /** ColorHash.java
+ *  a class for hash table holding ColorKey with its hash code.
  * 
  * by Baihan Lin
  * for CSE 373 Assignment 3, Autumn, 2016.
@@ -15,7 +16,7 @@ import java.awt.image.BufferedImage;
 public class ColorHash {
 
 	// private fields
-	private HashPair[] hashTable; 	// array to hold hash table of key value pairs
+	private HashPair[] hashTable; 	// array to hold hash table of key-value pairs
 	private int tbs;				// size of hash table
 	private int bpp; 				// bits Per Pixel
 	private double rlf; 			// rehash Load Factor
@@ -66,9 +67,18 @@ public class ColorHash {
 	}
 
 
-	/* Constructor to generate a hashTable with initial parameters implemented 
+	/**
+	 * Constructor to generate a ColorHash object
+	 * 
+	 * A ColorHash object is a hashTable with initial parameters implemented 
 	 * as one array of hashPair to represent a (key, value) pair, and supporting
 	 * two collision resolution methods: "Linear Probing" and "Quadratic Probing".
+	 *
+	 * @param tbs stores the initial size of the hash table.
+	 * @param bpp stores the number of bits per pixel: one of 3, 6, 9, 12, 15, 18, 21, or 24.
+	 * @param crm stores the type of probing to use upon collisions (Linear Probing or Quadratic Probing)
+	 * @param rlf stores the threshold to decide when to rehash hash table (defined as number of elements / table size)
+	 * @throws Exception If the collision resolution method is invalid
 	 */
 	public ColorHash(int tableSize, int bitsPerPixel, String collisionResolutionMethod, double rehashLoadFactor) throws Exception{
 
@@ -98,6 +108,13 @@ public class ColorHash {
 		}
 	}
 
+	/**
+	 * Inserts key into hash table with associated value
+	 * If entry already exists for key, overwrite the value
+	 * @param key The key to insert/update in hash table.
+	 * @param value The value associated with the key
+	 * @return Returns a ResponseItem that contains information about the task.
+	 */
 	public ResponseItem colorHashPut(ColorKey key, long value){
 
 		int nCol   = 0;				// number of collisions involved
@@ -261,22 +278,17 @@ public class ColorHash {
 		}		
 	}
 
-	private HashPair[] getHashTable(){
-		return hashTable;
-	}
-
 	/**
-	 * Check if we are over the load factor and must rehash. If we are, then go ahead and rehash and set flag.
+	 * A private method to support colorHashPut, increment, colorHashGet, getCount
+	 * 
+	 * Purpose: to retrieve the insert location of ColorKey while summing 
+	 * number of collisions based on linear or quadratic probing based on
+	 * crm from constructor input.
+	 *
+	 * @param key stores the ColorKey to insert in the hash table.
+	 * @return An integer array storing the index of insert location and 
+	 * number of collisions during the probing.
 	 */
-	private boolean ifRehash() {
-		if (getLoadFactor() >= rlf) {
-			resize();
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	private int[] doProbing(ColorKey key) {
 
 		int nCol = 0;
@@ -313,12 +325,33 @@ public class ColorHash {
 	}
 
 	/**
+	 * A private method to support colorHashPut, increment
+	 * 
+	 * Purpose: to get whether rlf is exceeded and rehash necessary
+	 * @return a boolean to indicate the necessity of rehashing.
+	 * If necessary to rehash, do rehashing.
+	 */
+	private boolean ifRehash() {
+		if (getLoadFactor() >= rlf) {
+			resize();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private HashPair[] getHashTable(){
+		return hashTable;
+	}
+	
+	/**
 	 * User-defined Exception
 	 * Thrown under attempts to use invalid Load Factor for certain 
 	 * collision resolution doProbing method.
 	 */
 	private class InvalidLoadFactorException extends Exception
 	{
+		private static final long serialVersionUID = 8849435559267965960L;
 		public InvalidLoadFactorException() {}
 		public InvalidLoadFactorException(String message)
 		{
@@ -333,6 +366,7 @@ public class ColorHash {
 	 */
 	private class MissingColorKeyException extends Exception
 	{
+		private static final long serialVersionUID = 6361599218594738343L;
 		public MissingColorKeyException() {}
 		public MissingColorKeyException(String message)
 		{
