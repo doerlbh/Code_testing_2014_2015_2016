@@ -109,10 +109,11 @@ public class ColorHash {
 	}
 
 	/**
-	 * Inserts key into hash table with associated value
+	 * a public method to insert a ColorKey with its value into hashTable
+	 * 
 	 * If entry already exists for key, overwrite the value
-	 * @param key The key to insert/update in hash table.
-	 * @param value The value associated with the key
+	 * @param key: The ColorKey to insert/update in hash table.
+	 * @param value: The value associated with the key
 	 * @return Returns a ResponseItem that contains information about the task.
 	 */
 	public ResponseItem colorHashPut(ColorKey key, long value){
@@ -146,7 +147,13 @@ public class ColorHash {
 
 	}
 
-
+	/**
+	 * A public method to search for a ColorKey and increment its value 
+	 * by 1 if found, or store 1 as the value if not found
+	 * 
+	 * @param key: the ColorKey to increment
+	 * @return the ResponseItem associated with the ColorKey
+	 */
 	public ResponseItem increment(ColorKey key){
 
 		long value = 1;				// value in incrementation
@@ -178,6 +185,13 @@ public class ColorHash {
 		return new ResponseItem(value, nCol, dRehash, dUpdate);
 	}
 
+	/**
+	 * A public method to search for a ColorKey and return value if found
+	 * 
+	 * @param key: the ColorKey to search for
+	 * @return the value to the ColorKey if found
+	 * @throws MissingColorKeyException if ColorKey not found
+	 */
 	public ResponseItem colorHashGet(ColorKey key) throws Exception{
 
 		long value = -1L;			// default value in case key not found
@@ -199,10 +213,15 @@ public class ColorHash {
 		return new ResponseItem(value, nCol, dRehash, dUpdate);
 	}
 
-
+	/**
+	 * A public method to search for a ColorKey and return value if found
+	 * 
+	 * @param key: the ColorKey to search for
+	 * @return the value to the ColorKey if found, 0 if not found
+	 */
 	public long getCount(ColorKey key){
-		long value = -1L;			// default value in case key not found
-		int nCol = 0;				// number of collisions involved
+		long value = -1L;	// default value in case key not found
+		int nCol = 0;		// number of collisions involved
 
 		int[] probeState = doProbing(key); // Get insert/update position and numCollisions
 		int hashIndex = probeState[0];
@@ -219,7 +238,13 @@ public class ColorHash {
 		return value;
 	}
 
-
+	/**
+	 * A public method to access the ColorKey at index tableIndex the hash table
+	 * 
+	 * @param tableIndex is the input which is the index at the hash table
+	 * @return the ColorKey at index tableIndex in hash table if exists
+	 * @throws IndexOutofBoundsException if index out of range
+	 */
 	public ColorKey getKeyAt(int tableIndex){
 		if (tableIndex >= getTableSize() || tableIndex < 0){
 			throw new IndexOutOfBoundsException();
@@ -227,7 +252,14 @@ public class ColorHash {
 		return hashTable[tableIndex].getKey();
 	}
 
-
+	/**
+	 * A public method to access the value at index tableIndex the hash table
+	 * 
+	 * @param tableIndex is the input which is the index at the hash table
+	 * @return the value at index tableIndex in hash table if exists, -1L if 
+	 * there is no entry at the the given tableIndex.
+	 * @throws IndexOutofBoundsException if index out of range
+	 */
 	public long getValueAt(int tableIndex){
 		if (tableIndex >= getTableSize() || tableIndex < 0){
 			throw new IndexOutOfBoundsException();
@@ -240,17 +272,33 @@ public class ColorHash {
 		}
 	}
 
+	/**
+	 * A public method to access the load factor of the hash table 
+	 * 
+	 * @return rlf of the hash table. 
+	 */
 	public double getLoadFactor(){
 		return (nPair + 1.0) / hashTable.length; 
 	}
 
-
+	/**
+	 * A public method to access the size of the hash table 
+	 * 
+	 * @return the size of the hash table. 
+	 */
 	public int getTableSize(){
 		return hashTable.length; 		
-		// - 1 ???
-
 	}
 
+	/**
+	 * A public method to allocate a new array to build a bigger hash table
+	 * and then scan the old table from location 0 to location getTableSize()-1, 
+	 * inserting the key-value pairs into the new table using the same approach 
+	 * as with colorHashPut. The new size should be the smallest prime number 
+	 * that is at least double the old table size. Before returning from resize, 
+	 * the old array(s) should be replaced by the new one(s), so that they can 
+	 * be garbage-collected.
+	 */
 	public void resize(){
 		nColRehash = 0;
 
@@ -279,7 +327,8 @@ public class ColorHash {
 	}
 
 	/**
-	 * A private method to support colorHashPut, increment, colorHashGet, getCount
+	 * A private helper method to support colorHashPut, increment, 
+	 * colorHashGet, getCount
 	 * 
 	 * Purpose: to retrieve the insert location of ColorKey while summing 
 	 * number of collisions based on linear or quadratic probing based on
@@ -325,7 +374,7 @@ public class ColorHash {
 	}
 
 	/**
-	 * A private method to support colorHashPut, increment
+	 * A private helper method to support colorHashPut, increment
 	 * 
 	 * Purpose: to get whether rlf is exceeded and rehash necessary
 	 * @return a boolean to indicate the necessity of rehashing.
@@ -339,15 +388,16 @@ public class ColorHash {
 			return false;
 		}
 	}
-	
+
 	private HashPair[] getHashTable(){
 		return hashTable;
 	}
-	
+
 	/**
 	 * User-defined Exception
-	 * Thrown under attempts to use invalid Load Factor for certain 
-	 * collision resolution doProbing method.
+	 * 
+	 * @throws InvalidLoadFactorException under attempts to use 
+	 * invalid Load Factor for certain collision resolution Probing method.
 	 */
 	private class InvalidLoadFactorException extends Exception
 	{
@@ -361,7 +411,8 @@ public class ColorHash {
 
 	/**
 	 * User-defined Exception
-	 * Thrown under attempts to find a ColorKey 
+	 * 
+	 * @throws ColorKeyException under attempts to find a ColorKey 
 	 * which doesn't exist in Hash Table.
 	 */
 	private class MissingColorKeyException extends Exception
