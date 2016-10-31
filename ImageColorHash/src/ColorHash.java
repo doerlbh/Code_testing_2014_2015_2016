@@ -101,8 +101,8 @@ public class ColorHash {
 	public ResponseItem colorHashPut(ColorKey key, long value){
 
 		int nCol   = 0;				// number of collisions involved
-		boolean dRehash = false;	// didRehash: true if operations caused a rehash
-		boolean dUpdate = false;	// didUpdate: true if operation caused value overwritten
+		boolean dRehash = false;	// dRehash: true if operations caused a rehash
+		boolean dUpdate = false;	// dUpdate: true if operation caused value overwritten
 
 		int[] probeState = doProbing(key); 	// Get probe state information
 		int indHash = probeState[0];		// Index of current hash pair
@@ -132,10 +132,10 @@ public class ColorHash {
 
 	public ResponseItem increment(ColorKey key){
 
-		long value = 1;				// value
+		long value = 1;				// value in incrementation
 		int nCol = 0;				// number of collisions involved
-		boolean dRehash = false;	// didRehash: true if operations caused a rehash
-		boolean dUpdate = false;	// didUpdate: true if operation caused value overwritten
+		boolean dRehash = false;	// dRehash: true if operations caused a rehash
+		boolean dUpdate = false;	// dUpdate: true if operation caused value overwritten
 
 		int[] probeState = doProbing(key); // Get insert/update position and numCollisions
 		int indHash = probeState[0];
@@ -161,25 +161,71 @@ public class ColorHash {
 		return new ResponseItem(value, nCol, dRehash, dUpdate);
 	}
 
-	public ResponseItem colorHashGet(ColorKey key) throws Exception{return null;}
+	public ResponseItem colorHashGet(ColorKey key) throws Exception{
+
+		long value = -1L;			// default value in case key not found
+		int nCol = 0;				// number of collisions involved
+		boolean dRehash = false;	// dRehash: true if operations caused a rehash
+		boolean dUpdate = false;	// dUpdate: true if operation caused value overwritten
+
+		int[] probeState = doProbing(key); // Get insert/update position and numCollisions
+		int indHash = probeState[0];
+		nCol = probeState[1];
+
+		HashPair currentHash = hashTable[indHash];
+
+		if (currentHash == null) { 	// Empty spot
+			throw new MissingColorKeyException("ColorKey not found in Hash Table");
+		} else if (currentHash.isKey(key)) { // Key found, return the value
+			value = hashTable[indHash].getVal();
+		}
+		return new ResponseItem(value, nCol, dRehash, dUpdate);
+	}
 
 
-	public long getCount(ColorKey key){return -1L;}
+	public long getCount(ColorKey key){
+		
+		return -1L;
+		
+	}
 
 
-	public ColorKey getKeyAt(long tableIndex){return null;}
+	public ColorKey getKeyAt(long tableIndex){
+		
+		return null;
+		
+	}
 
 
-	public long getValueAt(long tableIndex){return -1L;}
+	public long getValueAt(long tableIndex){
+		
+		return -1L;
+		
+	}
 
 
-	public double getLoadFactor(){return -1.0;}
+	public double getLoadFactor(){
+		
+		return -1.0;
+		
+	
+	}
 
 
-	public int getTableSize(){return -1;}
+	public int getTableSize(){
+		
+		
+		return -1;
+		
+	
+	}
 
 
-	public void resize(){}
+	public void resize(){
+		
+		
+		
+	}
 
 	/**
 	 * Check if we are over the load factor and must rehash. If we are, then go ahead and rehash and set flag.
@@ -237,6 +283,20 @@ public class ColorHash {
 	{
 		public InvalidLoadFactorException() {}
 		public InvalidLoadFactorException(String message)
+		{
+			super(message);
+		}
+	}
+	
+	/**
+	 * User-defined Exception
+	 * Thrown under attempts to find a ColorKey 
+	 * which doesn't exist in Hash Table.
+	 */
+	private class MissingColorKeyException extends Exception
+	{
+		public MissingColorKeyException() {}
+		public MissingColorKeyException(String message)
 		{
 			super(message);
 		}
