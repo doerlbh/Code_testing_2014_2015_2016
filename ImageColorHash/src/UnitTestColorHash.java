@@ -57,7 +57,7 @@ public class UnitTestColorHash {
 	}
 	
 	@Test
-    public void testPutAndGetAt() {
+    public void testPutAndGetAt() throws Exception {
 		makeSomeKeys();
     	// Instantiate ColorHash.
     	testHT = new ColorHash(3, 6, "Linear Probing", 0.9);
@@ -81,7 +81,7 @@ public class UnitTestColorHash {
     	assertEquals(v, 23);
     }
     @Test
-    public void testPutAndGet() {
+    public void testPutAndGet() throws Exception {
 		makeSomeKeys();
     	// Instantiates ColorHash.
     	testHT = new ColorHash(3, 6, "Linear Probing", 0.9);
@@ -101,7 +101,7 @@ public class UnitTestColorHash {
     }
 
 	@Test
-    public void testIncrementing() {
+    public void testIncrementing() throws Exception {
 		makeSomeKeys();
     	// Instantiates ColorHash.
     	testHT = new ColorHash(3, 6, "Linear Probing", 0.9);
@@ -117,7 +117,7 @@ public class UnitTestColorHash {
     	//System.out.println(testHT.showWholeTable());
     }
 	@Test
-	public void testIncrementAndGet() {
+	public void testIncrementAndGet() throws Exception {
 		makeSomeKeys();
     	testHT = new ColorHash(3, 6, "Linear Probing", 0.9);
     	System.out.println(testHT.increment(redKey));
@@ -130,7 +130,7 @@ public class UnitTestColorHash {
     	catch(Exception e){}
 	}
 	@Test
-    public void testQuadraticProbing() {
+    public void testQuadraticProbing() throws Exception {
 		makeCollidingKeys();
     	// Instantiates ColorHash.
     	testHT = new ColorHash(13, 6, "Quadratic Probing", 0.49);
@@ -158,7 +158,7 @@ public class UnitTestColorHash {
     	
     }
 	@Test
-	public void testQuadraticProbingAndResizing() {
+	public void testQuadraticProbingAndResizing() throws Exception {
 		testQuadraticProbing(); // Sets up the table to just before resizing.
 		long v;
 		try {
@@ -184,7 +184,7 @@ public class UnitTestColorHash {
     	assertEquals(v, 8L);
 	}
 	@Test
-	public void testResponseItemsForQuadraticProbingAndResizing() {
+	public void testResponseItemsForQuadraticProbingAndResizing() throws Exception {
 		testQuadraticProbing(); // Sets up the table to just before resizing.
 		
 
