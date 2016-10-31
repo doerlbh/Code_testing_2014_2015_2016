@@ -58,6 +58,10 @@ public class ColorHash {
 		// public method to retrieve the value of the hash pair
 		public long getValue() {
 			return value;
+		}
+
+		public boolean isKey(ColorKey testKey) {
+			return (testKey.equals(key));
 		}		
 	}
 
@@ -126,13 +130,11 @@ public class ColorHash {
 				nCol = nCol + nColRehash;
 				nCol = nCol + probeState[1];  // Add collisions from probing new table
 				indHash = probeState[0];  // Save the newly found spot in the rehashed table
-				
-				
 			}
 			hashTable[indHash] = new HashPair(key, value); // Insert the key
 			npair++;
 
-		} else if (curHash.getKey().equals(key)) { // Duplicate key found, update value
+		} else if (curHash.isKey(key)) { // Duplicate key found, update value
 			hashTable[indHash].setVal(value);
 			dUpdate = true;
 		}
@@ -151,8 +153,38 @@ public class ColorHash {
 	}
 
 	private int[] doProbing(ColorKey key) {
-		// TODO Auto-generated method stub
-		return null;
+
+		int nCol = 0;
+
+		int[] probeState = new int[2];
+
+		int indHash = key.hashCode() % hashTable.length; // Get the first target index
+
+		boolean existKey = false; // True if we found a place to insert/update
+		while (!existKey){
+
+			HashPair curHash = hashTable[indHash];
+
+			if (curHash == null || curHash.isKey(key)) { // Empty/duplicate spot found
+				existKey = true;
+			} else {  // Otherwise we have a collision, and will probe for a new spot using specified collision method
+				nCol++;
+				if (crm == 0){
+					indHash++;
+					if (indHash == getTableSize()){
+						indHash = 0;
+					} // Wrap around array if needed
+				} else if (crm == 1){
+					indHash = nCol * nCol + key.hashCode() % hashTable.length;
+					while(indHash >= getTableSize()){
+						indHash -= getTableSize();
+					}
+				}
+			}
+		}
+		probeState[0] = indHash;
+		probeState[1] = nCol;
+		return probeState;
 	}
 
 	public ResponseItem increment(ColorKey key){return null;}
