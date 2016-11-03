@@ -70,6 +70,16 @@ public class ComparePaintings {
 	void CollisionTests() {
 		// Implement this.				
 	}
+	
+	void fullSimilarityTests() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	void extraCredit10ImagesTest() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	// This simply checks that the images can be loaded, so you don't have 
 	// an issue with missing files or bad paths.
@@ -83,12 +93,18 @@ public class ComparePaintings {
 
 	/**
 	 * This is a basic testing function, and can be changed.
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		ComparePaintings cp = new ComparePaintings();
 		cp.imageLoadingTest();
-
+		String filename = ".jpg";
+		cp.basicTest(filename);
+		   cp.fullSimilarityTests();
+			cp.CollisionTests();
+			cp.extraCredit10ImagesTest();
 		ComparePaintings cp1 = new ComparePaintings();
+		
 
 	}
 
