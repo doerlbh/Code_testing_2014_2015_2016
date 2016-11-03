@@ -25,8 +25,8 @@ public class ColorHash {
 	private String crm; 			// defined collision resolution method (below)
 
 	// private string constants to define collision resolution method
-	private static final String LINEAR_PROBING = "Linear Probing"; 
-	private static final String QUADRATIC_PROBING = "Quadratic Probing"; 
+	public static final String LINEAR_PROBING = "Linear Probing"; 
+	public static final String QUADRATIC_PROBING = "Quadratic Probing"; 
 
 	// private inner class to represent the key-value pairs to assist hashTable
 	private class HashPair {	

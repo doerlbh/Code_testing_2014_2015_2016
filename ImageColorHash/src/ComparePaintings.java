@@ -13,20 +13,39 @@
 
 public class ComparePaintings {
 
-	public ComparePaintings(){}; // constructor.
+	// Fields
+	private ColorHash ch;		// ColorHash
+	private FeatureVector fv;	// FeatureVector
+	private long sumCol;		// sum of collisions
+	private String pm;			// probing method
+
+	// Constants
+	private static final int DEFAULT_BPP = 6;		// default bits Per Pixel
+	private static final int DEFAULT_TBS = 11;		// default table size
+	private static final double DEFAULT_RLF = 0.4;	// default rehash load factor
+
+	// constructor.
+	public ComparePaintings(){
+		pm = ColorHash.LINEAR_PROBING;
+		sumCol = 0;
+	}; 
 
 	// Load the image, construct the hash table, count the colors.
 	ColorHash countColors(String filename, int bitsPerPixel) {
-		// Implement this.
+
 		ImageLoader il = new ImageLoader(filename);
 
-		return null; // Change this to return the real result.
+		
 	}
 
 	//	Starting with two hash tables of color counts, compute a measure of similarity based on the cosine distance of two vectors.
-	double compare(ColorHash painting1, ColorHash painting2) {
-		// Implement this.
-		return 1.0; // Change this to return the actual similarity value.
+	double compare(ColorHash painting1, ColorHash painting2) throws Exception {
+		FeatureVector fv1 = new FeatureVector(DEFAULT_BPP);
+		FeatureVector fv2 = new FeatureVector(DEFAULT_BPP);
+		fv1.getTheCounts(painting1);
+		fv2.getTheCounts(painting2);
+		double cosSim = fv1.cosineSimilarity(fv2);
+		return cosSim;
 	}
 
 	//	A basic test for the compare method: S(x,x) should be 1.0, so you should compute the similarity of an image with itself and print out the answer. If it comes out to be 1.0, that is a good sign for your implementation so far.
@@ -48,15 +67,16 @@ public class ComparePaintings {
 		System.out.println("It looks like we have successfully loaded all three test images.");
 
 	}
+
 	/**
 	 * This is a basic testing function, and can be changed.
 	 */
 	public static void main(String[] args) {
 		ComparePaintings cp = new ComparePaintings();
 		cp.imageLoadingTest();
-		
+
 		ComparePaintings cp1 = new ComparePaintings();
-		
+
 	}
 
 }
