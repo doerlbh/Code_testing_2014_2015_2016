@@ -31,11 +31,21 @@ public class ComparePaintings {
 	}; 
 
 	// Load the image, construct the hash table, count the colors.
-	ColorHash countColors(String filename, int bitsPerPixel) {
+	ColorHash countColors(String filename, int bitsPerPixel) throws Exception {
 
+		sumCol = 0;
 		ImageLoader il = new ImageLoader(filename);
-
-		
+		ResponseItem ri;
+		ch = new ColorHash(DEFAULT_TBS, bitsPerPixel, pm, DEFAULT_RLF);
+		for (int x = 0; x < il.getWidth(); x++) {
+			for (int y = 0; y < il.getHeight(); y++) {
+				sumCol += ri.nCollisions;
+				ri = ch.increment(il.getColorKey(x, y, bitsPerPixel));
+			}
+		}
+		fv = new FeatureVector(bitsPerPixel);
+		fv.getTheCounts(ch);
+		return ch;
 	}
 
 	//	Starting with two hash tables of color counts, compute a measure of similarity based on the cosine distance of two vectors.
