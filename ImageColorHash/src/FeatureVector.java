@@ -110,6 +110,67 @@ public class FeatureVector {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		try {
+			ColorKey green = new ColorKey(0, 255, 0, 6);
+			System.out.println("green ColorKey is: "+green);
+			ColorKey black = new ColorKey(0, 0, 0, 6);
+			System.out.println("black ColorKey is: "+black);
+			ColorKey white = new ColorKey(255, 255, 255, 6);
+			System.out.println("white ColorKey is: "+white);
+			ColorKey random1 = new ColorKey(12, 156, 0, 6);
+			System.out.println("random1 ColorKey is: "+random1);
+			ColorKey random2 = new ColorKey(255, 145, 0, 6);
+			System.out.println("random2 ColorKey is: "+random2);
+			ColorKey random3 = new ColorKey(0, 255, 255, 6);
+			System.out.println("random3 ColorKey is: "+random3);
+			
+			ColorKey blackKey8  = new ColorKey(91, 15);
+			System.out.println("blackKey8 ColorKey is: "+blackKey8);
+
+			ColorHash ch = new ColorHash(3, 6, "Linear Probing", 0.9);
+			System.out.println("Linear Probing Testing");
+			
+			ch.increment(green);
+			System.out.println("increment green Testing");
+			ch.increment(green);
+			System.out.println("increment green Testing");
+
+			ch.increment(black);
+			System.out.println("increment black Testing");
+			ch.increment(black);
+			System.out.println("increment black Testing");
+			ch.increment(black);
+			System.out.println("increment black Testing");
+			ch.increment(black);
+			System.out.println("increment black Testing");
+			
+			ch.increment(white);
+			System.out.println("increment white Testing");
+			ch.increment(white);
+			System.out.println("increment white Testing");
+			ch.increment(white);
+			System.out.println("increment white Testing");
+			
+			ch.increment(random1);
+			System.out.println("increment random1 Testing");
+			ch.increment(random2);
+			System.out.println("increment random2 Testing");
+			ch.increment(random3);
+			System.out.println("increment random3 Testing");
+			ch.increment(blackKey8);
+			System.out.println("increment blackKey8 Testing");
+			
+			FeatureVector fv = new FeatureVector(6);
+			System.out.println("the keyspace for  FeatureVector is " + fv.keySpaceSize);
+			
+			fv.getTheCounts(ch);
+			System.out.println("fv's colorCounts" + fv.colorCounts);
+			
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
 
 	}
 
