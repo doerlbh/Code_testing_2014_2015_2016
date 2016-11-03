@@ -1,3 +1,5 @@
+//import ColorHash.InvalidLoadFactorException;
+
 /** FeatureVector.java
  *  a class for  .
  * 
@@ -66,10 +68,39 @@ public class FeatureVector {
 	// Hint: you may wish to write some private methods here to help
 	// computing the cosine similarity.  For example, it could be
 	// nice to have a dot product method and a vector magnitude method.
-	public double cosineSimilarity(FeatureVector other) {
+	public double cosineSimilarity(FeatureVector other) throws Exception {
 		// TODO
+		double dotProd = dot(this.colorCounts, other.colorCounts);
+		double vecProd = vec(this.colorCounts, other.colorCounts);
+		double cosSim = dotProd/vecProd;
+		return cosSim; 
+	}
 
-		return 1.0; // Change this to return the actual value.
+	private double vec(long[] A, long[] B) throws Exception {
+		// TODO Auto-generated method stub
+		if (A.length != B.length){
+			throw new ArithmeticException("Vector must have the same length.");
+		}
+		double prod = 0;
+		for (int i = 0; i < A.length; i++) {
+			prod += (double) A[i] * (double) B[i];
+		}
+		return prod;
+	}
+
+	private double dot(long[] A, long[] B) throws Exception {
+		// TODO Auto-generated method stub
+		if (A.length != B.length){
+			throw new ArithmeticException("Vector must have the same length.");
+		}
+		double prodA = 0;
+		double prodB = 0;
+		for (int i = 0; i < A.length; i++) {
+			prodA += (double) A[i] * (double) A[i];
+			prodB += (double) B[i] * (double) B[i];
+		}
+		double prod = Math.sqrt(prodA)*Math.sqrt(prodB);
+		return prod;
 	}
 
 	/**
