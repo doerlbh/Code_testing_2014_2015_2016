@@ -394,6 +394,12 @@ public class ColorHash {
 		}
 	}
 
+	/**
+	 * A private helper method to support resize
+	 * 
+	 * Purpose: to obtain the raw ADT format of ColorHash
+	 * @return a HashPair[] which holds the hash table
+	 */
 	private HashPair[] getHashTable(){
 		return hashTable;
 	}
