@@ -35,7 +35,7 @@ public class ComparePaintings {
 
 		sumCol = 0;
 		ImageLoader il = new ImageLoader(filename);
-		ResponseItem ri;
+		ResponseItem ri = null;
 		ch = new ColorHash(DEFAULT_TBS, bitsPerPixel, pm, DEFAULT_RLF);
 		for (int x = 0; x < il.getWidth(); x++) {
 			for (int y = 0; y < il.getHeight(); y++) {
@@ -59,8 +59,11 @@ public class ComparePaintings {
 	}
 
 	//	A basic test for the compare method: S(x,x) should be 1.0, so you should compute the similarity of an image with itself and print out the answer. If it comes out to be 1.0, that is a good sign for your implementation so far.
-	void basicTest(String filename) {
-		// Implement this.		
+	void basicTest(String filename) throws Exception {
+		ComparePaintings cp2 = new ComparePaintings();
+		cp2.countColors(filename, DEFAULT_BPP);
+		System.out.print("Cosine Similarity of the two images is ");
+		System.out.println(fv.cosineSimilarity(cp2.fv));		
 	}
 
 	//		Using the three given painting images and a variety of bits-per-pixel values, compute and print out a table of collision counts in the following format:
