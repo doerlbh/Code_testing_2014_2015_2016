@@ -50,15 +50,15 @@ public class FeatureVector {
 	// You should implement this method.
 	// It will go through all possible key values in order,
 	// get the count from the hash table and put it into this feature vector.
-	public void getTheCounts(ColorHash ch) {
+	public void getTheCounts(ColorHash ch) throws Exception {
 		// TODO
-		for (int i = 0; i < ch.getTableSize(); i++) {
-			ColorKey key = ch.getKeyAt(i);
+		for (int i = 0; i < keySpaceSize; i++) {
+			ColorKey key = new ColorKey(i, bitsPerPixel);;
 			if (key != null) {
 				colorCounts[i] = ch.getCount(key);
 			}
 		}
-		
+
 	}
 
 	// Implement this method. Use the formula given in the A3 spec,
@@ -79,7 +79,7 @@ public class FeatureVector {
 		return cosSim; 
 	}
 
-	private double vec(long[] A, long[] B) throws Exception {
+	private static double dot(long[] A, long[] B) throws Exception {
 		// TODO Auto-generated method stub
 		if (A.length != B.length){
 			throw new ArithmeticException("Vector must have the same length.");
@@ -91,7 +91,7 @@ public class FeatureVector {
 		return prod;
 	}
 
-	private double dot(long[] A, long[] B) throws Exception {
+	private static double vec(long[] A, long[] B) throws Exception {
 		// TODO Auto-generated method stub
 		if (A.length != B.length){
 			throw new ArithmeticException("Vector must have the same length.");
@@ -99,10 +99,10 @@ public class FeatureVector {
 		double prodA = 0;
 		double prodB = 0;
 		for (int i = 0; i < A.length; i++) {
-			prodA += (double) A[i] * (double) A[i];
-			prodB += (double) B[i] * (double) B[i];
+			prodA +=  (double) A[i] * (double) A[i];
+			prodB +=  (double) B[i] * (double) B[i];
 		}
-		double prod = Math.sqrt(prodA)*Math.sqrt(prodB);
+		double prod = Math.sqrt(prodA*prodB);
 		return prod;
 	}
 
@@ -111,9 +111,9 @@ public class FeatureVector {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 		try {
-			
+
 			// ColorKey testing
 			ColorKey green = new ColorKey(0, 255, 0, 6);
 			System.out.println("green ColorKey is: "+green);
@@ -127,13 +127,13 @@ public class FeatureVector {
 			System.out.println("random2 ColorKey is: "+random2);
 			ColorKey random3 = new ColorKey(0, 255, 255, 6);
 			System.out.println("random3 ColorKey is: "+random3);
-			
+
 			ColorKey blackKey8  = new ColorKey(91, 15);
 			System.out.println("blackKey8 ColorKey is: "+blackKey8);
 
 			ColorHash ch = new ColorHash(3, 6, "Linear Probing", 0.9);
 			System.out.println("Linear Probing Testing");
-			
+
 			// ColorHash testing
 			ch.increment(green);
 			System.out.println("increment green Testing");
@@ -148,14 +148,14 @@ public class FeatureVector {
 			System.out.println("increment black Testing");
 			ch.increment(black);
 			System.out.println("increment black Testing");
-			
+
 			ch.increment(white);
 			System.out.println("increment white Testing");
 			ch.increment(white);
 			System.out.println("increment white Testing");
 			ch.increment(white);
 			System.out.println("increment white Testing");
-			
+
 			ch.increment(random1);
 			System.out.println("increment random1 Testing");
 			ch.increment(random2);
@@ -164,14 +164,43 @@ public class FeatureVector {
 			System.out.println("increment random3 Testing");
 			ch.increment(blackKey8);
 			System.out.println("increment blackKey8 Testing");
-			
+
 			// FeatureVector testing
 			FeatureVector fv = new FeatureVector(6);
 			System.out.println("the keyspace for fv is " + fv.keySpaceSize);
-			
+
+			// FeatureVector getTheCounts Testing
 			fv.getTheCounts(ch);
-			System.out.println("fv's colorCounts" + fv.colorCounts);
+			long[] fvcc = fv.colorCounts;
+			System.out.print("fv's colorCounts: "); 
+			for (int i = 0; i < fvcc.length; i++) {
+				System.out.print(fvcc[i]+" ");
+			}
+
+			// FeatureVector cosineSimilarity Testing
+			ColorHash ch2 = new ColorHash(3, 6, "Linear Probing", 0.9);
+			System.out.println("Linear Probing Testing");
+			ch2.increment(random2);
+			ch2.increment(black);
+			ch2.increment(random3);
+			ch2.increment(green);
+			ch2.increment(random3);
+			ch2.increment(blackKey8);
+			ch2.increment(black);
+			ch2.increment(white);
+			ch2.increment(random1);
+			FeatureVector fv2 = new FeatureVector(6);
+			fv2.getTheCounts(ch2);
 			
+			double cosSim = fv.cosineSimilarity(fv2);
+			double cosdot = dot(fv.colorCounts, fv2.colorCounts);
+			double cosvec = vec(fv.colorCounts, fv2.colorCounts);
+			System.out.println("fv/fv2's cosdot = "+cosdot); 
+			System.out.println("fv/fv2's cosvec = "+cosvec); 
+			System.out.println("fv/fv2's cosSim = "+cosSim); 
+
+			System.out.println("fv/fv's cosSim = "+fv.cosineSimilarity(fv)); 
+
 		}
 		catch(Exception e) {
 			System.out.println(e);
