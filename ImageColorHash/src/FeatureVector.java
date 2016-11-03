@@ -53,8 +53,10 @@ public class FeatureVector {
 	public void getTheCounts(ColorHash ch) {
 		// TODO
 		for (int i = 0; i < ch.getTableSize(); i++) {
-			ColorKey key = ch.getKeyAt(i);
-			colorCounts[i] = ch.getCount(key);
+			if (ch.getKeyAt(i) != null) {
+				ColorKey key = ch.getKeyAt(i);
+				colorCounts[i] = ch.getCount(key);
+			}
 		}
 	}
 
