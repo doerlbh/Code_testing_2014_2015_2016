@@ -23,6 +23,17 @@ public class ComparePaintings {
 	private static final int DEFAULT_BPP = 6;		// default bits Per Pixel
 	private static final int DEFAULT_TBS = 11;		// default table size
 	private static final double DEFAULT_RLF = 0.4;	// default rehash load factor
+	public static final String IMG_01 = "MonaLisa.jpg"; 
+	public static final String IMG_02 = "StarryNight.jpg"; 
+	public static final String IMG_03 = "ChristinasWorld.jpg"; 
+	public static final String IMG_04 = "WaterLilies.jpg"; 
+	public static final String IMG_05 = "ParisAutumn.jpg"; 
+	public static final String IMG_06 = "ButterflyShip.jpg"; 
+	public static final String IMG_07 = "Kiss.jpg"; 
+	public static final String IMG_08 = "StJeromeReading.jpg"; 
+	public static final String IMG_09 = "CityRises.jpg"; 
+	public static final String IMG_10 = "Untitled.jpg"; 
+
 
 	// constructor.
 	public ComparePaintings(){
@@ -39,8 +50,8 @@ public class ComparePaintings {
 		ch = new ColorHash(DEFAULT_TBS, bitsPerPixel, pm, DEFAULT_RLF);
 		for (int x = 0; x < il.getWidth(); x++) {
 			for (int y = 0; y < il.getHeight(); y++) {
-				sumCol += ri.nCollisions;
 				ri = ch.increment(il.getColorKey(x, y, bitsPerPixel));
+				sumCol += ri.nCollisions;
 			}
 		}
 		fv = new FeatureVector(bitsPerPixel);
@@ -67,18 +78,47 @@ public class ComparePaintings {
 	}
 
 	//		Using the three given painting images and a variety of bits-per-pixel values, compute and print out a table of collision counts in the following format:
-	void CollisionTests() {
-		// Implement this.				
+	void CollisionTests() throws Exception {
+
+		System.out.println("Bits Per Pixel   C(Mona,linear)  C(Mona,quadratic)  C(Starry,linear) "
+				+ "C(Starry,quadratic) C(Christina,linear) C(Christina,quadratic)");
+		ComparePaintings cp01 = new ComparePaintings();
+		ComparePaintings cp02 = new ComparePaintings();
+		ComparePaintings cp03 = new ComparePaintings();
+		for (int bpp = 24; bpp >= 3; bpp-=3) {
+			
+			System.out.format("%-17d", bpp);
+			cp01.pm = ColorHash.LINEAR_PROBING;
+			cp01.countColors(IMG_01, bpp);
+			System.out.format("%-16d", cp01.sumCol);
+			cp01.pm = ColorHash.QUADRATIC_PROBING;
+			cp01.countColors(IMG_01, bpp);
+			System.out.format("%-19d", cp01.sumCol);
+			
+			cp02.pm = ColorHash.LINEAR_PROBING;
+			cp02.countColors(IMG_02, bpp);
+			System.out.format("%-17d", cp02.sumCol);
+			cp02.pm = ColorHash.QUADRATIC_PROBING;
+			cp02.countColors(IMG_02, bpp);
+			System.out.format("%-20d", cp02.sumCol);
+			
+			cp03.pm = ColorHash.LINEAR_PROBING;
+			cp03.countColors(IMG_03, bpp);
+			System.out.format("%-20d", cp03.sumCol);
+			cp03.pm = ColorHash.QUADRATIC_PROBING;
+			cp03.countColors(IMG_03, bpp);
+			System.out.format("%-22d%n", cp03.sumCol);
+		}
 	}
-	
+
 	void fullSimilarityTests() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	void extraCredit10ImagesTest() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	// This simply checks that the images can be loaded, so you don't have 
@@ -98,13 +138,13 @@ public class ComparePaintings {
 	public static void main(String[] args) throws Exception {
 		ComparePaintings cp = new ComparePaintings();
 		cp.imageLoadingTest();
-		String filename = ".jpg";
-		cp.basicTest(filename);
-		   cp.fullSimilarityTests();
-			cp.CollisionTests();
-			cp.extraCredit10ImagesTest();
+		//		String filename = ".jpg";
+		//		cp.basicTest(filename);
+		cp.fullSimilarityTests();
+		cp.CollisionTests();
+		cp.extraCredit10ImagesTest();
 		ComparePaintings cp1 = new ComparePaintings();
-		
+
 
 	}
 
