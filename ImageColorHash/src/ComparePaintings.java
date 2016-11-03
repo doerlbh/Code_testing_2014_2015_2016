@@ -82,11 +82,13 @@ public class ComparePaintings {
 
 		System.out.println("Bits Per Pixel   C(Mona,linear)  C(Mona,quadratic)  C(Starry,linear) "
 				+ "C(Starry,quadratic) C(Christina,linear) C(Christina,quadratic)");
+		
 		ComparePaintings cp01 = new ComparePaintings();
 		ComparePaintings cp02 = new ComparePaintings();
 		ComparePaintings cp03 = new ComparePaintings();
+		
 		for (int bpp = 24; bpp >= 3; bpp-=3) {
-			
+
 			System.out.format("%-17d", bpp);
 			cp01.pm = ColorHash.LINEAR_PROBING;
 			cp01.countColors(IMG_01, bpp);
@@ -94,14 +96,14 @@ public class ComparePaintings {
 			cp01.pm = ColorHash.QUADRATIC_PROBING;
 			cp01.countColors(IMG_01, bpp);
 			System.out.format("%-19d", cp01.sumCol);
-			
+
 			cp02.pm = ColorHash.LINEAR_PROBING;
 			cp02.countColors(IMG_02, bpp);
 			System.out.format("%-17d", cp02.sumCol);
 			cp02.pm = ColorHash.QUADRATIC_PROBING;
 			cp02.countColors(IMG_02, bpp);
 			System.out.format("%-20d", cp02.sumCol);
-			
+
 			cp03.pm = ColorHash.LINEAR_PROBING;
 			cp03.countColors(IMG_03, bpp);
 			System.out.format("%-20d", cp03.sumCol);
@@ -111,14 +113,91 @@ public class ComparePaintings {
 		}
 	}
 
-	void fullSimilarityTests() {
+	void fullSimilarityTests() throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("Bits Per Pixel       S(Mona,Starry)    S(Mona,Christina)     S(Starry,Christina)");
+
+		ComparePaintings cp01 = new ComparePaintings();
+		ComparePaintings cp02 = new ComparePaintings();
+		ComparePaintings cp03 = new ComparePaintings();
+		
+		for (int bpp = 24; bpp >= 3; bpp-=3) {
+
+			cp01.countColors(IMG_01, bpp);
+			cp02.countColors(IMG_02, bpp);
+			cp03.countColors(IMG_03, bpp);
+
+			System.out.format("%-21d", bpp);
+			System.out.format("%-18f", cp01.fv.cosineSimilarity(cp02.fv) );
+			System.out.format("%-22f", cp01.fv.cosineSimilarity(cp03.fv) );
+			System.out.format("%-22f%n", cp02.fv.cosineSimilarity(cp03.fv) );
+		}
 
 	}
 
-	void extraCredit10ImagesTest() {
+	void extraCredit10ImagesTest() throws Exception {
 		// TODO Auto-generated method stub
+		int bpp = 6;
+		
+		ComparePaintings cp01 = new ComparePaintings();
+		ComparePaintings cp02 = new ComparePaintings();
+		ComparePaintings cp03 = new ComparePaintings();
+		ComparePaintings cp04 = new ComparePaintings();
+		ComparePaintings cp05 = new ComparePaintings();
+		ComparePaintings cp06 = new ComparePaintings();
+		ComparePaintings cp07 = new ComparePaintings();
+		ComparePaintings cp08 = new ComparePaintings();
+		ComparePaintings cp09 = new ComparePaintings();
+		ComparePaintings cp10 = new ComparePaintings();
+		
+		cp01.countColors(IMG_01, bpp);
+		cp02.countColors(IMG_02, bpp);
+		cp03.countColors(IMG_03, bpp);
+		cp04.countColors(IMG_04, bpp);
+		cp05.countColors(IMG_05, bpp);
+		cp06.countColors(IMG_06, bpp);
+		cp07.countColors(IMG_07, bpp);
+		cp08.countColors(IMG_08, bpp);
+		cp09.countColors(IMG_09, bpp);
+		cp10.countColors(IMG_10, bpp);
 
+		System.out.format("%-18s", "");
+		System.out.format("%-11s", "MonaLisa");
+		System.out.format("%-14s", "StarryNight");
+		System.out.format("%-18s", "ChristinasWorld");
+		System.out.format("%-14s", "WaterLilies");
+		System.out.format("%-14s", "ParisAutumn");
+		System.out.format("%-16s", "ButterflyShip");
+		System.out.format("%-10s", "Kiss");
+		System.out.format("%-18s", "StJeromeReading");
+		System.out.format("%-12s", "CityRises");
+    	System.out.format("%-11s%n", "Untitled");
+
+		System.out.format("%-18s", "MonaLisa");
+		System.out.format("%-11f", cp01.fv.cosineSimilarity(cp01.fv));
+		System.out.format("%-14f", cp01.fv.cosineSimilarity(cp02.fv));
+		System.out.format("%-18f", cp01.fv.cosineSimilarity(cp03.fv));
+		System.out.format("%-14f", cp01.fv.cosineSimilarity(cp04.fv));
+		System.out.format("%-14f", cp01.fv.cosineSimilarity(cp05.fv));
+		System.out.format("%-16f", cp01.fv.cosineSimilarity(cp06.fv));
+		System.out.format("%-10f", cp01.fv.cosineSimilarity(cp07.fv));
+		System.out.format("%-18f", cp01.fv.cosineSimilarity(cp08.fv));
+		System.out.format("%-12f", cp01.fv.cosineSimilarity(cp09.fv));
+    	System.out.format("%-11f%n", cp01.fv.cosineSimilarity(cp10.fv));
+
+		System.out.format("%-18s", "StarryNight");
+		System.out.format("%-11f", cp02.fv.cosineSimilarity(cp01.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp02.fv));
+		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp03.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp04.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp05.fv));
+		System.out.format("%-16f", cp02.fv.cosineSimilarity(cp06.fv));
+		System.out.format("%-10f", cp02.fv.cosineSimilarity(cp07.fv));
+		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp08.fv));
+		System.out.format("%-12f", cp02.fv.cosineSimilarity(cp09.fv));
+    	System.out.format("%-11f%n", cp02.fv.cosineSimilarity(cp10.fv));
+
+    	
 	}
 
 	// This simply checks that the images can be loaded, so you don't have 
@@ -136,15 +215,19 @@ public class ComparePaintings {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
+		// loading test
 		ComparePaintings cp = new ComparePaintings();
 		cp.imageLoadingTest();
-		//		String filename = ".jpg";
-		//		cp.basicTest(filename);
-		cp.fullSimilarityTests();
-		cp.CollisionTests();
-		cp.extraCredit10ImagesTest();
-		ComparePaintings cp1 = new ComparePaintings();
 
+		// basicTest
+//		ComparePaintings cp1 = new ComparePaintings();
+//		cp1.countColors(IMG_01, 6);
+//		cp1.basicTest(IMG_02);
+
+		// otherTests
+//		cp.fullSimilarityTests();
+//		cp.CollisionTests();
+		cp.extraCredit10ImagesTest();
 
 	}
 
