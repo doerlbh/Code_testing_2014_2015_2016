@@ -53,11 +53,12 @@ public class FeatureVector {
 	public void getTheCounts(ColorHash ch) {
 		// TODO
 		for (int i = 0; i < ch.getTableSize(); i++) {
-			if (ch.getKeyAt(i) != null) {
-				ColorKey key = ch.getKeyAt(i);
+			ColorKey key = ch.getKeyAt(i);
+			if (key != null) {
 				colorCounts[i] = ch.getCount(key);
 			}
 		}
+		
 	}
 
 	// Implement this method. Use the formula given in the A3 spec,
@@ -112,6 +113,8 @@ public class FeatureVector {
 		// TODO Auto-generated method stub
 		
 		try {
+			
+			// ColorKey testing
 			ColorKey green = new ColorKey(0, 255, 0, 6);
 			System.out.println("green ColorKey is: "+green);
 			ColorKey black = new ColorKey(0, 0, 0, 6);
@@ -131,6 +134,7 @@ public class FeatureVector {
 			ColorHash ch = new ColorHash(3, 6, "Linear Probing", 0.9);
 			System.out.println("Linear Probing Testing");
 			
+			// ColorHash testing
 			ch.increment(green);
 			System.out.println("increment green Testing");
 			ch.increment(green);
@@ -161,8 +165,9 @@ public class FeatureVector {
 			ch.increment(blackKey8);
 			System.out.println("increment blackKey8 Testing");
 			
+			// FeatureVector testing
 			FeatureVector fv = new FeatureVector(6);
-			System.out.println("the keyspace for  FeatureVector is " + fv.keySpaceSize);
+			System.out.println("the keyspace for fv is " + fv.keySpaceSize);
 			
 			fv.getTheCounts(ch);
 			System.out.println("fv's colorCounts" + fv.colorCounts);
