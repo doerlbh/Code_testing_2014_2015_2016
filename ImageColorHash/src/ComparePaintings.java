@@ -14,14 +14,16 @@
 public class ComparePaintings {
 
 	public ComparePaintings(){}; // constructor.
-	
+
 	// Load the image, construct the hash table, count the colors.
 	ColorHash countColors(String filename, int bitsPerPixel) {
 		// Implement this.
+		ImageLoader il = new ImageLoader(filename);
+
 		return null; // Change this to return the real result.
 	}
 
-//	Starting with two hash tables of color counts, compute a measure of similarity based on the cosine distance of two vectors.
+	//	Starting with two hash tables of color counts, compute a measure of similarity based on the cosine distance of two vectors.
 	double compare(ColorHash painting1, ColorHash painting2) {
 		// Implement this.
 		return 1.0; // Change this to return the actual similarity value.
@@ -36,9 +38,9 @@ public class ComparePaintings {
 	void CollisionTests() {
 		// Implement this.				
 	}
-		
-// This simply checks that the images can be loaded, so you don't have 
-// an issue with missing files or bad paths.
+
+	// This simply checks that the images can be loaded, so you don't have 
+	// an issue with missing files or bad paths.
 	void imageLoadingTest() {
 		ImageLoader mona = new ImageLoader("MonaLisa.jpg");
 		ImageLoader starry = new ImageLoader("StarryNight.jpg");
@@ -52,6 +54,9 @@ public class ComparePaintings {
 	public static void main(String[] args) {
 		ComparePaintings cp = new ComparePaintings();
 		cp.imageLoadingTest();
+		
+		ComparePaintings cp1 = new ComparePaintings();
+		
 	}
 
 }
