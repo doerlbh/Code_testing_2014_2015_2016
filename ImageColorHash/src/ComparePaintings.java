@@ -197,7 +197,102 @@ public class ComparePaintings {
 		System.out.format("%-12f", cp02.fv.cosineSimilarity(cp09.fv));
     	System.out.format("%-11f%n", cp02.fv.cosineSimilarity(cp10.fv));
 
-    	
+		System.out.format("%-18s", "StarryNight");
+		System.out.format("%-11f", cp02.fv.cosineSimilarity(cp01.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp02.fv));
+		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp03.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp04.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp05.fv));
+		System.out.format("%-16f", cp02.fv.cosineSimilarity(cp06.fv));
+		System.out.format("%-10f", cp02.fv.cosineSimilarity(cp07.fv));
+		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp08.fv));
+		System.out.format("%-12f", cp02.fv.cosineSimilarity(cp09.fv));
+    	System.out.format("%-11f%n", cp02.fv.cosineSimilarity(cp10.fv));
+
+		System.out.format("%-18s", "StarryNight");
+		System.out.format("%-11f", cp02.fv.cosineSimilarity(cp01.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp02.fv));
+		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp03.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp04.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp05.fv));
+		System.out.format("%-16f", cp02.fv.cosineSimilarity(cp06.fv));
+		System.out.format("%-10f", cp02.fv.cosineSimilarity(cp07.fv));
+		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp08.fv));
+		System.out.format("%-12f", cp02.fv.cosineSimilarity(cp09.fv));
+    	System.out.format("%-11f%n", cp02.fv.cosineSimilarity(cp10.fv));
+
+		System.out.format("%-18s", "StarryNight");
+		System.out.format("%-11f", cp02.fv.cosineSimilarity(cp01.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp02.fv));
+		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp03.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp04.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp05.fv));
+		System.out.format("%-16f", cp02.fv.cosineSimilarity(cp06.fv));
+		System.out.format("%-10f", cp02.fv.cosineSimilarity(cp07.fv));
+		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp08.fv));
+		System.out.format("%-12f", cp02.fv.cosineSimilarity(cp09.fv));
+    	System.out.format("%-11f%n", cp02.fv.cosineSimilarity(cp10.fv));
+
+		System.out.format("%-18s", "StarryNight");
+		System.out.format("%-11f", cp02.fv.cosineSimilarity(cp01.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp02.fv));
+		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp03.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp04.fv));
+		System.out.format("%-14f", cp02.fv.cosineSimilarity(cp05.fv));
+		System.out.format("%-16f", cp02.fv.cosineSimilarity(cp06.fv));
+		System.out.format("%-10f", cp02.fv.cosineSimilarity(cp07.fv));
+		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp08.fv));
+		System.out.format("%-12f", cp02.fv.cosineSimilarity(cp09.fv));
+    	System.out.format("%-11f%n", cp02.fv.cosineSimilarity(cp10.fv));
+
+		System.out.format("%-18s", "Kiss");
+		System.out.format("%-11f", cp07.fv.cosineSimilarity(cp01.fv));
+		System.out.format("%-14f", cp07.fv.cosineSimilarity(cp02.fv));
+		System.out.format("%-18f", cp07.fv.cosineSimilarity(cp03.fv));
+		System.out.format("%-14f", cp07.fv.cosineSimilarity(cp04.fv));
+		System.out.format("%-14f", cp07.fv.cosineSimilarity(cp05.fv));
+		System.out.format("%-16f", cp07.fv.cosineSimilarity(cp06.fv));
+		System.out.format("%-10f", cp07.fv.cosineSimilarity(cp07.fv));
+		System.out.format("%-18f", cp07.fv.cosineSimilarity(cp08.fv));
+		System.out.format("%-12f", cp07.fv.cosineSimilarity(cp09.fv));
+    	System.out.format("%-11f%n", cp07.fv.cosineSimilarity(cp10.fv));
+
+		System.out.format("%-18s", "StJeromeReading");
+		System.out.format("%-11f", cp08.fv.cosineSimilarity(cp01.fv));
+		System.out.format("%-14f", cp08.fv.cosineSimilarity(cp02.fv));
+		System.out.format("%-18f", cp08.fv.cosineSimilarity(cp03.fv));
+		System.out.format("%-14f", cp08.fv.cosineSimilarity(cp04.fv));
+		System.out.format("%-14f", cp08.fv.cosineSimilarity(cp05.fv));
+		System.out.format("%-16f", cp08.fv.cosineSimilarity(cp06.fv));
+		System.out.format("%-10f", cp08.fv.cosineSimilarity(cp07.fv));
+		System.out.format("%-18f", cp08.fv.cosineSimilarity(cp08.fv));
+		System.out.format("%-12f", cp08.fv.cosineSimilarity(cp09.fv));
+    	System.out.format("%-11f%n", cp08.fv.cosineSimilarity(cp10.fv));
+
+		System.out.format("%-18s", "CityRises");
+		System.out.format("%-11f", cp09.fv.cosineSimilarity(cp01.fv));
+		System.out.format("%-14f", cp09.fv.cosineSimilarity(cp02.fv));
+		System.out.format("%-18f", cp09.fv.cosineSimilarity(cp03.fv));
+		System.out.format("%-14f", cp09.fv.cosineSimilarity(cp04.fv));
+		System.out.format("%-14f", cp09.fv.cosineSimilarity(cp05.fv));
+		System.out.format("%-16f", cp09.fv.cosineSimilarity(cp06.fv));
+		System.out.format("%-10f", cp09.fv.cosineSimilarity(cp07.fv));
+		System.out.format("%-18f", cp09.fv.cosineSimilarity(cp08.fv));
+		System.out.format("%-12f", cp09.fv.cosineSimilarity(cp09.fv));
+    	System.out.format("%-11f%n", cp09.fv.cosineSimilarity(cp10.fv));
+
+		System.out.format("%-18s", "Untitled");
+		System.out.format("%-11f", cp10.fv.cosineSimilarity(cp01.fv));
+		System.out.format("%-14f", cp10.fv.cosineSimilarity(cp02.fv));
+		System.out.format("%-18f", cp10.fv.cosineSimilarity(cp03.fv));
+		System.out.format("%-14f", cp10.fv.cosineSimilarity(cp04.fv));
+		System.out.format("%-14f", cp10.fv.cosineSimilarity(cp05.fv));
+		System.out.format("%-16f", cp10.fv.cosineSimilarity(cp06.fv));
+		System.out.format("%-10f", cp10.fv.cosineSimilarity(cp07.fv));
+		System.out.format("%-18f", cp10.fv.cosineSimilarity(cp08.fv));
+		System.out.format("%-12f", cp10.fv.cosineSimilarity(cp09.fv));
+    	System.out.format("%-11f%n", cp10.fv.cosineSimilarity(cp10.fv));
+
 	}
 
 	// This simply checks that the images can be loaded, so you don't have 
