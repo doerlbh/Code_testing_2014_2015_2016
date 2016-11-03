@@ -1,7 +1,16 @@
-/**
- * @author (your name goes here)
+/** FeatureVector.java
+ *  a class for  .
+ * 
+ * by Baihan Lin
+ * for CSE 373 Assignment 3, Autumn, 2016.
+ * Section BC. 
+ * 
+ * @author Baihan Lin  < sunnylin@uw.edu >
+ * @version 	1.2
+ * @since 		1.0 2016-10-25
  *
  */
+
 public class FeatureVector {
 
 	/**
@@ -36,22 +45,29 @@ public class FeatureVector {
 		colorCounts = new long[keySpaceSize];
 	}
 
+	// You should implement this method.
+	// It will go through all possible key values in order,
+	// get the count from the hash table and put it into this feature vector.
 	public void getTheCounts(ColorHash ch) {
-		// You should implement this method.
-		// It will go through all possible key values in order,
-		// get the count from the hash table and put it into this feature vector.
+		// TODO
+		for (int i = 0; i < ch.getTableSize(); i++) {
+			ColorKey key = ch.getKeyAt(i);
+			colorCounts[i] = ch.getCount(key);
+		}
 	}
-	public double cosineSimilarity(FeatureVector other) {
-		// Implement this method. Use the formula given in the A3 spec,
-		// which is also explained at
-		// https://en.wikipedia.org/wiki/Cosine_similarity
-		// where A is this feature vector and B is the other feature vector.
-		// When multiplying in the dot product, convert all the long values
-		// to double before doing the multiplication.
 
-		// Hint: you may wish to write some private methods here to help
-		// computing the cosine similarity.  For example, it could be
-		// nice to have a dot product method and a vector magnitude method.
+	// Implement this method. Use the formula given in the A3 spec,
+	// which is also explained at
+	// https://en.wikipedia.org/wiki/Cosine_similarity
+	// where A is this feature vector and B is the other feature vector.
+	// When multiplying in the dot product, convert all the long values
+	// to double before doing the multiplication.
+
+	// Hint: you may wish to write some private methods here to help
+	// computing the cosine similarity.  For example, it could be
+	// nice to have a dot product method and a vector magnitude method.
+	public double cosineSimilarity(FeatureVector other) {
+		// TODO
 
 		return 1.0; // Change this to return the actual value.
 	}

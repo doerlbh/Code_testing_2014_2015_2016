@@ -1,7 +1,16 @@
-/**
- * @author (your name goes here)
+/** ComparePaintings.java
+ *  a class for  .
+ * 
+ * by Baihan Lin
+ * for CSE 373 Assignment 3, Autumn, 2016.
+ * Section BC. 
+ * 
+ * @author Baihan Lin  < sunnylin@uw.edu >
+ * @version 	1.2
+ * @since 		1.0 2016-10-25
  *
  */
+
 public class ComparePaintings {
 
 	public ComparePaintings(){}; // constructor.
