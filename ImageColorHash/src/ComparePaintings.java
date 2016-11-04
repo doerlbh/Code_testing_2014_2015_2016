@@ -325,8 +325,9 @@ public class ComparePaintings {
 
 	}
 
-	// This simply checks that the images can be loaded, so you don't have 
-	// an issue with missing files or bad paths.
+	/** A method to check that the images can be loaded, 
+	 * so we don't have an issue with missing files or bad paths.
+	 */
 	void imageLoadingTest() {
 		ImageLoader mona = new ImageLoader("MonaLisa.jpg");
 		ImageLoader starry = new ImageLoader("StarryNight.jpg");
@@ -335,7 +336,11 @@ public class ComparePaintings {
 
 	}
 
-
+	/** a method to count the number of black pixels in Mona Lisa
+	 * @param filename: Mona Lisa in this case
+	 * @return black: the number of black pixels in this image
+	 * @throws Exception if condition not met
+	 */
 	long countBlack(String filename) throws Exception {
 		ComparePaintings cp01 = new ComparePaintings();
 		ColorHash ch01 = cp01.countColors(filename, DEFAULT_BPP);
@@ -370,7 +375,7 @@ public class ComparePaintings {
 
 		// extra credits
 		cp.extraCredit10ImagesTest();
-		
+
 		// countBlack
 		long black = cp.countBlack(IMG_01);
 		System.out.println("In Mona Lisa there is "+black+" black pixels ");
