@@ -134,9 +134,12 @@ public class ComparePaintings {
 		}
 	}
 
-	
+	/** Using the three given painting images and a variety 
+	 * of bits-per-pixel values, compute and print out a 
+	 * table of similarity values in the specified format
+	 * @throws Exception if ComparePaintings not met
+	 */
 	void fullSimilarityTests() throws Exception {
-		// TODO Auto-generated method stub
 		System.out.println("Bits Per Pixel       S(Mona,Starry)    S(Mona,Christina)     S(Starry,Christina)");
 
 		ComparePaintings cp01 = new ComparePaintings();
@@ -157,8 +160,13 @@ public class ComparePaintings {
 
 	}
 
+	/** Choose 10 different images of paintings from the web. Create 
+	 * a table with 10 rows and 10 columns that gives the results of 
+	 * running the cosine similarity analysis on each pair. Present 
+	 * the table neatly in your report.
+	 * @throws Exception if ComparePaintings not met
+	 */
 	void extraCredit10ImagesTest() throws Exception {
-		// TODO Auto-generated method stub
 		int bpp = 6;
 
 		ComparePaintings cp01 = new ComparePaintings();
@@ -329,7 +337,6 @@ public class ComparePaintings {
 
 
 	long countBlack(String filename) throws Exception {
-		//		// TODO Auto-generated method stub
 		ComparePaintings cp01 = new ComparePaintings();
 		ColorHash ch01 = cp01.countColors(filename, DEFAULT_BPP);
 		FeatureVector fv01 = new FeatureVector(DEFAULT_BPP);
@@ -342,7 +349,7 @@ public class ComparePaintings {
 
 	/**
 	 * This is a basic testing function, and can be changed.
-	 * @throws Exception 
+	 * @throws Exception if condition not met
 	 */
 	public static void main(String[] args) throws Exception {
 		// loading test
