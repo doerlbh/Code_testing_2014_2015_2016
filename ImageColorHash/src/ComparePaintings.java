@@ -385,7 +385,6 @@ public class ComparePaintings {
 		// CollisionTests
 		cp.CollisionTests();
 
-
 		// extra credits
 		cp.extraCredit10ImagesTest();
 

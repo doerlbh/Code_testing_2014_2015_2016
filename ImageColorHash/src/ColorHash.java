@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
  *
  */
 
+@SuppressWarnings("unused")
 public class ColorHash {
 
 	// private fields
