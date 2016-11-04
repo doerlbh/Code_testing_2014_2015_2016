@@ -21,7 +21,7 @@ public class ComparePaintings {
 
 	// Constants
 	private static final int DEFAULT_BPP = 6;		// default bits Per Pixel
-	private static final int DEFAULT_TBS = 13;		// default table size to kick start
+	private static final int DEFAULT_TBS = 2;		// default table size to kick start
 	private static final double DEFAULT_RLF = 0.4;	// default rehash load factor to kick start
 	private static final String IMG_01 = "MonaLisa.jpg"; 
 	private static final String IMG_02 = "StarryNight.jpg"; 
@@ -104,8 +104,10 @@ public class ComparePaintings {
 	 */
 	void CollisionTests() throws Exception {
 
-		System.out.println("Bits Per Pixel   C(Mona,linear)  C(Mona,quadratic)  C(Starry,linear) "
-				+ "C(Starry,quadratic) C(Christina,linear) C(Christina,quadratic)");
+		System.out.println("Bits Per Pixel   C(Mona,linear)  "
+				+ "C(Mona,quadratic)  C(Starry,linear) "
+				+ "C(Starry,quadratic) C(Christina,linear) "
+				+ "C(Christina,quadratic)");
 
 		ComparePaintings cp01 = new ComparePaintings();
 		ComparePaintings cp02 = new ComparePaintings();
@@ -145,7 +147,9 @@ public class ComparePaintings {
 	 * @throws Exception if ComparePaintings not met
 	 */
 	void fullSimilarityTests() throws Exception {
-		System.out.println("Bits Per Pixel       S(Mona,Starry)    S(Mona,Christina)     S(Starry,Christina)");
+		System.out.println("Bits Per Pixel       "
+				+ "S(Mona,Starry)    S(Mona,Christina)    "
+				+ " S(Starry,Christina)");
 
 		ComparePaintings cp01 = new ComparePaintings();
 		ComparePaintings cp02 = new ComparePaintings();
