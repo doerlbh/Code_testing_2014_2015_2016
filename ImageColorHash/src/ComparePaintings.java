@@ -1,5 +1,5 @@
 /** ComparePaintings.java
- *  a class for  .
+ *  a class to compare paints based on ColorHash and FeatureVector.
  * 
  * by Baihan Lin
  * for CSE 373 Assignment 3, Autumn, 2016.
@@ -21,8 +21,8 @@ public class ComparePaintings {
 
 	// Constants
 	private static final int DEFAULT_BPP = 6;		// default bits Per Pixel
-	private static final int DEFAULT_TBS = 11;		// default table size
-	private static final double DEFAULT_RLF = 0.4;	// default rehash load factor
+	private static final int DEFAULT_TBS = 13;		// default table size to kick start
+	private static final double DEFAULT_RLF = 0.4;	// default rehash load factor to kick start
 	private static final String IMG_01 = "MonaLisa.jpg"; 
 	private static final String IMG_02 = "StarryNight.jpg"; 
 	private static final String IMG_03 = "ChristinasWorld.jpg"; 
@@ -34,13 +34,19 @@ public class ComparePaintings {
 	private static final String IMG_09 = "CityRises.jpg"; 
 	private static final String IMG_10 = "Untitled.jpg"; 
 
-	// constructor.
+	// constructor for ComparePaintings
 	public ComparePaintings(){
 		pm = ColorHash.LINEAR_PROBING;
 		sumCol = 0;
 	}; 
 
-	// Load the image, construct the hash table, count the colors.
+	/**
+	 *  Load the image, construct the hash table, count the colors.
+	 * @param filename: filename of the image loaded
+	 * @param bitsPerPixel: bits per pixel used to define ColorHash
+	 * @return ch: a ColorHash from the image 
+	 * @throws Exception if ColorHash requirement not met
+	 */
 	ColorHash countColors(String filename, int bitsPerPixel) throws Exception {
 
 		sumCol = 0;
@@ -58,7 +64,13 @@ public class ComparePaintings {
 		return ch;
 	}
 
-	//	Starting with two hash tables of color counts, compute a measure of similarity based on the cosine distance of two vectors.
+	/**	Starting with two hash tables of color counts, compute a measure
+	 * of similarity based on the cosine distance of two vectors.
+	 * @param painting1: ColorHash 1
+	 * @param painting2: ColorHash 2
+	 * @return cosSim: the calculated cosine similarity value
+	 * @throws Exception if FeatureVector is not met
+	 */
 	double compare(ColorHash painting1, ColorHash painting2) throws Exception {
 		FeatureVector fv1 = new FeatureVector(DEFAULT_BPP);
 		FeatureVector fv2 = new FeatureVector(DEFAULT_BPP);
@@ -68,28 +80,37 @@ public class ComparePaintings {
 		return cosSim;
 	}
 
-	//	A basic test for the compare method: S(x,x) should be 1.0, so you should compute the similarity of an image with itself and print out the answer. If it comes out to be 1.0, that is a good sign for your implementation so far.
+	/**	A basic test for the compare method: S(x,x) should be 1.0, 
+	 * compute the similarity of an image with itself and print out 
+	 * the answer. 
+	 * @param filename: the image to load
+	 * @throws Exception if ComparePaintings not met
+	 */
 	void basicTest(String filename) throws Exception {
 		ComparePaintings cp2 = new ComparePaintings();
 		cp2.countColors(filename, DEFAULT_BPP);
-		System.out.print("Cosine Similarity of the two images is ");
+		System.out.print("Cosine Similarity Value between the two images is ");
 		System.out.println(fv.cosineSimilarity(cp2.fv));		
 	}
 
-	//		Using the three given painting images and a variety of bits-per-pixel values, compute and print out a table of collision counts in the following format:
+	/** Using the three given painting images and a variety 
+	 * of bits-per-pixel values, compute and print out a table 
+	 * of collision counts in the specified format
+	 * @throws Exception if ColorHash not met
+	 */
 	void CollisionTests() throws Exception {
 
 		System.out.println("Bits Per Pixel   C(Mona,linear)  C(Mona,quadratic)  C(Starry,linear) "
 				+ "C(Starry,quadratic) C(Christina,linear) C(Christina,quadratic)");
-		
+
 		ComparePaintings cp01 = new ComparePaintings();
 		ComparePaintings cp02 = new ComparePaintings();
 		ComparePaintings cp03 = new ComparePaintings();
-		
+
 		for (int bpp = 24; bpp >= 3; bpp -= 3) {
 
 			System.out.format("%-17d", bpp);
-			
+
 			cp01.pm = ColorHash.LINEAR_PROBING;
 			cp01.countColors(IMG_01, bpp);
 			System.out.format("%-16d", cp01.sumCol);
@@ -113,6 +134,7 @@ public class ComparePaintings {
 		}
 	}
 
+	
 	void fullSimilarityTests() throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("Bits Per Pixel       S(Mona,Starry)    S(Mona,Christina)     S(Starry,Christina)");
@@ -120,7 +142,7 @@ public class ComparePaintings {
 		ComparePaintings cp01 = new ComparePaintings();
 		ComparePaintings cp02 = new ComparePaintings();
 		ComparePaintings cp03 = new ComparePaintings();
-		
+
 		for (int bpp = 24; bpp >= 3; bpp-=3) {
 
 			cp01.countColors(IMG_01, bpp);
@@ -138,7 +160,7 @@ public class ComparePaintings {
 	void extraCredit10ImagesTest() throws Exception {
 		// TODO Auto-generated method stub
 		int bpp = 6;
-		
+
 		ComparePaintings cp01 = new ComparePaintings();
 		ComparePaintings cp02 = new ComparePaintings();
 		ComparePaintings cp03 = new ComparePaintings();
@@ -149,7 +171,7 @@ public class ComparePaintings {
 		ComparePaintings cp08 = new ComparePaintings();
 		ComparePaintings cp09 = new ComparePaintings();
 		ComparePaintings cp10 = new ComparePaintings();
-		
+
 		cp01.countColors(IMG_01, bpp);
 		cp02.countColors(IMG_02, bpp);
 		cp03.countColors(IMG_03, bpp);
@@ -171,7 +193,7 @@ public class ComparePaintings {
 		System.out.format("%-10s", "Kiss");
 		System.out.format("%-18s", "StJeromeReading");
 		System.out.format("%-12s", "CityRises");
-    	System.out.format("%-11s%n", "Untitled");
+		System.out.format("%-11s%n", "Untitled");
 
 		System.out.format("%-18s", "MonaLisa");
 		System.out.format("%-11f", cp01.fv.cosineSimilarity(cp01.fv));
@@ -183,7 +205,7 @@ public class ComparePaintings {
 		System.out.format("%-10f", cp01.fv.cosineSimilarity(cp07.fv));
 		System.out.format("%-18f", cp01.fv.cosineSimilarity(cp08.fv));
 		System.out.format("%-12f", cp01.fv.cosineSimilarity(cp09.fv));
-    	System.out.format("%-11f%n", cp01.fv.cosineSimilarity(cp10.fv));
+		System.out.format("%-11f%n", cp01.fv.cosineSimilarity(cp10.fv));
 
 		System.out.format("%-18s", "StarryNight");
 		System.out.format("%-11f", cp02.fv.cosineSimilarity(cp01.fv));
@@ -195,7 +217,7 @@ public class ComparePaintings {
 		System.out.format("%-10f", cp02.fv.cosineSimilarity(cp07.fv));
 		System.out.format("%-18f", cp02.fv.cosineSimilarity(cp08.fv));
 		System.out.format("%-12f", cp02.fv.cosineSimilarity(cp09.fv));
-    	System.out.format("%-11f%n", cp02.fv.cosineSimilarity(cp10.fv));
+		System.out.format("%-11f%n", cp02.fv.cosineSimilarity(cp10.fv));
 
 		System.out.format("%-18s", "ChristinasWorld");
 		System.out.format("%-11f", cp03.fv.cosineSimilarity(cp01.fv));
@@ -207,7 +229,7 @@ public class ComparePaintings {
 		System.out.format("%-10f", cp03.fv.cosineSimilarity(cp07.fv));
 		System.out.format("%-18f", cp03.fv.cosineSimilarity(cp08.fv));
 		System.out.format("%-12f", cp03.fv.cosineSimilarity(cp09.fv));
-    	System.out.format("%-11f%n", cp03.fv.cosineSimilarity(cp10.fv));
+		System.out.format("%-11f%n", cp03.fv.cosineSimilarity(cp10.fv));
 
 		System.out.format("%-18s", "WaterLilies");
 		System.out.format("%-11f", cp04.fv.cosineSimilarity(cp01.fv));
@@ -219,7 +241,7 @@ public class ComparePaintings {
 		System.out.format("%-10f", cp04.fv.cosineSimilarity(cp07.fv));
 		System.out.format("%-18f", cp04.fv.cosineSimilarity(cp08.fv));
 		System.out.format("%-12f", cp04.fv.cosineSimilarity(cp09.fv));
-    	System.out.format("%-11f%n", cp04.fv.cosineSimilarity(cp10.fv));
+		System.out.format("%-11f%n", cp04.fv.cosineSimilarity(cp10.fv));
 
 		System.out.format("%-18s", "ParisAutumn");
 		System.out.format("%-11f", cp05.fv.cosineSimilarity(cp01.fv));
@@ -231,7 +253,7 @@ public class ComparePaintings {
 		System.out.format("%-10f", cp05.fv.cosineSimilarity(cp07.fv));
 		System.out.format("%-18f", cp05.fv.cosineSimilarity(cp08.fv));
 		System.out.format("%-12f", cp05.fv.cosineSimilarity(cp09.fv));
-    	System.out.format("%-11f%n", cp05.fv.cosineSimilarity(cp10.fv));
+		System.out.format("%-11f%n", cp05.fv.cosineSimilarity(cp10.fv));
 
 		System.out.format("%-18s", "ButterflyShip");
 		System.out.format("%-11f", cp06.fv.cosineSimilarity(cp01.fv));
@@ -243,7 +265,7 @@ public class ComparePaintings {
 		System.out.format("%-10f", cp06.fv.cosineSimilarity(cp07.fv));
 		System.out.format("%-18f", cp06.fv.cosineSimilarity(cp08.fv));
 		System.out.format("%-12f", cp06.fv.cosineSimilarity(cp09.fv));
-    	System.out.format("%-11f%n", cp06.fv.cosineSimilarity(cp10.fv));
+		System.out.format("%-11f%n", cp06.fv.cosineSimilarity(cp10.fv));
 
 		System.out.format("%-18s", "Kiss");
 		System.out.format("%-11f", cp07.fv.cosineSimilarity(cp01.fv));
@@ -255,7 +277,7 @@ public class ComparePaintings {
 		System.out.format("%-10f", cp07.fv.cosineSimilarity(cp07.fv));
 		System.out.format("%-18f", cp07.fv.cosineSimilarity(cp08.fv));
 		System.out.format("%-12f", cp07.fv.cosineSimilarity(cp09.fv));
-    	System.out.format("%-11f%n", cp07.fv.cosineSimilarity(cp10.fv));
+		System.out.format("%-11f%n", cp07.fv.cosineSimilarity(cp10.fv));
 
 		System.out.format("%-18s", "StJeromeReading");
 		System.out.format("%-11f", cp08.fv.cosineSimilarity(cp01.fv));
@@ -267,7 +289,7 @@ public class ComparePaintings {
 		System.out.format("%-10f", cp08.fv.cosineSimilarity(cp07.fv));
 		System.out.format("%-18f", cp08.fv.cosineSimilarity(cp08.fv));
 		System.out.format("%-12f", cp08.fv.cosineSimilarity(cp09.fv));
-    	System.out.format("%-11f%n", cp08.fv.cosineSimilarity(cp10.fv));
+		System.out.format("%-11f%n", cp08.fv.cosineSimilarity(cp10.fv));
 
 		System.out.format("%-18s", "CityRises");
 		System.out.format("%-11f", cp09.fv.cosineSimilarity(cp01.fv));
@@ -279,7 +301,7 @@ public class ComparePaintings {
 		System.out.format("%-10f", cp09.fv.cosineSimilarity(cp07.fv));
 		System.out.format("%-18f", cp09.fv.cosineSimilarity(cp08.fv));
 		System.out.format("%-12f", cp09.fv.cosineSimilarity(cp09.fv));
-    	System.out.format("%-11f%n", cp09.fv.cosineSimilarity(cp10.fv));
+		System.out.format("%-11f%n", cp09.fv.cosineSimilarity(cp10.fv));
 
 		System.out.format("%-18s", "Untitled");
 		System.out.format("%-11f", cp10.fv.cosineSimilarity(cp01.fv));
@@ -291,7 +313,7 @@ public class ComparePaintings {
 		System.out.format("%-10f", cp10.fv.cosineSimilarity(cp07.fv));
 		System.out.format("%-18f", cp10.fv.cosineSimilarity(cp08.fv));
 		System.out.format("%-12f", cp10.fv.cosineSimilarity(cp09.fv));
-    	System.out.format("%-11f%n", cp10.fv.cosineSimilarity(cp10.fv));
+		System.out.format("%-11f%n", cp10.fv.cosineSimilarity(cp10.fv));
 
 	}
 
@@ -304,6 +326,19 @@ public class ComparePaintings {
 		System.out.println("It looks like we have successfully loaded all three test images.");
 
 	}
+
+
+	long countBlack(String filename) throws Exception {
+		//		// TODO Auto-generated method stub
+		ComparePaintings cp01 = new ComparePaintings();
+		ColorHash ch01 = cp01.countColors(filename, DEFAULT_BPP);
+		FeatureVector fv01 = new FeatureVector(DEFAULT_BPP);
+		fv01.getTheCounts(ch01);
+		long[] color = fv01.colorCounts;
+		long black = color[0];
+		return black;
+	}
+
 
 	/**
 	 * This is a basic testing function, and can be changed.
@@ -321,12 +356,17 @@ public class ComparePaintings {
 
 		// fullSimilarityTests
 		cp.fullSimilarityTests();
-		
+
 		// CollisionTests
 		cp.CollisionTests();
-		
+
+
 		// extra credits
 		cp.extraCredit10ImagesTest();
+		
+		// countBlack
+		long black = cp.countBlack(IMG_01);
+		System.out.println("In Mona Lisa there is "+black+" black pixels ");
 
 	}
 
