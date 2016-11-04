@@ -41,7 +41,8 @@ public class ComparePaintings {
 	}; 
 
 	/**
-	 *  Load the image, construct the hash table, count the colors.
+	 * Load the image, construct the hash table, count the colors.
+	 * 
 	 * @param filename: filename of the image loaded
 	 * @param bitsPerPixel: bits per pixel used to define ColorHash
 	 * @return ch: a ColorHash from the image 
@@ -66,6 +67,7 @@ public class ComparePaintings {
 
 	/**	Starting with two hash tables of color counts, compute a measure
 	 * of similarity based on the cosine distance of two vectors.
+	 * 
 	 * @param painting1: ColorHash 1
 	 * @param painting2: ColorHash 2
 	 * @return cosSim: the calculated cosine similarity value
@@ -83,6 +85,7 @@ public class ComparePaintings {
 	/**	A basic test for the compare method: S(x,x) should be 1.0, 
 	 * compute the similarity of an image with itself and print out 
 	 * the answer. 
+	 * 
 	 * @param filename: the image to load
 	 * @throws Exception if ComparePaintings not met
 	 */
@@ -96,6 +99,7 @@ public class ComparePaintings {
 	/** Using the three given painting images and a variety 
 	 * of bits-per-pixel values, compute and print out a table 
 	 * of collision counts in the specified format
+	 * 
 	 * @throws Exception if ColorHash not met
 	 */
 	void CollisionTests() throws Exception {
@@ -137,6 +141,7 @@ public class ComparePaintings {
 	/** Using the three given painting images and a variety 
 	 * of bits-per-pixel values, compute and print out a 
 	 * table of similarity values in the specified format
+	 * 
 	 * @throws Exception if ComparePaintings not met
 	 */
 	void fullSimilarityTests() throws Exception {
@@ -164,6 +169,7 @@ public class ComparePaintings {
 	 * a table with 10 rows and 10 columns that gives the results of 
 	 * running the cosine similarity analysis on each pair. Present 
 	 * the table neatly in your report.
+	 * 
 	 * @throws Exception if ComparePaintings not met
 	 */
 	void extraCredit10ImagesTest() throws Exception {
@@ -328,6 +334,7 @@ public class ComparePaintings {
 	/** A method to check that the images can be loaded, 
 	 * so we don't have an issue with missing files or bad paths.
 	 */
+	@SuppressWarnings("unused")
 	void imageLoadingTest() {
 		ImageLoader mona = new ImageLoader("MonaLisa.jpg");
 		ImageLoader starry = new ImageLoader("StarryNight.jpg");
@@ -337,6 +344,7 @@ public class ComparePaintings {
 	}
 
 	/** a method to count the number of black pixels in Mona Lisa
+	 * 
 	 * @param filename: Mona Lisa in this case
 	 * @return black: the number of black pixels in this image
 	 * @throws Exception if condition not met
@@ -354,6 +362,7 @@ public class ComparePaintings {
 
 	/**
 	 * This is a basic testing function, and can be changed.
+	 * 
 	 * @throws Exception if condition not met
 	 */
 	public static void main(String[] args) throws Exception {

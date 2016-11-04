@@ -1,7 +1,5 @@
-//import ColorHash.InvalidLoadFactorException;
-
 /** FeatureVector.java
- *  a class for  .
+ *  a class for for storing the results of counting the occurrences of colors.
  * 
  * by Baihan Lin
  * for CSE 373 Assignment 3, Autumn, 2016.
@@ -47,11 +45,13 @@ public class FeatureVector {
 		colorCounts = new long[keySpaceSize];
 	}
 
-	// You should implement this method.
-	// It will go through all possible key values in order,
-	// get the count from the hash table and put it into this feature vector.
+	/** A method to go through all possible key values in order
+	 * and get the count from the hash table and put it into 
+	 * this feature vector.
+	 * @param ch: the ColorHash being called
+	 * @throws Exception if ColorHash not met
+	 */
 	public void getTheCounts(ColorHash ch) throws Exception {
-		// TODO
 		for (int i = 0; i < keySpaceSize; i++) {
 			ColorKey key = new ColorKey(i, bitsPerPixel);;
 			if (key != null) {
@@ -61,26 +61,29 @@ public class FeatureVector {
 
 	}
 
-	// Implement this method. Use the formula given in the A3 spec,
-	// which is also explained at
-	// https://en.wikipedia.org/wiki/Cosine_similarity
-	// where A is this feature vector and B is the other feature vector.
-	// When multiplying in the dot product, convert all the long values
-	// to double before doing the multiplication.
-
-	// Hint: you may wish to write some private methods here to help
-	// computing the cosine similarity.  For example, it could be
-	// nice to have a dot product method and a vector magnitude method.
+	/** a method to calculate the cosine similarity value of the 
+	 * other FeatureVector versus current FeatureVector
+	 * 
+	 * @param other: the other FeatureVector to Compare
+	 * @return cosSim: the cosine similarity value of the two vectors
+	 * @throws Exception if condition not met
+	 */
 	public double cosineSimilarity(FeatureVector other) throws Exception {
-		// TODO
 		double dotProd = dot(this.colorCounts, other.colorCounts);
 		double vecProd = vec(this.colorCounts, other.colorCounts);
 		double cosSim = dotProd/vecProd;
 		return cosSim; 
 	}
 
+	/** a private method to support cosineSimilarity.
+	 * To calculate the dot product of two vectors
+	 * 
+	 * @param A: a vector in format of long[]
+	 * @param B: a vector in format of long[]
+	 * @return prod: the dot product of two vectors
+	 * @throws Exception if length of two vectors are different
+	 */
 	private static double dot(long[] A, long[] B) throws Exception {
-		// TODO Auto-generated method stub
 		if (A.length != B.length){
 			throw new ArithmeticException("Vector must have the same length.");
 		}
@@ -91,8 +94,15 @@ public class FeatureVector {
 		return prod;
 	}
 
+	/** a private method to support cosineSimilarity.
+	 * To calculate the vector product of two vectors
+	 * 
+	 * @param A: a vector in format of long[]
+	 * @param B: a vector in format of long[]
+	 * @return prod: the vector product of two vectors
+	 * @throws Exception if length of two vectors are different
+	 */
 	private static double vec(long[] A, long[] B) throws Exception {
-		// TODO Auto-generated method stub
 		if (A.length != B.length){
 			throw new ArithmeticException("Vector must have the same length.");
 		}
@@ -110,7 +120,6 @@ public class FeatureVector {
 	 * Optional main method for your own tests of these methods.
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		try {
 
@@ -191,7 +200,7 @@ public class FeatureVector {
 			ch2.increment(random1);
 			FeatureVector fv2 = new FeatureVector(6);
 			fv2.getTheCounts(ch2);
-			
+
 			double cosSim = fv.cosineSimilarity(fv2);
 			double cosdot = dot(fv.colorCounts, fv2.colorCounts);
 			double cosvec = vec(fv.colorCounts, fv2.colorCounts);
