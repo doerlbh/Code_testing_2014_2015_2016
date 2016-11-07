@@ -229,9 +229,41 @@ end
 %plot histograms
 fig5 = figure
 
-[Nt,xt]=hist(Snet,50);
-bar(xt,Nt/Trial)
+[Nt,xc]=hist(dt_closed,200);
+bar(xt,Nt)
 axis([0 max(xt)/4 -Inf Inf])
 xlabel('T')
-ylabel('Probability')
+ylabel('probability')
 title('histogram of probability on T')
+
+subplot(212)
+bar(xc(1:50),log(Nc(1:50)))
+xlabel('log(dt)')
+ylabel('freq')
+title('histogram of log(dt_ closed)')
+
+fig3 = figure
+
+subplot(211)
+[No,xo]=hist(dt_open,500);
+bar(xo,No)
+axis([0 max(xo)/4 -Inf Inf])
+xlabel('dt')
+ylabel('freq')
+title('histogram of dt_ open')
+
+subplot(212)
+bar(xo(1:50),log(No(1:50)))
+xlabel('log(dt)')
+ylabel('freq')
+title('histogram of log(dt_ open)')
+
+% Based on the hypothesis, here we fit it to a single exponential:
+fig4 = figure;
+plot(1:length(Nc),log(Nc))  %see what we're fitting
+title('log(dt closed) fitting to exponential')
+para = polyfit(1:50,log(N(1:50)),1)
+E_ajj = exp(para(1))
+
+% As shown in Fig 4, the single exponential fits dt_closed well.
+
