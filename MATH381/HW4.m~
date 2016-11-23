@@ -1,0 +1,31 @@
+%% HW4 for MATH381
+% @Author: Baihan Lin
+% @Date: Nov 2016
+
+clear all; close all; clc;
+
+rng(1);
+
+runs = 10;
+
+L = 2; % length of needle
+N = 100000; % trials to run
+
+n = 0; % number of crossed needles
+p = zeros(1, N); % probability of crossing
+
+r = rand(3,N); % random number for all steps
+
+for k = 1:N
+    x1 = 2*L*r(1,k);
+    y1 = 2*L*r(2,k);
+    ang = 
+    x2 = 2*L
+    y2 = 2*L
+
+    p(1) = n/k;
+end
+
+figure(1),
+plot(p); title('probablity of crossing along trials')
+xlabel('number of trails(iterations)'), ylabel('probability');
