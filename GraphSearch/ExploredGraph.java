@@ -405,5 +405,5 @@ public class ExploredGraph {
 			return "Move a disk from peg " + i + " to peg " + j;
 		}
 	}
-
+	
 }
