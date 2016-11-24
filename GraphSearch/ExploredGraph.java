@@ -41,6 +41,17 @@ public class ExploredGraph {
 		pMap = new LinkedHashMap<String, Vertex>();
 		pMove = new LinkedHashSet<Operator>();
 	}
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		ExploredGraph eg = new ExploredGraph();
+		// Test the vertex constructor: 
+		Vertex v0 = eg.new Vertex("[[4,3,2,1],[],[]]");
+		System.out.println(v0);
+
+	}
 
 	public void initialize(Vertex v) {
 		Ve.add(v);
@@ -163,24 +174,9 @@ public class ExploredGraph {
 
 	public Set<Edge> getEdges() {return Ee;} 
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		ExploredGraph eg = new ExploredGraph();
-		// Test the vertex constructor: 
-		Vertex v0 = eg.new Vertex("[[4,3,2,1],[],[]]");
-		System.out.println(v0);
-		// Add your own tests here.
-
-
-
-		// The autograder code will be used to test your basic functionality later.
-
-	}
-
 	class Vertex {
-		public Object dist;
+		int dist;
+		
 		ArrayList<Stack<Integer>> pegs; // Each vertex will hold a Towers-of-Hanoi state.
 		// There will be 3 pegs in the standard version, but more if you do extra credit option A5E1.
 
@@ -207,6 +203,7 @@ public class ExploredGraph {
 				catch(NumberFormatException nfe) { nfe.printStackTrace(); }
 			}		
 		}
+		
 		public String toString() {
 			String ans = "[";
 			for (int i=0; i<3; i++) {
@@ -219,11 +216,18 @@ public class ExploredGraph {
 	}
 
 	class Edge {
+		private Vertex vi, vj;
 		public Edge(Vertex vi, Vertex vj) {
-			// Add whatever you need to here.
-
-
+			this.vi = vi;
+			this.vj = vj;
 		}
+		public String toString() {
+			return "Edge from " + vi.toString() + " to " + vj.toString();
+		}
+		
+		public Vertex getEndPoint1(){ return vi;}
+		
+		public Vertex getEndPoint2(){ return vj;}
 	}
 
 	class Operator {
