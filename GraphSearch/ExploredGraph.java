@@ -46,10 +46,26 @@ public class ExploredGraph {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
 		ExploredGraph eg = new ExploredGraph();
-		// Test the vertex constructor: 
-		Vertex v0 = eg.new Vertex("[[4,3,2,1],[],[]]");
+
+		// bfs search path for 6 disks, expect (2^6) - 1 = 63
+		//		Vertex v0 = eg.new Vertex("[[6,5,4,3,2,1],[],[]]");
+		//		Vertex v1 = eg.new Vertex("[[],[],[6,5,4,3,2,1]]");
+		//		System.out.println(v0);
+
+		// bfs search path for 6 disks, 4 pegs, expect 17
+		Vertex v0 = eg.new Vertex("[[6,5,4,3,2,1],[],[],[]]");
+		Vertex v1 = eg.new Vertex("[[],[],[],[6,5,4,3,2,1]]");
 		System.out.println(v0);
+
+		// find path		
+		eg.initialize(v0);
+		ArrayList<Vertex> path = eg.shortestPath(v0, v1);
+//		Iterator<Vertex> it = path.iterator();
+		for (Vertex v : path) { System.out.println(v.toString()); }
+		System.out.println("path length = " + (path.size() - 1));
+
 
 	}
 
@@ -66,12 +82,17 @@ public class ExploredGraph {
 	}
 
 	private int getPegNumber(Vertex v) {
+		return string2peg(v.toString());
+	}
+
+	int string2peg(String s) {
 		int pCount = -1; // account for the first bracket in the front
-		for (char c : v.toString().toCharArray()) {
+		for (char c : s.toCharArray()) {
 			if (c == '[') {
 				pCount++;
 			}
 		}
+//		System.out.println(s + "---" + pCount);
 		return pCount;
 	}
 
@@ -176,51 +197,63 @@ public class ExploredGraph {
 
 	class Vertex {
 		int dist;
+		int nPegV;
 
 		ArrayList<Stack<Integer>> pegs; // Each vertex will hold a Towers-of-Hanoi state.
 		// There will be 3 pegs in the standard version, but more if you do extra credit option A5E1.
 
 		// Constructor that takes a string such as "[[4,3,2,1],[],[]]":
 		public Vertex(String vString) {
+			nPegV = string2peg(vString);
+//			System.out.println(vString);
 			String[] parts = vString.split("\\],\\[");
-			pegs = new ArrayList<Stack<Integer>>(3);
-			for (int i=0; i<3;i++) {
+//			System.out.println(parts.length);
+			pegs = new ArrayList<Stack<Integer>>(nPegV);
+			for (int i = 0; i < nPegV;i++) {
 				pegs.add(new Stack<Integer>());
 				try {
 					parts[i]=parts[i].replaceAll("\\[","");
 					parts[i]=parts[i].replaceAll("\\]","");
 					List<String> al = new ArrayList<String>(Arrays.asList(parts[i].split(",")));
-					System.out.println("ArrayList al is: "+al);
 					Iterator<String> it = al.iterator();
 					while (it.hasNext()) {
 						String item = it.next();
 						if (!item.equals("")) {
-							System.out.println("item is: "+item);
 							pegs.get(i).push(Integer.parseInt(item));
 						}
 					}
 				}
 				catch(NumberFormatException nfe) { nfe.printStackTrace(); }
-			}		
+			}
 		}
 
 		public String toString() {
 			String ans = "[";
-			for (int i=0; i<3; i++) {
+			for (int i=0; i< nPegV; i++) {
 				ans += pegs.get(i).toString().replace(" ", "");
-				if (i<2) { ans += ","; }
+				if (i<nPegV-1) { ans += ","; }
 			}
 			ans += "]";
 			return ans;
 		}
+
+		public boolean equals(Object v){
+			if (v == this) { return true; }
+			if (!(v instanceof Vertex)) { return false; }
+			Vertex other = (Vertex) v;
+			return (this.toString().equals(other.toString()));
+		}
 	}
 
 	class Edge {
+
 		private Vertex vi, vj;
+
 		public Edge(Vertex vi, Vertex vj) {
 			this.vi = vi;
 			this.vj = vj;
 		}
+
 		public String toString() {
 			return "Edge from " + vi.toString() + " to " + vj.toString();
 		}
@@ -231,6 +264,7 @@ public class ExploredGraph {
 	}
 
 	class Operator {
+
 		private int i, j;
 
 		public Operator(int i, int j) { // Constructor for operators.
