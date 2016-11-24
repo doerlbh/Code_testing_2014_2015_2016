@@ -1,5 +1,7 @@
 import java.util.*;
 
+// Happy Thanksgiving to you!
+
 /**
  * @author Baihan Lin  < sunnylin@uw.edu >
  * @version 	1.2
@@ -349,16 +351,25 @@ public class ExploredGraph {
 		public Vertex getEndPoint2(){ return vj;}
 	}
 
-	
+	// Inner Class to store operator
 	class Operator {
 
 		private int i, j;
 
-		public Operator(int i, int j) { // Constructor for operators.
+		/**
+		 * Constructor of Operator 
+		 * @param  i, j: the two pegs as source and target
+		 */
+		public Operator(int i, int j) { 
 			this.i = i;
 			this.j = j;
 		}
 
+		/**
+		 * Public Method to determine whether precondition of the operation is met
+		 * @param  v: a vertex which represent the state
+		 * @return true if precondition is met
+		 */
 		public boolean precondition(Vertex v) {
 			if(v.pegs.get(i).empty()){ 
 				return false;
@@ -371,6 +382,11 @@ public class ExploredGraph {
 			}
 		}
 
+		/**
+		 * Public Method to transition from one state to another
+		 * @param  v: a vertex which represent the current state
+		 * @return a new state as vertex
+		 */
 		public Vertex transition(Vertex v) {
 			if(precondition(v)){
 				Vertex next = new Vertex(v.toString());
@@ -381,6 +397,10 @@ public class ExploredGraph {
 			}
 		}
 
+		/**
+		 * Public Method to describe the operator as a string
+		 * @return a string with all operation information
+		 */
 		public String toString() {
 			return "Move a disk from peg " + i + " to peg " + j;
 		}
