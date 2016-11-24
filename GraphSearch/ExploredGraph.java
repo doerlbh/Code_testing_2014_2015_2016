@@ -24,6 +24,7 @@ public class ExploredGraph {
 
 	LinkedHashMap<String, Vertex> pMap; // predecessors of maps
 	Set<Operator> pMove; // peg moves
+	int costF; // cost function
 
 	/**
 	 * Constructor to ExploredGraph
@@ -31,12 +32,14 @@ public class ExploredGraph {
 	 * @param Ee stores collection of explored edges.
 	 * @param pMap stores  predecessors of maps
 	 * @param pMove stores peg moves
+	 * @param costF stores the choice of cost function
 	 */
 	public ExploredGraph() {
 		Ve = new LinkedHashSet<Vertex>();
 		Ee = new LinkedHashSet<Edge>();
 		pMap = new LinkedHashMap<String, Vertex>();
 		pMove = new LinkedHashSet<Operator>();
+		costF = 1; // by default we use edgeCost function 1
 	}
 
 	/**
@@ -166,6 +169,14 @@ public class ExploredGraph {
 		}
 	}
 
+	/**
+	 * Public Method set the choice of using which edge cost function.
+	 * @param m: choice of cost function choice
+	 */
+	public void useEdgeCostFunction(int m) {
+		costF = m;
+	}
+	
 	/**
 	 * Public Method to do Breadth-First Search from vi to vj
 	 * @param vi, vj: two vertices
