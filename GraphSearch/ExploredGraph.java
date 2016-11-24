@@ -53,7 +53,7 @@ public class ExploredGraph {
 			}
 		}
 	}
-	
+
 	private int getPegNumber(Vertex v) {
 		int pCount = -1; // account for the first bracket in the front
 		for (char c : v.toString().toCharArray()) {
@@ -65,19 +65,47 @@ public class ExploredGraph {
 	}
 
 	public int nvertices() {return Ve.size();}
-	
+
 	public int nedges() {return Ee.size();}
-	
-	 // Iterative Depth-First Search
+
+	// Iterative Depth-First Search
 	public void idfs(Vertex vi, Vertex vj) {}
-	
+
 	// Breadth-First Search
 	public void bfs(Vertex vi, Vertex vj) {} 
+
+	public ArrayList<Vertex> retrievePath(Vertex vi) {
+		ArrayList<Vertex> path = new ArrayList<Vertex>();
+		
+		Stack<Vertex> backPath = new Stack<Vertex>();
 	
-	public ArrayList<Vertex> retrievePath(Vertex vi) {return null;} // Implement this.
-	public ArrayList<Vertex> shortestPath(Vertex vi, Vertex vj) {return null;} // Implement this.
+		if (pMap.containsKey(vi.toString())) {
+			Vertex curMap = vi;
+			while (pMap.get(curMap.toString()) != null) {
+				backPath.push(curMap);
+				curMap = pMap.get(curMap.toString());
+			}
+			backPath.push(curMap);
+			// Reverse list to get proper order.
+			while (!backPath.isEmpty()) {
+				path.add(backPath.pop());
+			}
+		} else {
+			throw new IllegalArgumentException("Vertex not in searched path");
+		}
+		return path;
+	}
+
+	public ArrayList<Vertex> shortestPath(Vertex vi, Vertex vj) {
+		bfs(vi, vj);
+		ArrayList<Vertex> path = retrievePath(vj);
+		return path;
+	} 
+
 	public Set<Vertex> getVertices() {return Ve;} 
+
 	public Set<Edge> getEdges() {return Ee;} 
+
 	/**
 	 * @param args
 	 */
