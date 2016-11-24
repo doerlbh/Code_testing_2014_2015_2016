@@ -41,7 +41,7 @@ public class ExploredGraph {
 		pMap = new LinkedHashMap<String, Vertex>();
 		pMove = new LinkedHashSet<Operator>();
 	}
-	
+
 	/**
 	 * @param args
 	 */
@@ -96,8 +96,8 @@ public class ExploredGraph {
 			for (Operator move : pMove) {
 				Vertex nextVe = move.transition(curVe);
 				if ( (!nextVe.equals(curVe))
-					 && (oVe.search(nextVe) == -1)
-					 && (!cVe.contains(nextVe))) {
+						&& (oVe.search(nextVe) == -1)
+						&& (!cVe.contains(nextVe))) {
 					oVe.push(nextVe);
 					pMap.put(nextVe.toString(), curVe);
 					Ve.add(nextVe);
@@ -176,7 +176,7 @@ public class ExploredGraph {
 
 	class Vertex {
 		int dist;
-		
+
 		ArrayList<Stack<Integer>> pegs; // Each vertex will hold a Towers-of-Hanoi state.
 		// There will be 3 pegs in the standard version, but more if you do extra credit option A5E1.
 
@@ -203,7 +203,7 @@ public class ExploredGraph {
 				catch(NumberFormatException nfe) { nfe.printStackTrace(); }
 			}		
 		}
-		
+
 		public String toString() {
 			String ans = "[";
 			for (int i=0; i<3; i++) {
@@ -224,9 +224,9 @@ public class ExploredGraph {
 		public String toString() {
 			return "Edge from " + vi.toString() + " to " + vj.toString();
 		}
-		
+
 		public Vertex getEndPoint1(){ return vi;}
-		
+
 		public Vertex getEndPoint2(){ return vj;}
 	}
 
@@ -251,9 +251,13 @@ public class ExploredGraph {
 		}
 
 		public Vertex transition(Vertex v) {
-			// TODO: Add code to return a "successor" of v, according
-			// to this operator.
-			return null; // Placeholder.  change this.
+			if(precondition(v)){
+				Vertex next = new Vertex(v.toString());
+				next.pegs.get(j).push(next.pegs.get(i).pop());
+				return next;
+			} else {
+				return v; 
+			}
 		}
 
 		public String toString() {
