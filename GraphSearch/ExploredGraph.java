@@ -72,13 +72,42 @@ public class ExploredGraph {
 	public void idfs(Vertex vi, Vertex vj) {}
 
 	// Breadth-First Search
-	public void bfs(Vertex vi, Vertex vj) {} 
+	public void bfs(Vertex vi, Vertex vj) {
+		boolean endSearch = false;
+		int dist = 0;
+		Queue<Vertex> oVe = new LinkedList<Vertex>();
+		Queue<Vertex> cVe = new LinkedList<Vertex>();
+		pMap.clear();
+		pMap.put(vi.toString(), null);
+		Ee.add(new Edge(null, vi));
+		oVe.add(vi);
+		System.out.println(vi);
+		Vertex curVe;
+		while (!oVe.isEmpty() || !endSearch) {
+			curVe = oVe.remove();
+			curVe.dist = dist;
+			dist++;
+			for (Operator move : pMove) {
+				Vertex nextVe = move.transition(curVe);
+				if ( (!nextVe.equals(curVe))
+						&& (!oVe.contains(nextVe))
+						&& (!cVe.contains(nextVe))) {
+					oVe.add(nextVe);
+					pMap.put(nextVe.toString(), curVe);
+					Ve.add(nextVe);
+					Ee.add(new Edge(curVe, nextVe));
+				}
+				if (nextVe.equals(vj)) {
+					endSearch = true;
+				}
+			}
+			cVe.add(curVe);
+		}
+	} 
 
 	public ArrayList<Vertex> retrievePath(Vertex vi) {
 		ArrayList<Vertex> path = new ArrayList<Vertex>();
-		
-		Stack<Vertex> backPath = new Stack<Vertex>();
-	
+		Stack<Vertex> backPath = new Stack<Vertex>();	
 		if (pMap.containsKey(vi.toString())) {
 			Vertex curMap = vi;
 			while (pMap.get(curMap.toString()) != null) {
@@ -86,7 +115,6 @@ public class ExploredGraph {
 				curMap = pMap.get(curMap.toString());
 			}
 			backPath.push(curMap);
-			// Reverse list to get proper order.
 			while (!backPath.isEmpty()) {
 				path.add(backPath.pop());
 			}
@@ -123,6 +151,7 @@ public class ExploredGraph {
 	}
 
 	class Vertex {
+		public Object dist;
 		ArrayList<Stack<Integer>> pegs; // Each vertex will hold a Towers-of-Hanoi state.
 		// There will be 3 pegs in the standard version, but more if you do extra credit option A5E1.
 
