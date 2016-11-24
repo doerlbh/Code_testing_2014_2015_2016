@@ -261,9 +261,7 @@ public class ExploredGraph {
 		}
 
 		public String toString() {
-			// TODO: Add code to return a string good enough
-			// to distinguish different operators
-			return "";
+			return "Move a disk from peg " + i + " to peg " + j;
 		}
 	}
 
