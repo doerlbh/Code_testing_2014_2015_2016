@@ -239,9 +239,15 @@ public class ExploredGraph {
 		}
 
 		public boolean precondition(Vertex v) {
-			// TODO: Add code that will determine whether or not this 
-			// operator is applicable to this vertex.
-			return false; // Placeholder.  Change this.
+			if(v.pegs.get(i).empty()){ 
+				return false;
+			} else if (v.pegs.get(j).empty()){ 
+				return true;
+			} else if (v.pegs.get(i).peek() > v.pegs.get(j).peek()){ 
+				return false;
+			} else { 
+				return true;
+			}
 		}
 
 		public Vertex transition(Vertex v) {
