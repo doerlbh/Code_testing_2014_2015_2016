@@ -7,7 +7,7 @@ import java.util.*;
  * @version 	1.2
  * @since 		1.0 2016-11-12
  * 
- * Extra Credit Options Implemented:  A5E1, A5E2, A5E3, A5E4
+ * Extra Credit Options Implemented:  A5E1, A5E2 (half done, but not finished)
  * 
  * Solution to Assignment 5 in CSE 373, Autumn 2016
  * University of Washington.
@@ -25,7 +25,6 @@ public class ExploredGraph {
 	LinkedHashMap<String, Vertex> pMap; // predecessors of maps
 	Set<Operator> pMove; // peg moves
 	int costF; // cost function
-	ArrayList<Vertex> path; // path found
 
 	/**
 	 * Constructor to ExploredGraph
@@ -51,66 +50,36 @@ public class ExploredGraph {
 
 		ExploredGraph eg = new ExploredGraph();
 
-		// Basic Testing 1:
+		// Basic Testing:
 		// bfs search path for 6 disks, expect (2^6) - 1 = 63
-//		System.out.println("-[Basic Test]-------------------");
-//		Vertex v01 = eg.new Vertex("[[6,5,4,3,2,1],[],[]]");
-//		Vertex v11 = eg.new Vertex("[[],[],[6,5,4,3,2,1]]");
-//		eg.initialize(v01);
-//		eg.bfs(v01,v11);
-//		System.out.println(eg.nvertices());
-//		System.out.println(eg.nedges());
-//		System.out.println(eg.retrievePath(v11));
-//		ArrayList<Vertex> path1 = eg.shortestPath(v01, v11);
-//		for (Vertex v : path1) { System.out.println(v.toString()); }
-//		System.out.println("path length = " + (path1.size() - 1));
+		//		Vertex v0 = eg.new Vertex("[[6,5,4,3,2,1],[],[]]");
+		//		Vertex v1 = eg.new Vertex("[[],[],[6,5,4,3,2,1]]");
+		//		System.out.println(v0);
+
+		// A5E1 Testing 1:
+		// bfs search path for 6 disks, 4 pegs, expect 17
+		//		Vertex v0 = eg.new Vertex("[[6,5,4,3,2,1],[],[],[]]");
+		//		Vertex v1 = eg.new Vertex("[[],[],[],[6,5,4,3,2,1]]");
+		//		System.out.println(v0);
 
 		// A5E1 Testing 2:
-		// bfs search path for 6 disks, 4 pegs, expect 17
-		//		System.out.println("-[A5E1 Test2]-------------------");
-		//		Vertex v02 = eg.new Vertex("[[6,5,4,3,2,1],[],[],[]]");
-		//		Vertex v12 = eg.new Vertex("[[],[],[],[6,5,4,3,2,1]]");
-		//		eg.initialize(v02);
-		//		ArrayList<Vertex> path2 = eg.shortestPath(v02, v12);
-		//		for (Vertex v : path2) { System.out.println(v.toString()); }
-		//		System.out.println("path length = " + (path2.size() - 1));
+		// bfs search for 4 disks, 5 pegs, expect 7
+		Vertex v0 = eg.new Vertex("[[4,3,2,1],[],[],[],[]]");
+		Vertex v1 = eg.new Vertex("[[],[],[],[],[4,3,2,1]]");
+		System.out.println(v0);
 
-		// A5E1 Testing 3:
-//		 bfs search for 4 disks, 5 pegs, expect 7
-//		System.out.println("-[A5E1 Test3]-------------------");
-//		Vertex v03 = eg.new Vertex("[[4,3,2,1],[],[],[],[]]");
-//		Vertex v13 = eg.new Vertex("[[],[],[],[],[4,3,2,1]]");				
-//		eg.initialize(v03);
-//		ArrayList<Vertex> path3 = eg.shortestPath(v03, v13);
-//		for (Vertex v : path3) { System.out.println(v.toString()); }
-//		System.out.println("path length = " + (path3.size() - 1));
+		// find path		
+		eg.initialize(v0);
+		ArrayList<Vertex> path = eg.shortestPath(v0, v1);
+		for (Vertex v : path) { System.out.println(v.toString()); }
+		System.out.println("path length = " + (path.size() - 1));
 
-		// Dijkstra Testing 4
-		System.out.println("-[Dijkstra Test4]-------------------");
-		Vertex v04 = eg.new Vertex("[[4,3,2,1],[],[]]");
-		Vertex v14 = eg.new Vertex("[[],[],[4,3,2,1]]");
-		eg.initialize(v04);
-		for (int i = 1; i <=6; i++) {
-			System.out.println("======Function=" + i);
-			eg.useEdgeCostFunction(i);
-			eg.dijkstra(v04,v14);
-			System.out.println(eg.nvertices());
-			System.out.println(eg.nedges());
-			System.out.println(eg.retrievePath(v14));
-		}
-		eg.useEdgeCostFunction(1);
-
-		// aStar Testing 5
-		//		System.out.println("-[aStar Test5]-------------------");
-		//		eg.useEdgeCostFunction(1);
-		//		Vertex v05 = eg.new Vertex("[[5,4,3,2,1],[],[]]");
-		//		Vertex v15 = eg.new Vertex("[[],[],[5,4,3,2,1]]");
-		//		eg.initialize(v05);
-		//		eg.aStar(v05,v15);
-		//		System.out.println(eg.nvertices());
-		//		System.out.println(eg.nedges());
-		//		System.out.println(eg.retrievePath(v15));
-
+		// test other functions
+		eg.initialize(v0);
+		eg.bfs(v0,v1);
+		System.out.println(eg.nvertices());
+		System.out.println(eg.nedges());
+		System.out.println(eg.retrievePath(v1));
 
 	}
 
@@ -184,7 +153,7 @@ public class ExploredGraph {
 	public int getEdgeCost(int i, int j, int k) {
 		int edgeCost = 1;
 		switch (costF) {
-		case 1:	edgeCost = 1;
+		case 1: edgeCost = 1;
 		break;
 		case 2: edgeCost = k;
 		break;
@@ -282,75 +251,6 @@ public class ExploredGraph {
 	} 
 
 	/**
-	 * Public Method to do a Dijkstra search from vi to vj
-	 * explored edges and tracked path.
-	 * @param vi, vj: two vertices from source to target
-	 */
-	public void dijkstra(Vertex vi, Vertex vj) {
-		vi.dist = 0;
-		int nP = getPegNumber(vi);
-		ArrayList<Vertex> path = new ArrayList<Vertex>();
-		path.add(vi);
-		PriorityQueue<ArrayList<Vertex>> minHeap = new PriorityQueue<ArrayList<Vertex>>(11, new Comparator<ArrayList<Vertex>>() {
-			@Override
-			public int compare(ArrayList<Vertex> al1, ArrayList<Vertex> al2) {
-				Vertex v1 = al1.get(al1.size() - 1);
-				Vertex v2 = al2.get(al2.size() - 1);
-				return Integer.compare(v1.dist, v2.dist);
-			}
-		});
-		minHeap.offer(path);
-
-		while (!minHeap.isEmpty()) {
-
-			path = minHeap.poll();
-			Vertex vCur = path.get(path.size() - 1);
-			// Check if vCur reach the goal state.
-			if (vCur.equals(vj)) {
-				this.path = path;
-			}
-			Ve.remove(vi);
-			System.out.println(vCur.toString());
-			System.out.println(Ve.toString());
-			// If the node is not explored.
-			if (!Ve.contains(vCur)) {
-				
-				// Collect all adjacent nodes and explore a no-cycle path.
-				for (int i = 0; i < nP; i++) {
-					for (int j = 0; j < nP; j++) {
-						System.out.println("I am here");
-						if (i != j) {
-							Operator op = new Operator(i, j);
-							System.out.println("I am here 1");
-							if (op.precondition(vCur)) {
-								System.out.println("I am here 2");
-								Vertex vNext = op.transition(vCur);
-								// Explore the unvisited nodes, then mark the edge explored.
-								if (!Ve.contains(vNext)) {
-									System.out.println("I am here 3");
-									Edge newEdge = new Edge(vCur, vNext);
-									int k = vCur.pegs.get(i).peek(); 
-									int edgeCost = getEdgeCost(i, j, k);
-									// Update unknown nodes if there is smaller distance only.
-									if (vNext.dist > vCur.dist + edgeCost) {
-										vNext.dist = vCur.dist + edgeCost;
-										Ee.add(newEdge);
-										ArrayList<Vertex> newPath = new ArrayList<Vertex>(path);
-										newPath.add(vNext);
-										minHeap.offer(newPath);
-									}
-								}
-							}
-						}
-					}
-				}
-				Ve.add(vCur);	
-			}
-		}
-	}
-
-
-	/**
 	 * Public Method to use path links established to return path
 	 * @param vi: a vertex as target
 	 * @return ArrayList of Vertex which contains states along the path
@@ -366,13 +266,6 @@ public class ExploredGraph {
 			}
 			backPath.push(curMap);
 			while (!backPath.isEmpty()) { path.add(backPath.pop()); }
-		} else if (this.path != null) { // for Dijkadra method
-			for (int i = 0; i < this.path.size(); i++) {
-				Vertex vf = this.path.get(i);
-				if (vf.equals(vi)) {
-					return new ArrayList<Vertex>(this.path.subList(0, i + 1));
-				}
-			}
 		} else {
 			throw new IllegalArgumentException("Vertex not in searched path");
 		}
