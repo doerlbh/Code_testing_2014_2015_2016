@@ -133,13 +133,13 @@ public class ExploredGraph {
 		pMap.clear();
 		pMap.put(vi.toString(), null);
 		Ee.add(new Edge(null, vi));
-		
+
 		Stack<Vertex> oVe = new Stack<Vertex>(); //open
 		LinkedList<Vertex> cVe = new LinkedList<Vertex>(); //closed
-		
+
 		boolean isFound = false;
 		int dist = 0;
-		
+
 		oVe.push(vi);
 		Vertex curVe; // current Vertex
 		while (!oVe.empty() || !isFound) {
@@ -173,13 +173,13 @@ public class ExploredGraph {
 		pMap.clear();
 		pMap.put(vi.toString(), null);
 		Ee.add(new Edge(null, vi));
-		
+
 		Queue<Vertex> oVe = new LinkedList<Vertex>(); // open
 		Queue<Vertex> cVe = new LinkedList<Vertex>(); // closed
-		
+
 		boolean isFound = false;
 		int dist = 0;
-		
+
 		oVe.add(vi);
 		Vertex curVe; // current Vertex
 		while (!oVe.isEmpty() || !isFound) {
@@ -210,8 +210,8 @@ public class ExploredGraph {
 	 * @return ArrayList of Vertex which contains states along the path
 	 */
 	public ArrayList<Vertex> retrievePath(Vertex vi) {
-		ArrayList<Vertex> path = new ArrayList<Vertex>();
 		Stack<Vertex> backPath = new Stack<Vertex>();	
+		ArrayList<Vertex> path = new ArrayList<Vertex>();
 		if (pMap.containsKey(vi.toString())) {
 			Vertex curMap = vi;
 			while (pMap.get(curMap.toString()) != null) {
@@ -219,33 +219,51 @@ public class ExploredGraph {
 				curMap = pMap.get(curMap.toString());
 			}
 			backPath.push(curMap);
-			while (!backPath.isEmpty()) {
-				path.add(backPath.pop());
-			}
+			while (!backPath.isEmpty()) { path.add(backPath.pop()); }
 		} else {
 			throw new IllegalArgumentException("Vertex not in searched path");
 		}
 		return path;
 	}
 
+	/**
+	 * Public Method to get the shortest from one vertex to another
+	 * @param vi, vj: two vertices as two states
+	 * @return the shortest path in an ArrayList of vertices as states
+	 */
 	public ArrayList<Vertex> shortestPath(Vertex vi, Vertex vj) {
 		bfs(vi, vj);
 		ArrayList<Vertex> path = retrievePath(vj);
 		return path;
 	} 
 
+	/**
+	 * Public Method to get all the explored vertices 
+	 * @return collection of explored vertices
+	 */
 	public Set<Vertex> getVertices() {return Ve;} 
-
+	
+	/**
+	 * Public Method to get all the explored edges 
+	 * @return collection of explored edges
+	 */
 	public Set<Edge> getEdges() {return Ee;} 
 
+	// Inner class vertex to store each state
 	class Vertex {
-		int dist;
-		int nPegV;
+		int dist; // distance from the starting point
+		int nPegV; // number of peg for A5E1
 
 		ArrayList<Stack<Integer>> pegs; // Each vertex will hold a Towers-of-Hanoi state.
 		// There will be 3 pegs in the standard version, but more if you do extra credit option A5E1.
 
 		// Constructor that takes a string such as "[[4,3,2,1],[],[]]":
+		/**
+		 * Constructor to ExploredGraph
+		 * @param dist stores distance from the starting point
+		 * @param nPegV stores number of peg for A5E1
+		 * @param pegs stores a Towers-of-Hanoi state
+		 */
 		public Vertex(String vString) {
 			nPegV = string2peg(vString);
 			//			System.out.println(vString);
@@ -270,6 +288,10 @@ public class ExploredGraph {
 			}
 		}
 
+		/**
+		 * Public Method to return a string from the vertex 
+		 * @return a string with all the state elements
+		 */
 		public String toString() {
 			String ans = "[";
 			for (int i=0; i< nPegV; i++) {
@@ -280,6 +302,10 @@ public class ExploredGraph {
 			return ans;
 		}
 
+		/**
+		 * Public Method to compare two objects as vertex
+		 * @return a boolean: true if equal
+		 */
 		public boolean equals(Object v){
 			if (v == this) { return true; }
 			if (!(v instanceof Vertex)) { return false; }
@@ -287,25 +313,43 @@ public class ExploredGraph {
 			return (this.toString().equals(other.toString()));
 		}
 	}
-
+	
+	// Inner class vertex to store each edge between two vertices
 	class Edge {
 
 		private Vertex vi, vj;
-
+		
+		/**
+		 * Constructor of Edge
+		 * @param vi, vj: two vertices that form this edge
+		 */
 		public Edge(Vertex vi, Vertex vj) {
 			this.vi = vi;
 			this.vj = vj;
 		}
 
+		/**
+		 * Public Method to return a string from the edge 
+		 * @return a string with all the vertices as elements
+		 */
 		public String toString() {
 			return "Edge from " + vi.toString() + " to " + vj.toString();
 		}
 
+		/**
+		 * Public Method to return the first vertex 
+		 * @return vi: the first vertex
+		 */
 		public Vertex getEndPoint1(){ return vi;}
 
+		/**
+		 * Public Method to return the second vertex 
+		 * @return vi: the second vertex
+		 */
 		public Vertex getEndPoint2(){ return vj;}
 	}
 
+	
 	class Operator {
 
 		private int i, j;
