@@ -4,7 +4,7 @@ README file for Assignment 5.
 
 2. N/A. I work alone on this assignment.
 
-3. A5E1
+3. A5E1, A5E2 (half done but not finished yet)
 
 4. N/A 
 

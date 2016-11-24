@@ -7,7 +7,7 @@ import java.util.*;
  * @version 	1.2
  * @since 		1.0 2016-11-12
  * 
- * Extra Credit Options Implemented:  A5E1, A5E2, A5E3, A5E4
+ * Extra Credit Options Implemented:  A5E1, A5E2 (half done, but not finished)
  * 
  * Solution to Assignment 5 in CSE 373, Autumn 2016
  * University of Washington.
@@ -74,6 +74,13 @@ public class ExploredGraph {
 		for (Vertex v : path) { System.out.println(v.toString()); }
 		System.out.println("path length = " + (path.size() - 1));
 
+		// test other functions
+		eg.initialize(v0);
+		eg.bfs(v0,v1);
+		System.out.println(eg.nvertices());
+		System.out.println(eg.nedges());
+		System.out.println(eg.retrievePath(v1));
+
 	}
 
 	/**
@@ -130,6 +137,40 @@ public class ExploredGraph {
 	public int nedges() {return Ee.size();}
 
 	/**
+	 * Public Method set the choice of using which edge cost function.
+	 * @param m: choice of cost function choice
+	 */
+	public void useEdgeCostFunction(int m) {
+		costF = m;
+	}
+	
+	/**
+	 * Public Method to calculate the edge cost
+	 * @param i, j: two pegs
+	 * @param k: number on the disk
+	 * note: another implicit parameter is the choice of cost function
+	 */
+	public int getEdgeCost(int i, int j, int k) {
+		int edgeCost = 1;
+		switch (costF) {
+		case 1:	edgeCost = 1;
+		break;
+		case 2: edgeCost = k;
+		break;
+		case 3: edgeCost = k * k;
+		break;
+		case 4: edgeCost = (int)Math.pow(2, k);
+		break;
+		case 5: double p = (j == 1) ? 0.1 : 1;
+		edgeCost = (int)(p * Math.pow(2, k));
+		break;
+		case 6: edgeCost = k*(k+1)*(k+2);
+		break;	
+		}	
+		return edgeCost;
+	}
+	
+	/**
 	 * Public Method to do Iterative Depth-First Search from vi to vj
 	 * @param vi, vj: two vertices
 	 * @return nothing, but added all possible solution into Ve and Ee
@@ -169,14 +210,6 @@ public class ExploredGraph {
 		}
 	}
 
-	/**
-	 * Public Method set the choice of using which edge cost function.
-	 * @param m: choice of cost function choice
-	 */
-	public void useEdgeCostFunction(int m) {
-		costF = m;
-	}
-	
 	/**
 	 * Public Method to do Breadth-First Search from vi to vj
 	 * @param vi, vj: two vertices
@@ -255,7 +288,7 @@ public class ExploredGraph {
 	 * @return collection of explored vertices
 	 */
 	public Set<Vertex> getVertices() {return Ve;} 
-	
+
 	/**
 	 * Public Method to get all the explored edges 
 	 * @return collection of explored edges
@@ -326,12 +359,12 @@ public class ExploredGraph {
 			return (this.toString().equals(other.toString()));
 		}
 	}
-	
+
 	// Inner class vertex to store each edge between two vertices
 	class Edge {
 
 		private Vertex vi, vj;
-		
+
 		/**
 		 * Constructor of Edge
 		 * @param vi, vj: two vertices that form this edge
@@ -416,5 +449,5 @@ public class ExploredGraph {
 			return "Move a disk from peg " + i + " to peg " + j;
 		}
 	}
-	
+
 }
