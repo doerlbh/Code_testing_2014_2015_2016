@@ -69,7 +69,36 @@ public class ExploredGraph {
 	public int nedges() {return Ee.size();}
 
 	// Iterative Depth-First Search
-	public void idfs(Vertex vi, Vertex vj) {}
+	public void idfs(Vertex vi, Vertex vj) {
+		boolean isFound = false;
+		int dist = 0;
+		Stack<Vertex> oVe = new Stack<Vertex>();
+		LinkedList<Vertex> cVe = new LinkedList<Vertex>();
+		pMap.clear();
+		pMap.put(vi.toString(), null);
+		Ee.add(new Edge(null, vi));
+		oVe.push(vi);
+		while (!oVe.empty() || !isFound) {
+			Vertex curVe = oVe.pop();
+			curVe.dist = dist;
+			dist++;
+			for (Operator move : pMove) {
+				Vertex nextVe = move.transition(curVe);
+				if ( (!nextVe.equals(curVe))
+					 && (oVe.search(nextVe) == -1)
+					 && (!cVe.contains(nextVe))) {
+					oVe.push(nextVe);
+					pMap.put(nextVe.toString(), curVe);
+					Ve.add(nextVe);
+					Ee.add(new Edge(curVe, nextVe));
+				}
+				if (nextVe.equals(vj)) {
+					isFound = true;
+				}
+			}
+			cVe.add(curVe);
+		}
+	}
 
 	// Breadth-First Search
 	public void bfs(Vertex vi, Vertex vj) {
