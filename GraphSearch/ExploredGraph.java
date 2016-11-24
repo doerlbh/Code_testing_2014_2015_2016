@@ -1,19 +1,21 @@
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.Stack;
-import java.util.function.Function;
+import java.util.*;
+//
+//import java.util.List;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Iterator;
+//import java.util.LinkedHashSet;
+//import java.util.Set;
+//import java.util.Stack;
+//import java.util.function.Function;
+
 
 /**
+ * @author Baihan Lin  < sunnylin@uw.edu >
+ * @version 	1.2
+ * @since 		1.0 2016-11-12
  * 
- */
-
-/**
- * @author your name(s) here.
- * Extra Credit Options Implemented, if any:  (mention them here.)
+ * Extra Credit Options Implemented:  A5E1, A5E2, A5E3, A5E4
  * 
  * Solution to Assignment 5 in CSE 373, Autumn 2016
  * University of Washington.
@@ -28,19 +30,50 @@ import java.util.function.Function;
 public class ExploredGraph {
 	Set<Vertex> Ve; // collection of explored vertices
 	Set<Edge> Ee;   // collection of explored edges
-	
+
+	int nPeg; // Number of pegs
+	LinkedHashMap<String, Vertex> pMap; // predecessors of maps
+	Set<Operator> pMove; // peg moves
+
 	public ExploredGraph() {
 		Ve = new LinkedHashSet<Vertex>();
 		Ee = new LinkedHashSet<Edge>();
+		pMap = new LinkedHashMap<String, Vertex>();
+		pMove = new LinkedHashSet<Operator>();
 	}
 
-	public void initialize() {
-		// Implement this
+	public void initialize(Vertex v) {
+		Ve.add(v);
+		int nPeg = getPegNumber(v);
+		for (int i = 0; i < nPeg; i++) {
+			for (int j = 0; j < nPeg; j++) {
+				if (i != j) {
+					pMove.add(new Operator(i, j));
+				}
+			}
+		}
 	}
-	public int nvertices() {return 0;} // Implement this.
-	public int nedges() {return 0;}    // Implement this.
-	public void idfs(Vertex vi, Vertex vj) {} // Implement this. (Iterative Depth-First Search)
-	public void bfs(Vertex vi, Vertex vj) {} // Implement this. (Breadth-First Search)
+	
+	private int getPegNumber(Vertex v) {
+		int pCount = -1; // account for the first bracket in the front
+		for (char c : v.toString().toCharArray()) {
+			if (c == '[') {
+				pCount++;
+			}
+		}
+		return pCount;
+	}
+
+	public int nvertices() {return Ve.size();}
+	
+	public int nedges() {return Ee.size();}
+	
+	 // Iterative Depth-First Search
+	public void idfs(Vertex vi, Vertex vj) {}
+	
+	// Breadth-First Search
+	public void bfs(Vertex vi, Vertex vj) {} 
+	
 	public ArrayList<Vertex> retrievePath(Vertex vi) {return null;} // Implement this.
 	public ArrayList<Vertex> shortestPath(Vertex vi, Vertex vj) {return null;} // Implement this.
 	public Set<Vertex> getVertices() {return Ve;} 
@@ -54,14 +87,17 @@ public class ExploredGraph {
 		Vertex v0 = eg.new Vertex("[[4,3,2,1],[],[]]");
 		System.out.println(v0);
 		// Add your own tests here.
+
+
+
 		// The autograder code will be used to test your basic functionality later.
 
 	}
-	
+
 	class Vertex {
 		ArrayList<Stack<Integer>> pegs; // Each vertex will hold a Towers-of-Hanoi state.
 		// There will be 3 pegs in the standard version, but more if you do extra credit option A5E1.
-		
+
 		// Constructor that takes a string such as "[[4,3,2,1],[],[]]":
 		public Vertex(String vString) {
 			String[] parts = vString.split("\\],\\[");
@@ -76,10 +112,10 @@ public class ExploredGraph {
 					Iterator<String> it = al.iterator();
 					while (it.hasNext()) {
 						String item = it.next();
-                        if (!item.equals("")) {
-                                System.out.println("item is: "+item);
-                                pegs.get(i).push(Integer.parseInt(item));
-                        }
+						if (!item.equals("")) {
+							System.out.println("item is: "+item);
+							pegs.get(i).push(Integer.parseInt(item));
+						}
 					}
 				}
 				catch(NumberFormatException nfe) { nfe.printStackTrace(); }
@@ -88,20 +124,22 @@ public class ExploredGraph {
 		public String toString() {
 			String ans = "[";
 			for (int i=0; i<3; i++) {
-			    ans += pegs.get(i).toString().replace(" ", "");
+				ans += pegs.get(i).toString().replace(" ", "");
 				if (i<2) { ans += ","; }
 			}
 			ans += "]";
 			return ans;
 		}
 	}
-	
+
 	class Edge {
 		public Edge(Vertex vi, Vertex vj) {
 			// Add whatever you need to here.
+
+
 		}
 	}
-	
+
 	class Operator {
 		private int i, j;
 
