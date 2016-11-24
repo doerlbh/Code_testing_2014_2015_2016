@@ -49,23 +49,29 @@ public class ExploredGraph {
 
 		ExploredGraph eg = new ExploredGraph();
 
+		// Basic Testing:
 		// bfs search path for 6 disks, expect (2^6) - 1 = 63
 		//		Vertex v0 = eg.new Vertex("[[6,5,4,3,2,1],[],[]]");
 		//		Vertex v1 = eg.new Vertex("[[],[],[6,5,4,3,2,1]]");
 		//		System.out.println(v0);
 
+		// A5E1 Testing 1:
 		// bfs search path for 6 disks, 4 pegs, expect 17
-		Vertex v0 = eg.new Vertex("[[6,5,4,3,2,1],[],[],[]]");
-		Vertex v1 = eg.new Vertex("[[],[],[],[6,5,4,3,2,1]]");
-		System.out.println(v0);
+//		Vertex v0 = eg.new Vertex("[[6,5,4,3,2,1],[],[],[]]");
+//		Vertex v1 = eg.new Vertex("[[],[],[],[6,5,4,3,2,1]]");
+//		System.out.println(v0);
 
+		// A5E1 Testing 2:
+		// bfs search for 4 disks, 5 pegs, expect 7
+		Vertex v0 = eg.new Vertex("[[4,3,2,1],[],[],[],[]]");
+		Vertex v1 = eg.new Vertex("[[],[],[],[],[4,3,2,1]]");
+		System.out.println(v0);
+		
 		// find path		
 		eg.initialize(v0);
 		ArrayList<Vertex> path = eg.shortestPath(v0, v1);
-//		Iterator<Vertex> it = path.iterator();
 		for (Vertex v : path) { System.out.println(v.toString()); }
 		System.out.println("path length = " + (path.size() - 1));
-
 
 	}
 
@@ -92,7 +98,7 @@ public class ExploredGraph {
 				pCount++;
 			}
 		}
-//		System.out.println(s + "---" + pCount);
+		//		System.out.println(s + "---" + pCount);
 		return pCount;
 	}
 
@@ -205,9 +211,9 @@ public class ExploredGraph {
 		// Constructor that takes a string such as "[[4,3,2,1],[],[]]":
 		public Vertex(String vString) {
 			nPegV = string2peg(vString);
-//			System.out.println(vString);
+			//			System.out.println(vString);
 			String[] parts = vString.split("\\],\\[");
-//			System.out.println(parts.length);
+			//			System.out.println(parts.length);
 			pegs = new ArrayList<Stack<Integer>>(nPegV);
 			for (int i = 0; i < nPegV;i++) {
 				pegs.add(new Stack<Integer>());
