@@ -1,11 +1,14 @@
-/*
+/**
  * ImageComponents.java
- * Starter code for optional assignment UF // Change this line to "UF Solution by " + YOUR_NAME and UWNetID.
- * 
+ * UF Solution by 
+ * @author  Baihan Lin, 1360521, <sunnylin@uw.edu>.
+ * @date    Nov 25 2016
+ * @version 1.3
  * 
  * CSE 373, University of Washington, Autumn 2016.
  * 
- * Starter Code for CSE 373 Optional Assignment UF, Part II.    Starter Code Version 1.
+ * Based on Starter Code for CSE 373 Optional Assignment UF, Part II.    
+ * Starter Code Version 1.
  * S. Tanimoto
  * 
  */ 
