@@ -8,12 +8,12 @@ alpha0=0.5;
 beta=10.2;
 n=2;
 
-for numreps=1:20
+for numreps=1:1
 
 p = [alpha,alpha0,beta,n];
 x0 = 30*rand(6,1) ;
 
-Tmax=2500;
+Tmax=40;
 
 [T,Y] = ode45(@repress,[0 Tmax],x0,[],p);
 
