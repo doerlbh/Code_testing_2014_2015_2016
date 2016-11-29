@@ -58,8 +58,12 @@ public class ImageComponents extends JFrame implements ActionListener {
 
 	int[][] parentID; // For your forest of up-trees.
 
-	// TODO
-	// Part of your UNION-FIND implementation. You need to complete the implementation of this.
+	
+	/** TODO
+	 * Public Method to find in UNION-Find
+	 * @param pixelID to start with
+	 * @return pixelID parent up the entire tree
+	 */
 	int find(int pixelID) {
 
 		int x = getXcoord(pixelID);
@@ -75,8 +79,11 @@ public class ImageComponents extends JFrame implements ActionListener {
 
 	}         
 
-	// TODO
-	// Another part of your UNION-FIND implementation.  Also complete this one.
+	/** TODO
+	 * Public Method to union in UNION-Find
+	 * @param two pixelID to union
+	 * @return nothing, but the two pixelIDs are unioned
+	 */
 	void union(int pixelID1, int pixelID2) {
 
 		pixelID1 = find(pixelID1);
@@ -97,12 +104,20 @@ public class ImageComponents extends JFrame implements ActionListener {
 
 	}  
 
-	// TODO Auto-generated method stub
+	/** TODO
+	 * Private Method to get X coordinate
+	 * @param  pixelID
+	 * @return X coordinate
+	 */
 	private int getXcoord(int pixelID) {
 		return pixelID % this.w;
 	}
 
-	// TODO Auto-generated method stub
+	/** TODO
+	 * Private Method to get Y coordinate
+	 * @param  pixelID
+	 * @return Y coordinate
+	 */
 	private int getYcoord(int pixelID) {
 		return pixelID / this.w;
 	}
@@ -126,8 +141,11 @@ public class ImageComponents extends JFrame implements ActionListener {
 			this.r = r; this.g = g; this.b = b;    		
 		}
 
-		// TODO
-		// Replace this to return the distance between this color and c2.
+		/** TODO
+		 * Public Method to get Euclidean Distance of two colors
+		 * @param  color c2
+		 * @return Euclidean Distance of two colors
+		 */
 		double euclideanDistance(Color c2) {
 
 			int diffR = (this.r - c2.r) * (this.r - c2.r);
@@ -393,8 +411,9 @@ public class ImageComponents extends JFrame implements ActionListener {
 		bi.setRGB(x,  y, rgb);
 	}
 
-	// TODO
-	// compute number of connected trees and re-color the image
+	/** TODO
+	 * Public Method to compute number of connected trees and re-color the image
+	 */
 	void computeConnectedComponents() {
 		this.nUF = 0;
 
@@ -428,7 +447,7 @@ public class ImageComponents extends JFrame implements ActionListener {
 		}
 
 		System.out.println("The number of times that the method UNION was called for this image is: " + this.nUF);
-		
+
 		// count number of components & re-color image based on connectivity
 		int nComp = 0;
 		Map<Integer, Integer> comps = new HashMap<Integer, Integer>();
@@ -446,7 +465,7 @@ public class ImageComponents extends JFrame implements ActionListener {
 				putPixel(biWorking, i, j, newColor[0], newColor[1], newColor[2]);
 			}
 		}
-		
+
 		System.out.println("The number of connected components in this image is: " + nComp);
 		repaint();
 
@@ -458,7 +477,11 @@ public class ImageComponents extends JFrame implements ActionListener {
 		}
 	}
 
-	// TODO calculate pixelID based on x and y
+	/** TODO
+	 * Private Method to get pixelID
+	 * @param  x, y
+	 * @return pixelID
+	 */
 	private int getPixelID(int x, int y) {
 		return y * this.w + x;
 	}
