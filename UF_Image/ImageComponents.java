@@ -32,6 +32,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
+
 import javax.imageio.ImageIO;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -54,7 +56,6 @@ public class ImageComponents extends JFrame implements ActionListener {
 	int h; // height of the current image.
 	int nUF; // number of union-find operations performed
 
-
 	int[][] parentID; // For your forest of up-trees.
 
 	// TODO
@@ -64,18 +65,22 @@ public class ImageComponents extends JFrame implements ActionListener {
 		int x = getXcoord(pixelID);
 		int y = getYcoord(pixelID);
 
-		if(parentID[x][y] == -1) {
-			return pixelID;
-		} else {
-			return find(parentID[x][y]);
+		while(parentID[y][x] >= 0){
+			pixelID = parentID[y][x];
+			x = getXcoord(pixelID);
+			y = getYcoord(pixelID);
 		}
 
-	}         
+		return pixelID;
 
+	}         
 
 	// TODO
 	// Another part of your UNION-FIND implementation.  Also complete this one.
 	void union(int pixelID1, int pixelID2) {
+
+		pixelID1 = find(pixelID1);
+		pixelID2 = find(pixelID2);
 
 		int x1 = getXcoord(pixelID1);
 		int y1 = getYcoord(pixelID1);
@@ -84,11 +89,11 @@ public class ImageComponents extends JFrame implements ActionListener {
 		int y2 = getYcoord(pixelID2);
 
 		if (pixelID1 < pixelID2) {
-			parentID[x2][y2] = pixelID1;
+			parentID[y2][x2] = pixelID1;
 		} else {
-			parentID[x1][y1] = pixelID2;
+			parentID[y1][x1] = pixelID2;
 		}
-		nUF++;
+		this.nUF++;
 
 	}  
 
@@ -133,7 +138,6 @@ public class ImageComponents extends JFrame implements ActionListener {
 
 		}
 	}
-
 
 	// Some image manipulation data definitions that won't change...
 	static LookupOp PHOTONEG_OP, RGBTHRESH_OP;
@@ -245,12 +249,12 @@ public class ImageComponents extends JFrame implements ActionListener {
 		loadImage(startingImage); // Read in the pre-selected starting image.
 		setVisible(true); // Display it.
 
-		// create a collection of trees with -1 as all its elements
+		// create a collection of trees 
 		parentID = new int[this.h][this.w];
-		
+
 		for (int i = 0; i < this.h; i++) {
 			for (int j = 0; j < this.w; j++) {
-				parentID[i][j] = -1;
+				parentID[i][j] = -1; // with -1 as all its elements
 			}
 		}
 
@@ -383,16 +387,80 @@ public class ImageComponents extends JFrame implements ActionListener {
 		}
 	}
 
-
 	// Use this to put color information into a pixel of a BufferedImage object.
 	void putPixel(BufferedImage bi, int x, int y, int r, int g, int b) {
 		int rgb = (r << 16) | (g << 8) | b; // pack 3 bytes into a word.
 		bi.setRGB(x,  y, rgb);
 	}
 
-
+	// TODO
+	// compute number of connected trees and re-color the image
 	void computeConnectedComponents() {
+		this.nUF = 0;
 
+		for (int j = 0; j < this.h; j++) {
+			for (int i = 0; i < this.w; i++) {
+
+				int curColor = biWorking.getRGB(i, j);
+				int curPixelID = getPixelID(i, j);
+
+				// check right pixel
+				if (i + 1 < this.w) {
+					if (curColor == biWorking.getRGB(i + 1, j)) {
+						int rPixelID = getPixelID(i + 1, j);
+						if (find(curPixelID) != find(rPixelID)) {
+							union(curPixelID, rPixelID);
+						}
+					}      				
+				}
+
+				// check up pixel
+				if (j + 1 < this.h) {
+					if (curColor == biWorking.getRGB(i, j + 1)) {
+						int uPixelID = getPixelID(i, j + 1);
+						if (find(curPixelID) != find(uPixelID)) {
+							union(curPixelID, uPixelID);
+						}
+					}
+				}
+
+			}
+		}
+
+		System.out.println("The number of times that the method UNION was called for this image is: " + this.nUF);
+		
+		// count number of components & re-color image based on connectivity
+		int nComp = 0;
+		Map<Integer, Integer> comps = new HashMap<Integer, Integer>();
+		for (int j = 0; j < this.h; j++) {
+			for (int i = 0; i < this.w; i++) {
+				int pixelID = getPixelID(i, j);
+				if (parentID[j][i] == -1) {
+					comps.put(pixelID, nComp);
+					nComp++;
+				}		
+				pixelID = find(pixelID);
+				int k = (int) comps.get(pixelID);
+				ProgressiveColors pc = new ProgressiveColors();
+				int[] newColor = pc.progressiveColor(k);
+				putPixel(biWorking, i, j, newColor[0], newColor[1], newColor[2]);
+			}
+		}
+		
+		System.out.println("The number of connected components in this image is: " + nComp);
+		repaint();
+
+		// re-initialize for next re-color 
+		for (int j = 0; j < this.h; j++) {
+			for (int i = 0; i < this.w; i++) {
+				parentID[j][i] = -1;
+			}
+		}
+	}
+
+	// TODO calculate pixelID based on x and y
+	private int getPixelID(int x, int y) {
+		return y * this.w + x;
 	}
 
 	/* This main method can be used to run the application. */
