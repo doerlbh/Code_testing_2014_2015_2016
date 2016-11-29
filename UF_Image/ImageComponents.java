@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-
+import java.util.Hashtable;
 import javax.imageio.ImageIO;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -52,44 +52,55 @@ public class ImageComponents extends JFrame implements ActionListener {
 	Graphics gOrig, gWorking; // Used to access the drawImage method.
 	int w; // width of the current image.
 	int h; // height of the current image.
-	int Nuf; // number of union-find operations performed
-    
+	int nUF; // number of union-find operations performed
+
 
 	int[][] parentID; // For your forest of up-trees.
 
 	// TODO
 	// Part of your UNION-FIND implementation. You need to complete the implementation of this.
 	int find(int pixelID) {
-		
-		int x = pixelID % this.w;
-		int y = (pixelID - x) / this.w;
-		
+
+		int x = getXcoord(pixelID);
+		int y = getYcoord(pixelID);
+
 		if(parentID[x][y] == -1) {
 			return pixelID;
 		} else {
 			return find(parentID[x][y]);
 		}
-		
+
 	}         
+
 
 	// TODO
 	// Another part of your UNION-FIND implementation.  Also complete this one.
 	void union(int pixelID1, int pixelID2) {
-    	
-		int x1 = pixelID1 % this.w;
-		int y1 = (pixelID1 - x1) / this.w;
-		
-		int x2 = pixelID2 % this.w;
-		int y2 = (pixelID2 - x2) / this.w;
-    	
-    	if (pixelID1 < pixelID2) {
-    		parentID[x2][y2] = pixelID1;
-    	} else {
-    		parentID[x1][y1] = pixelID2;
-    	}
-    	Nuf++;
-    	
+
+		int x1 = getXcoord(pixelID1);
+		int y1 = getYcoord(pixelID1);
+
+		int x2 = getXcoord(pixelID2);
+		int y2 = getYcoord(pixelID2);
+
+		if (pixelID1 < pixelID2) {
+			parentID[x2][y2] = pixelID1;
+		} else {
+			parentID[x1][y1] = pixelID2;
+		}
+		nUF++;
+
 	}  
+
+	// TODO Auto-generated method stub
+	private int getXcoord(int pixelID) {
+		return pixelID % this.w;
+	}
+
+	// TODO Auto-generated method stub
+	private int getYcoord(int pixelID) {
+		return pixelID / this.w;
+	}
 
 	JPanel viewPanel; // Where the image will be painted.
 	JPopupMenu popup;
@@ -117,7 +128,7 @@ public class ImageComponents extends JFrame implements ActionListener {
 			int diffR = (this.r - c2.r) * (this.r - c2.r);
 			int diffG = (this.g - c2.g) * (this.g - c2.g);
 			int diffB = (this.b - c2.b) * (this.b - c2.b);
-			
+
 			return Math.sqrt(diffR + diffG + diffB);
 
 		}
@@ -141,6 +152,7 @@ public class ImageComponents extends JFrame implements ActionListener {
 	};
 
 	public ImageComponents() { // Constructor for the application.
+
 		setTitle("Image Analyzer"); 
 		addWindowListener(new WindowAdapter() { // Handle any window close-box clicks.
 			public void windowClosing(WindowEvent e) {System.exit(0);}
@@ -188,7 +200,6 @@ public class ImageComponents extends JFrame implements ActionListener {
 		RGBThreshItem.addActionListener(this);
 		imageOpMenu.add(RGBThreshItem);
 
-
 		// Create CC menu stuff.
 		CCItem1 = new JMenuItem("Compute Connected Components and Recolor");
 		CCItem1.addActionListener(this);
@@ -233,6 +244,16 @@ public class ImageComponents extends JFrame implements ActionListener {
 		}
 		loadImage(startingImage); // Read in the pre-selected starting image.
 		setVisible(true); // Display it.
+
+		// create a collection of trees with -1 as all its elements
+		parentID = new int[this.h][this.w];
+		
+		for (int i = 0; i < this.h; i++) {
+			for (int j = 0; j < this.w; j++) {
+				parentID[i][j] = -1;
+			}
+		}
+
 	}
 
 	/*
