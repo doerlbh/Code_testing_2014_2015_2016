@@ -12,26 +12,34 @@ dy(5) = p(6)*y(6) + p(7)*y(7) - p(1)*y(5);
 dy(6) = p(5)*y(4) - p(6)*y(6);
 dy(7) = p(3)*y(2) - p(7)*y(7);
 
-tau = log(1/rand()) / sum(dy);
+lambda = sum(abs(dy));
+tau = log(1/rand()) / lambda;
 
 ytemp = (y + dy);
 ytemp = ytemp.*[ytemp >= 0];
 
-r = rand()*sum(dy);
-if r < sum(dy(1))
+r = rand()*lambda;
+if r < sum(abs(dy(1)))
     ynew(1) = ytemp(1);
-else if r < sum(dy(1:2));
+    disp('r 1');
+else if r < sum(abs(dy(1:2)));
         ynew(2) = ytemp(2);
-    else if r < sum(dy(1:3));
+            disp('r 2');
+    else if r < sum(abs(dy(1:3)));
             ynew(3) = ytemp(3);
-        else if r < sum(dy(1:4));
+                disp('r 3');
+        else if r < sum(abs(dy(1:4)));
                 ynew(4) = ytemp(4);
-            else if r < sum(dy(1:5));
+                    disp('r 4');
+            else if r < sum(abs(dy(1:5)));
                     ynew(5) = ytemp(5);
-                else if r < sum(dy(1:6));
+                        disp('r 5');
+                else if r < sum(abs(dy(1:6)));
                         ynew(6) = ytemp(6);
+                            disp('r 6');
                     else
                         ynew(7) = ytemp(7);
+                            disp('r 7');
                     end
                 end
             end
