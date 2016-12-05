@@ -1,7 +1,8 @@
 1360521
-selection sort
-bubble sort
-heap sort
-merge sort
 quick sort
+selection sort
 insertion sort
+shell sort
+merge sort
+heap sort
+
