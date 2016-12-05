@@ -1,0 +1,7 @@
+1360521
+selection sort
+bubble sort
+heap sort
+merge sort
+quick sort
+insertion sort

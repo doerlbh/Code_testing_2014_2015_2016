@@ -1,0 +1,1132 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font than Computer Modern for most use cases
+    \usepackage{palatino}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Appendix - Code}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \begin{center}    	
+	    {\LARGE \bfseries Appendix - Code\par}	   
+	\end{center}
+    
+
+    
+    \subsection{Raw Data}\label{raw-data}
+
+{[}NADP{]} = 8e-5 M
+
+{[}ATP{]} = 1.5 mM
+
+{[}ADP{]} = 0.5 mM
+
+{[}NADPH{]} = 0.1 mM
+
+{[}P{]} = 100 mM
+
+{[}RuBP{]} = 0.15 mM
+
+{[}O2{]} = 0.3 mM
+
+{[}CO2{]} = 0.3 mM
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        \PY{c+c1}{\PYZsh{} All the imports}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+        \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{display}\PY{p}{,} \PY{n}{HTML}
+        \PY{k+kn}{import} \PY{n+nn}{ipywidgets} \PY{k}{as} \PY{n+nn}{ipw}
+        \PY{k+kn}{import} \PY{n+nn}{logging}
+        
+        \PY{n}{logging}\PY{o}{.}\PY{n}{disable}\PY{p}{(}\PY{n}{logging}\PY{o}{.}\PY{n}{CRITICAL}\PY{p}{)}
+        
+        
+        \PY{n}{avogadro} \PY{o}{=} \PY{l+m+mf}{6.022e23}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{chloroplast\PYZus{}volume} \PY{o}{=} \PY{l+m+mf}{3.3e\PYZhy{}14}  \PY{c+c1}{\PYZsh{} Liters}
+        \PY{n}{grana\PYZus{}stack\PYZus{}height} \PY{o}{=} \PY{l+m+mf}{1.18e\PYZhy{}7}  \PY{c+c1}{\PYZsh{} Meters}
+        \PY{n}{grana\PYZus{}stack\PYZus{}endcap\PYZus{}area} \PY{o}{=} \PY{l+m+mf}{1.6e\PYZhy{}13} \PY{c+c1}{\PYZsh{} Square meters}
+        \PY{n}{grana\PYZus{}per\PYZus{}chloroplast} \PY{o}{=} \PY{l+m+mi}{60}
+        
+        \PY{n}{height\PYZus{}extension} \PY{o}{=} \PY{l+m+mf}{1.2}  \PY{c+c1}{\PYZsh{} Increase height by 10\PYZpc{} on either end}
+        \PY{n}{radius\PYZus{}extension} \PY{o}{=} \PY{l+m+mf}{1.1}  \PY{c+c1}{\PYZsh{} Increase radius by 10\PYZpc{}}
+        
+        \PY{n}{single\PYZus{}grana\PYZus{}volume} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1}\PY{n}{e3} \PY{o}{*} \PY{n}{grana\PYZus{}stack\PYZus{}height} \PY{o}{*}  \PY{c+c1}{\PYZsh{} Liters }
+                               \PY{n}{grana\PYZus{}stack\PYZus{}endcap\PYZus{}area}\PY{p}{)} 
+        \PY{n}{grana\PYZus{}volume} \PY{o}{=} \PY{n}{grana\PYZus{}per\PYZus{}chloroplast} \PY{o}{*} \PY{n}{single\PYZus{}grana\PYZus{}volume}  \PY{c+c1}{\PYZsh{} Liters}
+        
+        \PY{n}{single\PYZus{}grana\PYZus{}extended\PYZus{}volume} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1}\PY{n}{e3} \PY{o}{*} \PY{n}{height\PYZus{}extension} \PY{o}{*}  \PY{c+c1}{\PYZsh{} Liters}
+                                        \PY{n}{grana\PYZus{}stack\PYZus{}height} \PY{o}{*} 
+                                        \PY{n}{radius\PYZus{}extension}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{*} 
+                                        \PY{n}{grana\PYZus{}stack\PYZus{}endcap\PYZus{}area}\PY{p}{)}
+        
+        \PY{n}{grana\PYZus{}extended\PYZus{}volume} \PY{o}{=} \PY{p}{(}\PY{n}{grana\PYZus{}per\PYZus{}chloroplast} \PY{o}{*}  \PY{c+c1}{\PYZsh{} Liters}
+                                 \PY{n}{single\PYZus{}grana\PYZus{}extended\PYZus{}volume}\PY{p}{)}
+        
+        \PY{n}{stroma\PYZus{}volume} \PY{o}{=} \PY{n}{chloroplast\PYZus{}volume} \PY{o}{\PYZhy{}} \PY{n}{grana\PYZus{}volume}
+        \PY{n}{reaction\PYZus{}volume} \PY{o}{=}  \PY{n}{grana\PYZus{}extended\PYZus{}volume} \PY{o}{\PYZhy{}} \PY{n}{grana\PYZus{}volume}
+        \PY{n}{diffusion\PYZus{}volume} \PY{o}{=} \PY{n}{stroma\PYZus{}volume} \PY{o}{\PYZhy{}} \PY{n}{reaction\PYZus{}volume}
+        
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Stroma Volume : }\PY{l+s+si}{\PYZob{}:.3e\PYZcb{}}\PY{l+s+s2}{ Liters}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{stroma\PYZus{}volume}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Reaction Volume : }\PY{l+s+si}{\PYZob{}:.3e\PYZcb{}}\PY{l+s+s2}{ Liters}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{reaction\PYZus{}volume}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Diffusion Volume : }\PY{l+s+si}{\PYZob{}:.3e\PYZcb{}}\PY{l+s+s2}{ Liters}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{diffusion\PYZus{}volume}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Stroma Volume : 3.187e-14 Liters
+Reaction Volume : 5.120e-16 Liters
+Diffusion Volume : 3.136e-14 Liters
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{reactant\PYZus{}map\PYZus{}1} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{NADP}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{0}\PY{p}{,}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ATP}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ADP}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{NADPH}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,}                  
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{CO2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{\PYZcb{}}
+        
+        \PY{n}{reactant\PYZus{}keys} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{reactant\PYZus{}map\PYZus{}1}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Stays in consistent order}
+        
+        \PY{c+c1}{\PYZsh{} Moles per liter}
+        \PY{n}{reactant\PYZus{}conc\PYZus{}in\PYZus{}stroma} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.00008}\PY{p}{,}  \PY{c+c1}{\PYZsh{} NADP}
+                                            \PY{l+m+mf}{0.0015}\PY{p}{,}   \PY{c+c1}{\PYZsh{} ATP}
+                                            \PY{l+m+mf}{0.0005}\PY{p}{,}   \PY{c+c1}{\PYZsh{} ADP}
+                                            \PY{l+m+mf}{0.0001}\PY{p}{,}   \PY{c+c1}{\PYZsh{} NADPH                                    }
+                                            \PY{l+m+mf}{0.0003}\PY{p}{,}   \PY{c+c1}{\PYZsh{} O2}
+                                            \PY{l+m+mf}{0.0003}\PY{p}{]}\PY{p}{)}  \PY{c+c1}{\PYZsh{} CO2}
+        
+        
+        \PY{n}{reactants\PYZus{}in\PYZus{}diffusion\PYZus{}vol} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{int\PYZus{}}\PY{p}{(}\PY{n}{diffusion\PYZus{}volume} \PY{o}{*} \PY{n}{avogadro} \PY{o}{*}
+                                             \PY{n}{reactant\PYZus{}conc\PYZus{}in\PYZus{}stroma}\PY{p}{)}
+        \PY{n}{reactants\PYZus{}in\PYZus{}reaction\PYZus{}vol} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{int\PYZus{}}\PY{p}{(}\PY{n}{reaction\PYZus{}volume} \PY{o}{*} \PY{n}{avogadro} \PY{o}{*} 
+                                            \PY{n}{reactant\PYZus{}conc\PYZus{}in\PYZus{}stroma}\PY{p}{)}
+        
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Reactants in Diffusion Volume}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=============================}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{reactant} \PY{o+ow}{in} \PY{n}{reactant\PYZus{}keys}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Total }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ molecules in diffusion volume : }\PY{l+s+si}{\PYZob{}:\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}
+                    \PY{n}{reactant}\PY{p}{,} 
+                    \PY{n}{reactants\PYZus{}in\PYZus{}diffusion\PYZus{}vol}\PY{p}{[}\PY{n}{reactant\PYZus{}map\PYZus{}1}\PY{p}{[}\PY{n}{reactant}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            
+        \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Reactants in Reaction Volume}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=============================}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{reactant} \PY{o+ow}{in} \PY{n}{reactant\PYZus{}keys}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Total }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ molecules in reaction volume : }\PY{l+s+si}{\PYZob{}:\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}
+                    \PY{n}{reactant}\PY{p}{,} 
+                    \PY{n}{reactants\PYZus{}in\PYZus{}reaction\PYZus{}vol}\PY{p}{[}\PY{n}{reactant\PYZus{}map\PYZus{}1}\PY{p}{[}\PY{n}{reactant}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            
+            
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Reactants in Diffusion Volume
+=============================
+Total O2 molecules in diffusion volume : 5664625
+Total NADP molecules in diffusion volume : 1510566
+Total ATP molecules in diffusion volume : 28323129
+Total NADPH molecules in diffusion volume : 1888208
+Total ADP molecules in diffusion volume : 9441043
+Total CO2 molecules in diffusion volume : 5664625
+
+
+Reactants in Reaction Volume
+=============================
+Total O2 molecules in reaction volume : 92502
+Total NADP molecules in reaction volume : 24667
+Total ATP molecules in reaction volume : 462512
+Total NADPH molecules in reaction volume : 30834
+Total ADP molecules in reaction volume : 154170
+Total CO2 molecules in reaction volume : 92502
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:}       
+            
+        \PY{c+c1}{\PYZsh{} \PYZus{}d are in the diffusion volume, }
+        \PY{c+c1}{\PYZsh{} \PYZus{}r are in the reaction volume}
+        \PY{n}{reactant\PYZus{}names} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2\PYZus{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{O2\PYZus{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ATP\PYZus{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ADP\PYZus{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NADPH\PYZus{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NADP\PYZus{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{O2\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ATP\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ADP\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NADPH\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NADP\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Glucose}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Index map of the reactants}
+        \PY{n}{reactant\PYZus{}map} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{reactant}\PY{p}{:}\PY{n}{reactant\PYZus{}names}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{reactant}\PY{p}{)} 
+                        \PY{k}{for} \PY{n}{reactant} \PY{o+ow}{in} \PY{n}{reactant\PYZus{}names}\PY{p}{\PYZcb{}}
+        
+        \PY{c+c1}{\PYZsh{} For calculating diffusion parameters.}
+        \PY{n}{reactant\PYZus{}masses} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{44.01}\PY{p}{,}     \PY{c+c1}{\PYZsh{} CO2\PYZus{}d    }
+                                    \PY{l+m+mf}{32.00}\PY{p}{,}     \PY{c+c1}{\PYZsh{} O2\PYZus{}d}
+                                    \PY{l+m+mf}{507.18}\PY{p}{,}    \PY{c+c1}{\PYZsh{} ATP\PYZus{}d}
+                                    \PY{l+m+mf}{427.20}\PY{p}{,}    \PY{c+c1}{\PYZsh{} ADP\PYZus{}d}
+                                    \PY{l+m+mf}{745.42}\PY{p}{,}    \PY{c+c1}{\PYZsh{} NADPH\PYZus{}d}
+                                    \PY{l+m+mf}{744.42}\PY{p}{,}    \PY{c+c1}{\PYZsh{} NADP\PYZus{}d                              }
+                                    \PY{l+m+mf}{44.01}\PY{p}{,}     \PY{c+c1}{\PYZsh{} CO2\PYZus{}r}
+                                    \PY{l+m+mf}{32.00}\PY{p}{,}     \PY{c+c1}{\PYZsh{} O2\PYZus{}r}
+                                    \PY{l+m+mf}{507.18}\PY{p}{,}    \PY{c+c1}{\PYZsh{} ATP\PYZus{}r}
+                                    \PY{l+m+mf}{427.20}\PY{p}{,}    \PY{c+c1}{\PYZsh{} ADP\PYZus{}r}
+                                    \PY{l+m+mf}{745.42}\PY{p}{,}    \PY{c+c1}{\PYZsh{} NADPH\PYZus{}r}
+                                    \PY{l+m+mf}{744.42}\PY{p}{]}\PY{p}{)}   \PY{c+c1}{\PYZsh{} NADP\PYZus{}r}
+                                    
+        
+        \PY{c+c1}{\PYZsh{} Starting number of reactants  }
+        \PY{n}{reactants} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{5664625}\PY{p}{,}     \PY{c+c1}{\PYZsh{} CO2\PYZus{}d    }
+                              \PY{l+m+mi}{5664625}\PY{p}{,}     \PY{c+c1}{\PYZsh{} O2\PYZus{}d}
+                              \PY{l+m+mi}{28323129}\PY{p}{,}    \PY{c+c1}{\PYZsh{} ATP\PYZus{}d}
+                              \PY{l+m+mi}{9441043}\PY{p}{,}     \PY{c+c1}{\PYZsh{} ADP\PYZus{}d}
+                              \PY{l+m+mi}{1888208}\PY{p}{,}     \PY{c+c1}{\PYZsh{} NADPH\PYZus{}d}
+                              \PY{l+m+mi}{1510566}\PY{p}{,}     \PY{c+c1}{\PYZsh{} NADP\PYZus{}d                      }
+                              \PY{l+m+mi}{92502}\PY{p}{,}       \PY{c+c1}{\PYZsh{} CO2\PYZus{}r}
+                              \PY{l+m+mi}{92502}\PY{p}{,}       \PY{c+c1}{\PYZsh{} O2\PYZus{}r}
+                              \PY{l+m+mi}{462512}\PY{p}{,}      \PY{c+c1}{\PYZsh{} ATP\PYZus{}r}
+                              \PY{l+m+mi}{154170}\PY{p}{,}      \PY{c+c1}{\PYZsh{} ADP\PYZus{}r}
+                              \PY{l+m+mi}{30834}\PY{p}{,}       \PY{c+c1}{\PYZsh{} NADPH\PYZus{}r}
+                              \PY{l+m+mi}{24667}\PY{p}{,}       \PY{c+c1}{\PYZsh{} NADP\PYZus{}r                      }
+                              \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}          \PY{c+c1}{\PYZsh{} Glucose}
+        
+        
+        \PY{c+c1}{\PYZsh{} Specifies which reactants are in each reaction}
+        \PY{n}{reactions} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+        \PY{c+c1}{\PYZsh{}                            Dark reaction        }
+        \PY{c+c1}{\PYZsh{}                        Light reaction  |}
+        \PY{c+c1}{\PYZsh{}                          NADP diff. |  |  }
+        \PY{c+c1}{\PYZsh{}                      NADPH diff. |  |  |  }
+        \PY{c+c1}{\PYZsh{}                     ADP diff. |  |  |  |  }
+        \PY{c+c1}{\PYZsh{}                  ATP diff. |  |  |  |  |  }
+        \PY{c+c1}{\PYZsh{}           O2 int. diff. |  |  |  |  |  |  }
+        \PY{c+c1}{\PYZsh{}       CO2 int. diff. |  |  |  |  |  |  |  }
+        \PY{c+c1}{\PYZsh{}     O2 ext. diff. |  |  |  |  |  |  |  |      }
+        \PY{c+c1}{\PYZsh{} CO2 ext. diff. |  |  |  |  |  |  |  |  |      }
+        \PY{c+c1}{\PYZsh{}             |  |  |  |  |  |  |  |  |  |      }
+                     \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} CO2\PYZus{}d}
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} O2\PYZus{}d}
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} ATP\PYZus{}d}
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} ADP\PYZus{}d}
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} NADPH\PYZus{}d}
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} NADP\PYZus{}d             }
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} CO2\PYZus{}r}
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} O2\PYZus{}r}
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} ATP\PYZus{}r}
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} ADP\PYZus{}r}
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} NADPH\PYZus{}r}
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} NADP\PYZus{}r             }
+                     \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{} Glucose}
+        
+        \PY{c+c1}{\PYZsh{} Specifies the change in the reactants for each reaction}
+        \PY{n}{state\PYZus{}change} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+        \PY{c+c1}{\PYZsh{}                                             Dark reaction        }
+        \PY{c+c1}{\PYZsh{}                                        Light reaction   |}
+        \PY{c+c1}{\PYZsh{}                                        NADP diff.   |   |}
+        \PY{c+c1}{\PYZsh{}                                  NADPH diff.   |    |   |}
+        \PY{c+c1}{\PYZsh{}                               ADP diff.   |    |    |   |}
+        \PY{c+c1}{\PYZsh{}                          ATP diff.   |    |    |    |   |}
+        \PY{c+c1}{\PYZsh{}                 O2 int. diff.   |    |    |    |    |   |}
+        \PY{c+c1}{\PYZsh{}           CO2 int. diff.   |    |    |    |    |    |   |}
+        \PY{c+c1}{\PYZsh{}       O2 ext. diff.   |    |    |    |    |    |    |   |}
+        \PY{c+c1}{\PYZsh{} CO2 ext. diff. \PYZus{}\PYZus{}|  \PYZus{}\PYZus{}|  \PYZus{}\PYZus{}|  \PYZus{}\PYZus{}|  \PYZus{}\PYZus{}|  \PYZus{}\PYZus{}|  \PYZus{}\PYZus{}|  \PYZus{}\PYZus{}| \PYZus{}\PYZus{}|}
+        \PY{c+c1}{\PYZsh{}          |    |    |    |    |    |    |    |    |   |   }
+                \PY{p}{[}\PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} CO2\PYZus{}d}
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} O2\PYZus{}d}
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} ATP\PYZus{}d}
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} ADP\PYZus{}d}
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} NADPH\PYZus{}d}
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} NADP\PYZus{}d        }
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}  \PY{o}{\PYZhy{}}\PY{l+m+mi}{6}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} CO2\PYZus{}r}
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{1}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} O2\PYZus{}r}
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{3}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{18}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} ATP\PYZus{}r}
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}  \PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}  \PY{l+m+mi}{18}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} ADP\PYZus{}r}
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{100}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{2}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{12}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} NADPH\PYZus{}r}
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{100}\PY{p}{,}  \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,}  \PY{l+m+mi}{12}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} NADP\PYZus{}r        }
+                \PY{p}{[}  \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{,}   \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{} Glucose}
+        
+        \PY{c+c1}{\PYZsh{} Keys are the columns of the reaction and }
+        \PY{c+c1}{\PYZsh{} state change matrices}
+        \PY{n}{reaction\PYZus{}map} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+m+mi}{0}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DM}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{c+c1}{\PYZsh{} CO2 Membrane diffusion}
+                        \PY{l+m+mi}{1}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DM}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{c+c1}{\PYZsh{} O2 Membrane diffusion}
+                        \PY{l+m+mi}{2}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DI}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{c+c1}{\PYZsh{} CO2 internal diffusion}
+                        \PY{l+m+mi}{3}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DI}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{c+c1}{\PYZsh{} O2 internal diffusion}
+                        \PY{l+m+mi}{4}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DI}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{c+c1}{\PYZsh{} ATP diffusion}
+                        \PY{l+m+mi}{5}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DI}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{c+c1}{\PYZsh{} ADP diffusion}
+                        \PY{l+m+mi}{6}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DI}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{c+c1}{\PYZsh{} NADPH diffusion}
+                        \PY{l+m+mi}{7}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DI}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{c+c1}{\PYZsh{} NADP diffusion                }
+                        \PY{l+m+mi}{8}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{R}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{c+c1}{\PYZsh{} Light reaction}
+                        \PY{l+m+mi}{9}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{R}\PY{l+s+s2}{\PYZdq{}}\PY{p}{\PYZcb{}} \PY{c+c1}{\PYZsh{} Dark reaction  }
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{k}{class} \PY{n+nc}{Model}\PY{p}{(}\PY{n+nb}{object}\PY{p}{)}\PY{p}{:} 
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simple data structure for storing reaction info.\PYZdq{}\PYZdq{}\PYZdq{}}
+             
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,}                 
+                          \PY{n}{reactant\PYZus{}names}\PY{p}{,}
+                          \PY{n}{reactant\PYZus{}map}\PY{p}{,}
+                          \PY{n}{reactant\PYZus{}masses}\PY{p}{,}
+                          \PY{n}{reactants}\PY{p}{,}
+                          \PY{n}{reactions}\PY{p}{,}
+                          \PY{n}{state\PYZus{}change}\PY{p}{,}
+                          \PY{n}{reaction\PYZus{}map}\PY{p}{,}
+                          \PY{n}{reaction\PYZus{}volume}\PY{p}{,}
+                          \PY{n}{diffusion\PYZus{}volume}\PY{p}{)}\PY{p}{:}        
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{reactant\PYZus{}names} \PY{o}{=} \PY{n}{reactant\PYZus{}names}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{reactant\PYZus{}map} \PY{o}{=} \PY{n}{reactant\PYZus{}map}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{reactant\PYZus{}masses} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{reactant\PYZus{}masses}\PY{p}{)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{reactants} \PY{o}{=} \PY{n}{reactants}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{reactions} \PY{o}{=} \PY{n}{reactions}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{state\PYZus{}change} \PY{o}{=} \PY{n}{state\PYZus{}change}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{reaction\PYZus{}map} \PY{o}{=} \PY{n}{reaction\PYZus{}map}
+                 \PY{c+c1}{\PYZsh{} Avoid repeated division by doing it now.}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{rvd} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{n}{reaction\PYZus{}volume}\PY{o}{*}\PY{n}{avogadro}\PY{p}{)}  
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{dvd} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{n}{diffusion\PYZus{}volume}\PY{o}{*}\PY{n}{avogadro}\PY{p}{)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{log} \PY{o}{=} \PY{p}{[}\PY{p}{]}  \PY{c+c1}{\PYZsh{} For counting reactions.}
+                 
+             \PY{k}{def} \PY{n+nf}{get\PYZus{}reactants}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{reactants}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+             
+             \PY{k}{def} \PY{n+nf}{update\PYZus{}reactants}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{reaction}\PY{p}{,} \PY{n}{sgn}\PY{p}{)}\PY{p}{:}   
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{log}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{reaction}\PY{p}{)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{reactants} \PY{o}{+}\PY{o}{=} \PY{n}{sgn}\PY{o}{*}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{state\PYZus{}change}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{reaction}\PY{p}{]}
+             
+              
+         
+         \PY{k}{class} \PY{n+nc}{Simulator}\PY{p}{(}\PY{n+nb}{object}\PY{p}{)}\PY{p}{:}
+             
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{model}\PY{p}{,} \PY{n}{params}\PY{p}{,} \PY{n}{callback}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Runs a stocastic chemical reaction simulation.\PYZdq{}\PYZdq{}\PYZdq{}}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model} \PY{o}{=} \PY{n}{model}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{params} \PY{o}{=} \PY{n}{params}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{callback} \PY{o}{=} \PY{n}{callback}
+                 
+             \PY{k}{def} \PY{n+nf}{run}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{t}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{        Runs the simulation}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Arguments}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        t : float}
+         \PY{l+s+sd}{            The start time of the reaction}
+         \PY{l+s+sd}{            }
+         \PY{l+s+sd}{        Returns}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        T : ndarray}
+         \PY{l+s+sd}{            A vector of the time points at which the}
+         \PY{l+s+sd}{            reactants were updated.}
+         \PY{l+s+sd}{            }
+         \PY{l+s+sd}{        R : ndarray}
+         \PY{l+s+sd}{            A (number of reactants) x (len(T)) matrix}
+         \PY{l+s+sd}{            of the reactant counts at the time points in T.}
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                 \PY{c+c1}{\PYZsh{} Output initialization}
+                 \PY{n}{T} \PY{o}{=} \PY{p}{[}\PY{n}{t}\PY{p}{]}
+                 \PY{n}{R} \PY{o}{=} \PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{get\PYZus{}reactants}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+                 
+                 \PY{k}{while} \PY{n}{T}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{params}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{+} \PY{n}{t}\PY{p}{:}            
+                     
+                     \PY{c+c1}{\PYZsh{} Calculate the current reaction rates}
+                     \PY{c+c1}{\PYZsh{} and the sign of the reaction (diffusion goes }
+                     \PY{c+c1}{\PYZsh{} two ways.)}
+                     \PY{n}{rates}\PY{p}{,} \PY{n}{sgn} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{calc\PYZus{}rates}\PY{p}{(}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{}print(rates)}
+                     
+                     \PY{c+c1}{\PYZsh{} Get the time til update tau and}
+                     \PY{c+c1}{\PYZsh{} a random variable to pick which reaction }
+                     \PY{c+c1}{\PYZsh{} occurs.}
+                     \PY{n}{tau}\PY{p}{,} \PY{n}{r} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{calculate\PYZus{}update}\PY{p}{(}\PY{n}{rates}\PY{p}{)}
+                     
+                     \PY{c+c1}{\PYZsh{} Get the reaction from r and the reaction rates.}
+                     \PY{n}{reaction} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{get\PYZus{}reaction}\PY{p}{(}\PY{n}{rates}\PY{p}{,} \PY{n}{r}\PY{p}{)}   
+                     
+                     \PY{c+c1}{\PYZsh{} Update the reactant counts.}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{update\PYZus{}reactants}\PY{p}{(}\PY{n}{reaction}\PY{p}{,} \PY{n}{sgn}\PY{p}{[}\PY{n}{reaction}\PY{p}{]}\PY{p}{)}
+                     
+                     \PY{c+c1}{\PYZsh{} Append results to the output}
+                     \PY{n}{T}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{T}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{tau}\PY{p}{)}
+                     \PY{n}{R}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{get\PYZus{}reactants}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                     
+                     \PY{c+c1}{\PYZsh{} Update the progress bar in the display widget.}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{callback}\PY{p}{(}\PY{n}{tau}\PY{p}{)}            
+                 
+                 \PY{k}{return} \PY{n}{T}\PY{p}{,} \PY{n}{R}
+             
+             \PY{k}{def} \PY{n+nf}{calc\PYZus{}rates}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{        Calculates the instantaneous reaction rates }
+         \PY{l+s+sd}{        from current species counts and parameters.}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Returns}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        rates : ndarray}
+         \PY{l+s+sd}{            Instantaneous reaction rates for all reactions.}
+         \PY{l+s+sd}{        sgn : ndarray}
+         \PY{l+s+sd}{            Vector of +/\PYZhy{}1\PYZsq{}s indication the direction of}
+         \PY{l+s+sd}{            each reaction.}
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                 
+                 \PY{c+c1}{\PYZsh{} Turn counts into concentrations.}
+                 \PY{n}{conc} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{float\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{get\PYZus{}reactants}\PY{p}{(}\PY{p}{)}\PY{p}{)}   
+                 \PY{n}{conc}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{6}\PY{p}{]} \PY{o}{=} \PY{n}{conc}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{6}\PY{p}{]}\PY{o}{*}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{dvd}
+                 \PY{n}{conc}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{conc}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{:}\PY{p}{]}\PY{o}{*}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{rvd}
+                 
+                 \PY{c+c1}{\PYZsh{} Initialize outputs}
+                 \PY{n}{rates} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{reaction\PYZus{}map}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{sgn} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{reaction\PYZus{}map}\PY{p}{)}\PY{p}{,} \PY{n}{dtype} \PY{o}{=} \PY{n+nb}{int}\PY{p}{)}
+                 
+                 \PY{c+c1}{\PYZsh{} Could speed up with by only updating reactants}
+                 \PY{c+c1}{\PYZsh{} changed on the previous step if necessary }
+                 \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{rates}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} The three reaction types are processed differently}
+                     
+                     \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{reaction\PYZus{}map}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DM}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                         \PY{c+c1}{\PYZsh{} Uses external CO2/O2 concentration}
+                         \PY{n}{rates}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{sgn}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{calc\PYZus{}membrane\PYZus{}diffusion\PYZus{}rate}\PY{p}{(}
+                             \PY{n}{i}\PY{p}{,} \PY{n}{conc}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                     \PY{k}{elif} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{reaction\PYZus{}map}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DI}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                         \PY{c+c1}{\PYZsh{} Diffusion between internal compartments}
+                         \PY{c+c1}{\PYZsh{} Magic numbers (2 and 4) relate the reactants}
+                         \PY{c+c1}{\PYZsh{} of species S in the two internal compartments.}
+                         \PY{c+c1}{\PYZsh{} Should pass in info as a data structure. }
+                         \PY{n}{rates}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{sgn}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{calc\PYZus{}internal\PYZus{}diffusion\PYZus{}rate}\PY{p}{(}
+                             \PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{conc}\PY{p}{[}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{conc}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)} 
+                     \PY{k}{else}\PY{p}{:}
+                         \PY{c+c1}{\PYZsh{} Straight up reaction rate calculation.  Sign is always}
+                         \PY{c+c1}{\PYZsh{} positive as our reactions are one\PYZhy{}way.}
+                         \PY{n}{rates}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{sgn}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{calc\PYZus{}reaction\PYZus{}rate}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{conc}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}
+                         
+                 \PY{k}{return} \PY{n}{rates}\PY{p}{,} \PY{n}{sgn}
+             
+             \PY{k}{def} \PY{n+nf}{calc\PYZus{}membrane\PYZus{}diffusion\PYZus{}rate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{n}{c}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{        Calculates diffusion rate and direction through }
+         \PY{l+s+sd}{        chloroplast membrane.}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Arguments}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        i : int [0 or 1]}
+         \PY{l+s+sd}{            Index representing the diffusion reaction of interest.}
+         \PY{l+s+sd}{        c : float}
+         \PY{l+s+sd}{            Concentration of the i\PYZhy{}th reactant.}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Returns}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        (rate, sgn) : (float, int)}
+         \PY{l+s+sd}{            Reaction rate and direction.}
+         \PY{l+s+sd}{            }
+         \PY{l+s+sd}{        Note}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Based on the diffusion rate equation}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{            r = K*sqrt(T/m)}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        scaled by the difference in concentration across}
+         \PY{l+s+sd}{        the membrane.  Because osmosis is hard and not the}
+         \PY{l+s+sd}{        point of the model.}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                 \PY{c+c1}{\PYZsh{} Reaction coefficient}
+                 \PY{n}{K} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{params}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K\PYZus{}m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{c+c1}{\PYZsh{} Temperature}
+                 \PY{n}{T} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{params}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{temp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}        
+                 \PY{c+c1}{\PYZsh{} Concentrations of external gasses}
+                 \PY{n}{g\PYZus{}c} \PY{o}{=} \PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{params}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{co2\PYZus{}conc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{params}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o2\PYZus{}conc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+                 
+                 \PY{c+c1}{\PYZsh{} Compute reaction sign, rate, then return}
+                 \PY{n}{d} \PY{o}{=} \PY{n}{g\PYZus{}c}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{c}        
+                 \PY{k}{return} \PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{/}\PY{n}{reactant\PYZus{}masses}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{d}\PY{p}{)}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{d}\PY{p}{)}\PY{p}{)}
+                 
+                 
+             
+             \PY{k}{def} \PY{n+nf}{calc\PYZus{}internal\PYZus{}diffusion\PYZus{}rate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{n}{c1}\PY{p}{,} \PY{n}{c2}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{        Calculates diffusion rate and direction between}
+         \PY{l+s+sd}{        our internal compartments in the chloroplast}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Arguments}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        i : int }
+         \PY{l+s+sd}{            Index representing the diffusion reaction of interest.}
+         \PY{l+s+sd}{        c1, c2 : floats}
+         \PY{l+s+sd}{            Concentrations of the reactant in the two internal}
+         \PY{l+s+sd}{            compartments in the chloroplast.}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Returns}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        (rate, sgn) : (float, int)}
+         \PY{l+s+sd}{            Reaction rate and direction.}
+         \PY{l+s+sd}{            }
+         \PY{l+s+sd}{        Note}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}     }
+         \PY{l+s+sd}{        Based on the diffusion rate equation}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{            r = K*sqrt(T/m)}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        scaled by the difference in concentration }
+         \PY{l+s+sd}{        (ie a discretized gradient)}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                 
+                 \PY{c+c1}{\PYZsh{} Reaction coefficient}
+                 \PY{n}{K} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{params}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{c+c1}{\PYZsh{} Temperature}
+                 \PY{n}{T} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{params}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{temp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+                 
+                 \PY{c+c1}{\PYZsh{} Compute reaction sign, rate, then return}
+                 \PY{n}{d} \PY{o}{=} \PY{n}{c1} \PY{o}{\PYZhy{}} \PY{n}{c2}        
+                 \PY{k}{return} \PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{/}\PY{n}{reactant\PYZus{}masses}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{d}\PY{p}{)}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{d}\PY{p}{)}\PY{p}{)}
+                 
+                 
+             \PY{k}{def} \PY{n+nf}{calc\PYZus{}reaction\PYZus{}rate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{n}{c}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{        Calculates the light and dark reaction rates}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Arguments}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        i : int [8 or 9]}
+         \PY{l+s+sd}{            Index representing the chemical reaction of interest.}
+         \PY{l+s+sd}{        c: ndarray}
+         \PY{l+s+sd}{            Vector of concentrations for all reactants}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Returns}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        rate : float}
+         \PY{l+s+sd}{            Reaction rate }
+         \PY{l+s+sd}{            }
+         \PY{l+s+sd}{        Note}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Based on the chemical reaction rate equation}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{            d[X]/dt = \PYZhy{}k\PYZus{}0*a*[X]*[Y]*[Z] + k\PYZus{}1*d*[X]*[U]*[V]}
+         \PY{l+s+sd}{            }
+         \PY{l+s+sd}{        modelling the reactions}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{                       k\PYZus{}0}
+         \PY{l+s+sd}{        aX + bY + cZ \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZgt{}  (Products)}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{                      k\PYZus{}1}
+         \PY{l+s+sd}{        (Reactants) \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZgt{} dX + eU + fV}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        where X,Y,Z,U,V are chemical species and}
+         \PY{l+s+sd}{        a,b,c,d,e,f are numbers that balance the }
+         \PY{l+s+sd}{        chemical equation stoichiometrically.        }
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                 \PY{c+c1}{\PYZsh{} Get the appropriate rate coefficient}
+                 \PY{n}{k} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{params}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k\PYZus{}l}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{8} \PY{k}{else} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{params}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k\PYZus{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{c+c1}{\PYZsh{} Extract the concentrations of reactants}
+                 \PY{c+c1}{\PYZsh{} involved in the current reaction.}
+                 \PY{n}{r} \PY{o}{=} \PY{n}{c}\PY{o}{*}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{reactions}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}
+                 \PY{n}{r} \PY{o}{=} \PY{n}{r}\PY{p}{[}\PY{n}{r}\PY{o}{.}\PY{n}{nonzero}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+                 \PY{c+c1}{\PYZsh{} To preserve dimensionality, raise the rate }
+                 \PY{c+c1}{\PYZsh{} constant to the power of the length of the reactants.}
+                 \PY{c+c1}{\PYZsh{} Rate is then K[X][Y][Z] for K = k**3 in this example.}
+                 \PY{c+c1}{\PYZsh{} Scaled by the coefficients when reactants are updated.}
+                 \PY{k}{return} \PY{n}{k}\PY{o}{*}\PY{o}{*}\PY{n+nb}{len}\PY{p}{(}\PY{n}{r}\PY{p}{)}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{product}\PY{p}{(}\PY{n}{r}\PY{p}{)}
+                 
+             \PY{n+nd}{@staticmethod}
+             \PY{k}{def} \PY{n+nf}{calculate\PYZus{}update}\PY{p}{(}\PY{n}{rates}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{        Draw from the joint probability distribution}
+         \PY{l+s+sd}{        P(tau, r) over update time\PYZhy{}steps and reactions}
+         \PY{l+s+sd}{        based on the current instantaneous reaction rates.}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Arguments}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        rates : ndarray}
+         \PY{l+s+sd}{            Instantaneous reaction rates for all reactions.}
+         \PY{l+s+sd}{            }
+         \PY{l+s+sd}{        Returns}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        (tau, r) : (float, float)}
+         \PY{l+s+sd}{            tau \PYZhy{} next time\PYZhy{}step}
+         \PY{l+s+sd}{            r \PYZhy{} variable to draw next reaction.}
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                 \PY{c+c1}{\PYZsh{} Rate at which any reaction will happen}
+                 \PY{n}{total\PYZus{}rate} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{rates}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Assume reactions are a Poisson process}
+                 \PY{n}{tau} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{o}{/}\PY{n}{total\PYZus{}rate}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Get a variable uniformly distributed in}
+                 \PY{c+c1}{\PYZsh{} (0, total rate)}
+                 \PY{n}{r} \PY{o}{=} \PY{n}{total\PYZus{}rate}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{p}{)}
+                 
+                 \PY{k}{return} \PY{n}{tau}\PY{p}{,} \PY{n}{r}
+             
+             \PY{n+nd}{@staticmethod}
+             \PY{k}{def} \PY{n+nf}{get\PYZus{}reaction}\PY{p}{(}\PY{n}{rates}\PY{p}{,} \PY{n}{r}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{        Produces the next reaction to occur.}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Arguments}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        rates : ndarray}
+         \PY{l+s+sd}{            Instantaneous reaction rates for all reactions.}
+         \PY{l+s+sd}{        r : float}
+         \PY{l+s+sd}{            Random variable uniformly drawn from the }
+         \PY{l+s+sd}{            interval (0, sum(rates)==total\PYZus{}reaction\PYZus{}rate)}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{        Returns}
+         \PY{l+s+sd}{        \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{        i : int}
+         \PY{l+s+sd}{            The index of the next reaction}
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                 
+                 \PY{c+c1}{\PYZsh{} Look in the interval (0, rate\PYZus{}1)}
+                 \PY{c+c1}{\PYZsh{} if r found, select reaction 1, else}
+                 \PY{c+c1}{\PYZsh{} look in (rate\PYZus{}1, rate\PYZus{}2), loop.}
+                 \PY{n}{current} \PY{o}{=} \PY{l+m+mi}{0}    
+                 \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{rates}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{current} \PY{o}{+}\PY{o}{=} \PY{n}{rates}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                     \PY{k}{if} \PY{n}{current} \PY{o}{\PYZgt{}} \PY{n}{r}\PY{p}{:}                
+                         \PY{k}{break}            
+                 \PY{k}{return} \PY{n}{i}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+         \PY{c+c1}{\PYZsh{} Model Parameters \PYZsh{}}
+         \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+         
+         \PY{c+c1}{\PYZsh{} Setup here as a bunch of sliders for interactivity.}
+         
+         \PY{c+c1}{\PYZsh{} Simulate how many seconds?}
+         \PY{n}{max\PYZus{}time} \PY{o}{=} \PY{n}{ipw}\PY{o}{.}\PY{n}{IntSlider}\PY{p}{(}\PY{n+nb}{min}\PY{o}{=}     \PY{l+m+mi}{100}\PY{p}{,} 
+                                  \PY{n+nb}{max}\PY{o}{=}     \PY{l+m+mi}{10000000}\PY{p}{,}
+                                  \PY{n}{step}\PY{o}{=}    \PY{l+m+mi}{100}\PY{p}{,}
+                                  \PY{n}{value}\PY{o}{=}   \PY{l+m+mi}{1000}\PY{p}{,}
+                                  \PY{n}{continuous\PYZus{}update}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} External gas Concentrations (Moles/Liter)}
+         \PY{n}{ext\PYZus{}o2\PYZus{}conc} \PY{o}{=} \PY{n}{ipw}\PY{o}{.}\PY{n}{FloatSlider}\PY{p}{(}\PY{n+nb}{min}\PY{o}{=}   \PY{l+m+mf}{0.00001}\PY{p}{,} 
+                                       \PY{n+nb}{max}\PY{o}{=}   \PY{l+m+mf}{0.00100}\PY{p}{,}
+                                       \PY{n}{step}\PY{o}{=}  \PY{l+m+mf}{0.00001}\PY{p}{,}
+                                       \PY{n}{value}\PY{o}{=} \PY{l+m+mf}{0.00030}\PY{p}{,}
+                                       \PY{n}{continuous\PYZus{}update}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         \PY{n}{ext\PYZus{}co2\PYZus{}conc} \PY{o}{=} \PY{n}{ipw}\PY{o}{.}\PY{n}{FloatSlider}\PY{p}{(}\PY{n+nb}{min}\PY{o}{=}   \PY{l+m+mf}{0.00001}\PY{p}{,} 
+                                        \PY{n+nb}{max}\PY{o}{=}   \PY{l+m+mf}{0.00100}\PY{p}{,}
+                                        \PY{n}{step}\PY{o}{=}  \PY{l+m+mf}{0.00001}\PY{p}{,}
+                                        \PY{n}{value}\PY{o}{=} \PY{l+m+mf}{0.00030}\PY{p}{,}
+                                        \PY{n}{continuous\PYZus{}update}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} System Temperature (Kelvin)}
+         \PY{n}{temperature} \PY{o}{=} \PY{n}{ipw}\PY{o}{.}\PY{n}{IntSlider}\PY{p}{(}\PY{n+nb}{min}\PY{o}{=}   \PY{l+m+mi}{273}\PY{p}{,} 
+                                     \PY{n+nb}{max}\PY{o}{=}   \PY{l+m+mi}{320}\PY{p}{,}
+                                     \PY{n}{step}\PY{o}{=}    \PY{l+m+mi}{1}\PY{p}{,}
+                                     \PY{n}{value}\PY{o}{=} \PY{l+m+mi}{305}\PY{p}{,}
+                                     \PY{n}{continuous\PYZus{}update}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         
+         
+         \PY{c+c1}{\PYZsh{} Diffusion Parameters}
+         
+         \PY{c+c1}{\PYZsh{} Cell Membrane }
+         \PY{n}{memb\PYZus{}diff} \PY{o}{=} \PY{n}{ipw}\PY{o}{.}\PY{n}{FloatSlider}\PY{p}{(}\PY{n+nb}{min}\PY{o}{=}   \PY{l+m+mi}{1}\PY{p}{,} 
+                                     \PY{n+nb}{max}\PY{o}{=}   \PY{l+m+mi}{1000}\PY{p}{,}
+                                     \PY{n}{step}\PY{o}{=}  \PY{l+m+mi}{1}\PY{p}{,}
+                                     \PY{n}{value}\PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}
+                                     \PY{n}{continuous\PYZus{}update}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Reaction Compartment }
+         \PY{n}{int\PYZus{}diff} \PY{o}{=} \PY{n}{ipw}\PY{o}{.}\PY{n}{FloatSlider}\PY{p}{(}\PY{n+nb}{min}\PY{o}{=}   \PY{l+m+mi}{1}\PY{p}{,} 
+                                    \PY{n+nb}{max}\PY{o}{=}   \PY{l+m+mi}{20}\PY{p}{,}
+                                    \PY{n}{step}\PY{o}{=}  \PY{l+m+mi}{1}\PY{p}{,}
+                                    \PY{n}{value}\PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}
+                                    \PY{n}{continuous\PYZus{}update}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         
+         
+         \PY{c+c1}{\PYZsh{} Reaction Rates}
+         \PY{n}{light\PYZus{}rate} \PY{o}{=} \PY{n}{ipw}\PY{o}{.}\PY{n}{FloatSlider}\PY{p}{(}\PY{n+nb}{min}\PY{o}{=}    \PY{l+m+mi}{1}\PY{p}{,} 
+                                      \PY{n+nb}{max}\PY{o}{=}    \PY{l+m+mi}{500}\PY{p}{,}
+                                      \PY{n}{step}\PY{o}{=}   \PY{l+m+mi}{1}\PY{p}{,}
+                                      \PY{n}{value}\PY{o}{=}  \PY{l+m+mi}{1}\PY{p}{,}
+                                      \PY{n}{continuous\PYZus{}update}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         
+         \PY{n}{dark\PYZus{}rate} \PY{o}{=} \PY{n}{ipw}\PY{o}{.}\PY{n}{FloatSlider}\PY{p}{(}\PY{n+nb}{min}\PY{o}{=}     \PY{l+m+mi}{1}\PY{p}{,} 
+                                      \PY{n+nb}{max}\PY{o}{=}    \PY{l+m+mi}{500}\PY{p}{,}
+                                      \PY{n}{step}\PY{o}{=}   \PY{l+m+mi}{1}\PY{p}{,}
+                                      \PY{n}{value}\PY{o}{=}  \PY{l+m+mi}{1}\PY{p}{,}
+                                      \PY{n}{continuous\PYZus{}update}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{k}{def} \PY{n+nf}{plot\PYZus{}the\PYZus{}plots}\PY{p}{(}\PY{n}{T}\PY{p}{,} \PY{n}{R}\PY{p}{)}\PY{p}{:}    
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Plots reactant concentrations near the }
+         \PY{l+s+sd}{    thylakoid membrane over time.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Arguments}
+         \PY{l+s+sd}{    \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{    T : ndarray}
+         \PY{l+s+sd}{        Time steps at which the reactants }
+         \PY{l+s+sd}{        were evaluated.}
+         \PY{l+s+sd}{    R : ndarray}
+         \PY{l+s+sd}{        (number\PYZus{}of\PYZus{}reactants) x (len(T)) array}
+         \PY{l+s+sd}{        of reactant numbers at the time steps}
+         \PY{l+s+sd}{        in T.}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{c+c1}{\PYZsh{} Using model data names}
+             \PY{n}{reacs} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{O2\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ATP\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ADP\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                      \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NADPH\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NADP\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Glucose}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{c+c1}{\PYZsh{} Plot readable names}
+             \PY{n}{names} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Carbon Dioxide}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                      \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Oxygen}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                      \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ATP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                      \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ADP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                      \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NADPH}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                      \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NADP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}             
+                      \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Glucose}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             
+             \PY{c+c1}{\PYZsh{} Convert from numbers to concentrations.}
+             \PY{n}{R} \PY{o}{=} \PY{n}{R}\PY{o}{/}\PY{p}{(}\PY{n}{reaction\PYZus{}volume}\PY{o}{*}\PY{n}{avogadro}\PY{p}{)}
+             
+             \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{names}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{35}\PY{p}{)}\PY{p}{)}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{reacs}\PY{p}{)}\PY{p}{)}\PY{p}{:}       
+                 
+                 \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{T}\PY{p}{,} \PY{n}{R}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{reactant\PYZus{}map}\PY{p}{[}\PY{n}{reacs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+                 \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{)}
+                 \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ Concentration [M]}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{names}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{,}
+                                 \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{)}
+             
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+             
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{c+c1}{\PYZsh{} Lists are \PYZsq{}passed by reference\PYZsq{}}
+         \PY{c+c1}{\PYZsh{} so updates in inner scopes (a function) }
+         \PY{c+c1}{\PYZsh{} propagate to outer scopes.}
+         \PY{c+c1}{\PYZsh{} So we make a copy to preserve our initial}
+         \PY{c+c1}{\PYZsh{} conditions, but allow ourselves to run}
+         \PY{c+c1}{\PYZsh{} the simulation repeatedly and concatenate }
+         \PY{c+c1}{\PYZsh{} the data, giving us the ability to push}
+         \PY{c+c1}{\PYZsh{} towards extrema in the model by moving around}
+         \PY{c+c1}{\PYZsh{} sliders.}
+         \PY{n}{r} \PY{o}{=} \PY{n}{reactants}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} For storing the long term data.}
+         \PY{n}{R} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{T} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{C} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{CONC} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{c+c1}{\PYZsh{} Setup a simulation progress bar}
+         \PY{c+c1}{\PYZsh{} so we don\PYZsq{}t get mad and think our }
+         \PY{c+c1}{\PYZsh{} computer froze.}
+         \PY{n}{progress\PYZus{}bar} \PY{o}{=} \PY{n}{ipw}\PY{o}{.}\PY{n}{FloatProgress}\PY{p}{(}\PY{n+nb}{min}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{max}\PY{o}{=}\PY{n}{max\PYZus{}time}\PY{o}{.}\PY{n}{value}\PY{p}{)}
+         \PY{n}{display}\PY{p}{(}\PY{n}{progress\PYZus{}bar}\PY{p}{)}
+         \PY{k}{def} \PY{n+nf}{update\PYZus{}callback}\PY{p}{(}\PY{n}{dt}\PY{p}{)}\PY{p}{:}
+             \PY{n}{progress\PYZus{}bar}\PY{o}{.}\PY{n}{value} \PY{o}{+}\PY{o}{=} \PY{n}{dt}
+             
+         \PY{n}{reaction\PYZus{}name\PYZus{}map} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+m+mi}{0}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{CO2 Membrane diffusion}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                              \PY{l+m+mi}{1}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O2 Membrane diffusion}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                              \PY{l+m+mi}{2}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{CO2 internal diffusion}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                              \PY{l+m+mi}{3}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O2 internal diffusion}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                              \PY{l+m+mi}{4}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ATP diffusion}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                              \PY{l+m+mi}{5}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ADP diffusion}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                              \PY{l+m+mi}{6}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{NADPH diffusion}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                              \PY{l+m+mi}{7}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{NADP diffusion}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                              \PY{l+m+mi}{8}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Light reaction}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                              \PY{l+m+mi}{9}\PY{p}{:}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Dark reaction}\PY{l+s+s2}{\PYZdq{}}\PY{p}{\PYZcb{}}
+         
+         \PY{c+c1}{\PYZsh{} Interactive widgets!  With all our model parameters!}
+         \PY{n+nd}{@ipw}\PY{o}{.}\PY{n}{interact}\PY{p}{(}\PY{n}{max\PYZus{}time}\PY{o}{=}\PY{n}{max\PYZus{}time}\PY{p}{,} 
+                       \PY{n}{ext\PYZus{}o2\PYZus{}conc}\PY{o}{=}\PY{n}{ext\PYZus{}o2\PYZus{}conc}\PY{p}{,}
+                       \PY{n}{ext\PYZus{}co2\PYZus{}conc}\PY{o}{=}\PY{n}{ext\PYZus{}co2\PYZus{}conc}\PY{p}{,}
+                       \PY{n}{temperature}\PY{o}{=}\PY{n}{temperature}\PY{p}{,}
+                       \PY{n}{memb\PYZus{}diff}\PY{o}{=}\PY{n}{memb\PYZus{}diff}\PY{p}{,}
+                       \PY{n}{int\PYZus{}diff}\PY{o}{=}\PY{n}{int\PYZus{}diff}\PY{p}{,}
+                       \PY{n}{light\PYZus{}rate}\PY{o}{=}\PY{n}{light\PYZus{}rate}\PY{p}{,}
+                       \PY{n}{dark\PYZus{}rate}\PY{o}{=}\PY{n}{dark\PYZus{}rate}\PY{p}{,}
+                       \PY{n}{\PYZus{}\PYZus{}manual}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{c+c1}{\PYZsh{} Makes us have to press a button}
+                                      \PY{c+c1}{\PYZsh{} to start the simulation.}
+         \PY{k}{def} \PY{n+nf}{f}\PY{p}{(}\PY{n}{max\PYZus{}time}\PY{p}{,} \PY{n}{ext\PYZus{}o2\PYZus{}conc}\PY{p}{,} \PY{n}{ext\PYZus{}co2\PYZus{}conc}\PY{p}{,} 
+               \PY{n}{temperature}\PY{p}{,} \PY{n}{memb\PYZus{}diff}\PY{p}{,} \PY{n}{int\PYZus{}diff}\PY{p}{,}
+               \PY{n}{light\PYZus{}rate}\PY{p}{,} \PY{n}{dark\PYZus{}rate}\PY{p}{)}\PY{p}{:}
+             
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Wrapper function for interactivity.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Arguments}
+         \PY{l+s+sd}{    \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{l+s+sd}{    Parameters of the simulation, see above.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{c+c1}{\PYZsh{} Reset the progress bar.}
+             \PY{n}{progress\PYZus{}bar}\PY{o}{.}\PY{n}{min}\PY{o}{=}\PY{l+m+mi}{0}
+             \PY{n}{progress\PYZus{}bar}\PY{o}{.}\PY{n}{max}\PY{o}{=}\PY{n}{max\PYZus{}time}
+             \PY{n}{progress\PYZus{}bar}\PY{o}{.}\PY{n}{value}\PY{o}{=}\PY{l+m+mi}{0}
+             
+             \PY{c+c1}{\PYZsh{} Package up the parameters.}
+             \PY{n}{params} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{max\PYZus{}time}\PY{p}{,} 
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o2\PYZus{}conc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{ext\PYZus{}o2\PYZus{}conc}\PY{p}{,} 
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{co2\PYZus{}conc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{ext\PYZus{}co2\PYZus{}conc}\PY{p}{,} 
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{temp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{temperature}\PY{p}{,} 
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K\PYZus{}m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{memb\PYZus{}diff}\PY{p}{,} 
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{int\PYZus{}diff}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k\PYZus{}l}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{light\PYZus{}rate}\PY{p}{,} 
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k\PYZus{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{dark\PYZus{}rate}\PY{p}{\PYZcb{}}
+             
+             \PY{c+c1}{\PYZsh{} Initialize the model.}
+             \PY{n}{m} \PY{o}{=} \PY{n}{Model}\PY{p}{(}\PY{n}{reactant\PYZus{}names}\PY{p}{,}
+                       \PY{n}{reactant\PYZus{}map}\PY{p}{,}
+                       \PY{n}{reactant\PYZus{}masses}\PY{p}{,}
+                       \PY{n}{r}\PY{p}{,}
+                       \PY{n}{reactions}\PY{p}{,}
+                       \PY{n}{state\PYZus{}change}\PY{p}{,}
+                       \PY{n}{reaction\PYZus{}map}\PY{p}{,}
+                       \PY{n}{reaction\PYZus{}volume}\PY{p}{,} 
+                       \PY{n}{diffusion\PYZus{}volume}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} Initialize the simulator    }
+             \PY{n}{s} \PY{o}{=} \PY{n}{Simulator}\PY{p}{(}\PY{n}{m}\PY{p}{,} \PY{n}{params}\PY{p}{,} \PY{n}{update\PYZus{}callback}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} Get the current simulation results}
+             \PY{k}{if} \PY{n}{T}\PY{p}{:}
+                 \PY{n}{T\PYZus{}run}\PY{p}{,} \PY{n}{R\PYZus{}run} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{T}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{T\PYZus{}run}\PY{p}{,} \PY{n}{R\PYZus{}run} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} Append them to our long term results.}
+             \PY{n}{T}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{T\PYZus{}run}\PY{p}{)}
+             \PY{n}{R}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{n}{R\PYZus{}run}\PY{p}{)}
+         
+             \PY{c+c1}{\PYZsh{} Counts the number of each reaction to occur.}
+             \PY{n}{c} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{m}\PY{o}{.}\PY{n}{log}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} Hang on to the results}
+             \PY{n}{C}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{c}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} Print the individual reaction counts}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Reaction Counts}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{c}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ count: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{reaction\PYZus{}name\PYZus{}map}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{,} \PY{n}{v}\PY{p}{)}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Total : }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{[}\PY{n}{v} \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{c}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}    
+             
+             \PY{n}{plot\PYZus{}the\PYZus{}plots}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{T\PYZus{}run}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{R\PYZus{}run}\PY{p}{)}\PY{p}{)}
+             
+             
+             
+         \PY{c+c1}{\PYZsh{} The idea here is to pick a set of parameters and run the }
+         \PY{c+c1}{\PYZsh{} simulation til you get a steady state.  Something will}
+         \PY{c+c1}{\PYZsh{} level off near zero when this happens.  Then turn on/off}
+         \PY{c+c1}{\PYZsh{} another parameter and run it for a few times.}
+         \PY{c+c1}{\PYZsh{} You can then go to the next cell and plot cumulative }
+         \PY{c+c1}{\PYZsh{} data to see the impact of the change on photosynthesis.}
+         \PY{c+c1}{\PYZsh{}}
+         \PY{c+c1}{\PYZsh{} Example:}
+         \PY{c+c1}{\PYZsh{} }
+         \PY{c+c1}{\PYZsh{} Leave everything at default rates and turn the dark\PYZus{}rate}
+         \PY{c+c1}{\PYZsh{} up to max.  Eventually the NADPH will flatline near zero}
+         \PY{c+c1}{\PYZsh{} though it\PYZsq{}ll bounce around due to a small amount of light}
+         \PY{c+c1}{\PYZsh{} reactions and diffusion.  Then, turn on the light reactions.}
+         \PY{c+c1}{\PYZsh{} Suddenly your the reactants for the dark reaction will }
+         \PY{c+c1}{\PYZsh{} start being produced again and the glucose production rate}
+         \PY{c+c1}{\PYZsh{} will take off.}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Reaction Counts
+---------------
+CO2 Membrane diffusion count: 40289
+CO2 internal diffusion count: 634
+ATP diffusion count: 8
+ADP diffusion count: 1
+NADPH diffusion count: 16
+NADP diffusion count: 14
+Total : 40962
+
+
+    \end{Verbatim}
+
+  
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{c+c1}{\PYZsh{} Plot the cumulative data}
+         
+         \PY{n}{plot\PYZus{}the\PYZus{}plots}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{R}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    
+    
+    \end{document}
