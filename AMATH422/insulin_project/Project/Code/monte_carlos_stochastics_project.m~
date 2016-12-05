@@ -22,11 +22,12 @@ xall = zeros(Nstep,7);
 
 x = x0;
 
-for step = 1 : Nstep - 1
-   xall(step,:) = x;
-   [xnew, tau, rate] = stochastic_update(x, p);
-   x = xnew;
-   time(step) = tau;
+for step = 1 : Nstep
+   x
+   [tau rate] = stochastic_update(x, p);
+   x = x + rate;
+   
+    
 end
 
 for numreps=1:1
