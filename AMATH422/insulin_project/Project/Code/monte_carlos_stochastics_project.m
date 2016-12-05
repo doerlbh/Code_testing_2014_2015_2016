@@ -19,49 +19,41 @@ rng(1);
 Nstep=10000;
 time = zeros(Nstep,1);
 xall = zeros(Nstep,7);
-
+xall(1,:) = x0;
 x = x0;
 
 for step = 1 : Nstep - 1
-   xall(step,:) = x;
    [xnew, tau, rate] = stochastic_update(x, p);
    x = xnew;
-   time(step) = tau;
+   time(step+1) = tau;
+   xall(step+1,:) = x;
 end
-
-for numreps=1:1
-
-Tmax=80;
-options = odeset('NonNegative',2:7); %make solutions nonnegative
-
-[T,Y] = ode45(@(t,y) sixpool(t,y,p),[0 Tmax],x0,options);
-
 
 %plot phosphorylated vs non-phosphorylated
 figure(1)
 set(gca,'FontSize',16)
 subplot(2,1,1)
-plot(T,Y(:,3:4),'LineWidth',3); hold on;
-plot(T,Y(:,6),'LineWidth',3); hold on;
+plot(time,xall(:,3:4),'LineWidth',3); hold on;
+plot(time,xall(:,6),'LineWidth',3); hold on;
 legend('x3','x4','x6')
-title('Phosphorylated')
+title('Stochastic Dynamics of Phosphorylated')
 xlabel('t'); 
 ylabel('%');
 
 subplot(2,1,2)
-plot(T,Y(:,2),'LineWidth',3); hold on;
-plot(T,Y(:,5),'LineWidth',3); hold on;
+plot(time,xall(:,2),'LineWidth',3); hold on;
+plot(time,xall(:,5),'LineWidth',3); hold on;
 plot(T,Y(:,7),'LineWidth',3); hold on;
 legend('x2','x5','x7')
-title('Nonphosphorylated')
+title('Stochastic Dynamics of Nonphosphorylated')
 xlabel('t'); 
 ylabel('%');
 
 % phosphorylated = y(3) + y(4) + y(6)
-s=Y(:,4)+Y(:,6);
-t=sum(Y(:,:),2);
+s=xall(:,4)+xall(:,6);
+t=sum(xall(:,:),2);
 figure
-plot(1:60,(Y(1:60,3) + Y(1:60,4) + Y(1:60,6)),'LineWidth',3); hold on;
+plot(1:60,(xall(1:60,3) + xall(1:60,4) + xall(1:60,6)),'LineWidth',3); hold on;
 legend('x2')
 title('Phosphorylated')
 xlabel('t'); 
