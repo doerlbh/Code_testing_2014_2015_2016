@@ -11,12 +11,13 @@ p7=0.23;    %k57
 var=zeros(201,7);
 %parameter = 0:200:2p(i)
 
-p = [p1 p2 p3 p4 p5 p6 p7];
-x0 = [0, 100, 0, 0, 0, 0, 0];
+p = [p1; p2; p3; p4; p5; p6; p7];
+x0 = [0; 100; 0; 0; 0; 0; 0];
 
 rng(1);
 
-Nstep=10000;
+Nstep=5;
+stptime = zeros(Nstep,1);
 time = zeros(Nstep,1);
 xall = zeros(Nstep,7);
 xall(1,:) = x0;
@@ -25,7 +26,8 @@ x = x0;
 for step = 1 : Nstep - 1
    [xnew, tau, rate] = stochastic_update(x, p);
    x = xnew;
-   time(step+1) = tau;
+   stptime(step+1) = tau;
+   time(step+1) = time(step) + tau;
    xall(step+1,:) = x;
 end
 
@@ -43,7 +45,7 @@ ylabel('%');
 subplot(2,1,2)
 plot(time,xall(:,2),'LineWidth',3); hold on;
 plot(time,xall(:,5),'LineWidth',3); hold on;
-plot(T,Y(:,7),'LineWidth',3); hold on;
+plot(time,xall(:,7),'LineWidth',3); hold on;
 legend('x2','x5','x7')
 title('Stochastic Dynamics of Nonphosphorylated')
 xlabel('t'); 
@@ -53,9 +55,9 @@ ylabel('%');
 s=xall(:,4)+xall(:,6);
 t=sum(xall(:,:),2);
 figure
-plot(1:60,(xall(1:60,3) + xall(1:60,4) + xall(1:60,6)),'LineWidth',3); hold on;
+plot(time,(xall(1:Nstep,3) + xall(1:Nstep,4) + xall(1:Nstep,6)),'LineWidth',3); hold on;
 legend('x2')
-title('Phosphorylated')
+title('Stochastic Dynamics of Phosphorylated')
 xlabel('t'); 
 ylabel('%');
 
@@ -64,5 +66,3 @@ ylabel('%');
 % internalized = y(4) + y(5) + y(6) + y(7)
 % bound = y(1) + y(2) + y(3) = y(2) + y(3)
 
-
-end
