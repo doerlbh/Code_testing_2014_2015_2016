@@ -13,7 +13,7 @@ x0 = [0; 1000; 0; 0; 0; 0; 0];
 
 rng(1);
 
-Nstep=10000;
+Nstep=500;
 stptime = zeros(Nstep,1);
 time = zeros(Nstep,1);
 xall = zeros(Nstep,7);
@@ -35,8 +35,8 @@ subplot(2,1,1)
 plot(time,xall(:,3:4),'LineWidth',3); hold on;
 plot(time,xall(:,6),'LineWidth',3); hold on;
 legend('x3','x4','x6')
-title('Stochastic Dynamics of Phosphorylated')
-xlabel('t'); 
+title('Stochastic Dynamics of Phosphorylated Receptor vs. time')
+xlabel('time (s)'); 
 ylabel('%');
 
 subplot(2,1,2)
@@ -44,16 +44,17 @@ plot(time,xall(:,2),'LineWidth',3); hold on;
 plot(time,xall(:,5),'LineWidth',3); hold on;
 plot(time,xall(:,7),'LineWidth',3); hold on;
 legend('x2','x5','x7')
-title('Stochastic Dynamics of Nonphosphorylated')
-xlabel('t'); 
+title('Stochastic Dynamics of Nonphosphorylated Receptor vs. time')
+xlabel('time (s)'); 
 ylabel('%');
 
 % phosphorylated = y(3) + y(4) + y(6)
 figure(2)
+set(gca,'FontSize',16)
 plot(time,(xall(1:Nstep,3) + xall(1:Nstep,4) + xall(1:Nstep,6)),'LineWidth',3); hold on;
 legend('x2')
-title('Stochastic Dynamics of Phosphorylated')
-xlabel('t'); 
+title('Stochastic Dynamics of Phosphorylated Receptor vs. time')
+xlabel('time (s)'); 
 ylabel('%');
 
 % internalized and phosphorylated = y(4) + y(6)
@@ -68,8 +69,8 @@ subplot(2,1,1)
 plot(1:Nstep,xall(:,3:4),'LineWidth',3); hold on;
 plot(1:Nstep,xall(:,6),'LineWidth',3); hold on;
 legend('x3','x4','x6')
-title('Stochastic Dynamics of Phosphorylated')
-xlabel('step'); 
+title('Stochastic Dynamics of Phosphorylated Receptor vs. simulation step')
+xlabel('simulation step'); 
 ylabel('%');
 
 subplot(2,1,2)
@@ -77,15 +78,31 @@ plot(1:Nstep,xall(:,2),'LineWidth',3); hold on;
 plot(1:Nstep,xall(:,5),'LineWidth',3); hold on;
 plot(1:Nstep,xall(:,7),'LineWidth',3); hold on;
 legend('x2','x5','x7')
-title('Stochastic Dynamics of Nonphosphorylated')
-xlabel('step'); 
+title('Stochastic Dynamics of Nonphosphorylated Receptor vs. simulation step')
+xlabel('simulation step'); 
 ylabel('%');
 
 % phosphorylated = y(3) + y(4) + y(6)
 figure(4)
+set(gca,'FontSize',16)
 plot(1:Nstep,(xall(1:Nstep,3) + xall(1:Nstep,4) + xall(1:Nstep,6)),'LineWidth',3); hold on;
 legend('x2')
-title('Stochastic Dynamics of Phosphorylated')
-xlabel('step'); 
+title('Stochastic Dynamics of Phosphorylated Receptor vs. simulation step')
+xlabel('simulation step'); 
 ylabel('%');
 
+figure(5)
+set(gca,'FontSize',16)
+plot(1:Nstep, stptime,'LineWidth',3); 
+legend('waiting time for each step')
+title('the time of each step happening')
+xlabel('simulation step'); 
+ylabel('time (s)');
+
+figure(6)
+set(gca,'FontSize',16)
+plot(1:Nstep, time,'LineWidth',3);
+legend('time elapse')
+title('the time of each step happening')
+xlabel('simulation step'); 
+ylabel('time (s)');
