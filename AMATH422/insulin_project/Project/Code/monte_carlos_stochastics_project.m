@@ -94,15 +94,13 @@ ylabel('%');
 figure(5)
 set(gca,'FontSize',16)
 plot(1:Nstep, stptime,'LineWidth',3); 
-legend('waiting time for each step')
-title('the time of each step happening')
+title('waiting time for each step happening')
 xlabel('simulation step'); 
-ylabel('time (s)');
+ylabel('waiting time for each step (s)');
 
 figure(6)
 set(gca,'FontSize',16)
 plot(1:Nstep, time,'LineWidth',3);
-legend('time elapse')
-title('the time of each step happening')
+title('cumulative time of each step happening')
 xlabel('simulation step'); 
-ylabel('time (s)');
+ylabel('time elapse (s)');
