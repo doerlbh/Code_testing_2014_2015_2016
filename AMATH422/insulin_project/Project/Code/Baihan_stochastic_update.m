@@ -1,5 +1,5 @@
 
-function [ynew, tau, dy] = stochastic_update(y, p)
+function [ynew, tau, dy] = Baihan_stochastic_update(y, p)
 
 dy = zeros(7,1);
 ynew = y;
