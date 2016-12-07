@@ -1,5 +1,5 @@
 
-function [ynew, tau, dy] = new_stochastic_update(y, p)
+function [ynew, tau] = new_stochastic_update(y, p)
 
 k25 = p(1);
 k32 = p(2);
@@ -10,34 +10,42 @@ k56 = p(6);
 k57 = p(7);
 
 rates = [k32 * y(2);
-    k43 * x(3);
-    k64 * x(4);
-    k56 * x(6);
-    k25 * x(5);
-    k72 * x(2);
-    k57 * x(7);]
+    k43 * y(3);
+    k64 * y(4);
+    k56 * y(6);
+    k25 * y(5);
+    k72 * y(2);
+    k57 * y(7);];
 
-lambda = sum(rates);
+lambda = sum(abs(rates));
 
-Trans = [0 0 0 0 0 0 0;
+transition = [0 0 0 0 0 0 0;
     -1 0 0 0 1 -1 0;
     1 -1 0 0 0 0 0;
     0 1 -1 0 0 0 0;
     0 0 0 1 -1 0 1;
     0 0 1 -1 0 0 0;
-    0 0 0 0 0 1 -1;]
+    0 0 0 0 0 1 -1;];
 
 ynew = y;
 
 tau = log(1/rand()) / lambda;
 
-ytemp = (y + dy);
-ytemp = ytemp.*[ytemp >= 0];
-
 r = rand()*lambda;
 
+current = 0;
+selection = 1;
 
+for it = 1:length(rates)
+    current = current + rates(1);
+    if current > r
+        selection = it;
+        break;
+    end
+end
 
+ynew = ynew + transition(:,selection);
+ynew = ynew.*[ynew >= 0];
 
 end
 
