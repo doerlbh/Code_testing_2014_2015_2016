@@ -37,9 +37,10 @@ current = 0;
 selection = 1;
 
 for it = 1:length(rates)
-    current = current + rates(1);
+    current = current + rates(it);
     if current > r
         selection = it;
+        disp(selection);
         break;
     end
 end

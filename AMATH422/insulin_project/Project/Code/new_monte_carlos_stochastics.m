@@ -8,12 +8,13 @@ p5=0.23;    %k64
 p6=0.101;   %k56
 p7=0.23;    %k57
 
+Nreceptor = 100000;
 p = [p1; p2; p3; p4; p5; p6; p7];
-x0 = [0; 1000; 0; 0; 0; 0; 0];
+x0 = [0; Nreceptor; 0; 0; 0; 0; 0];
 
 rng(1);
 
-Nstep=1000;
+Nstep=10000000;
 stptime = zeros(Nstep,1);
 time = zeros(Nstep,1);
 xall = zeros(Nstep,7);
@@ -30,11 +31,11 @@ end
 
 figure(1)
 set(gca,'FontSize',16);
-plot(time,xall(:,1:7),'LineWidth',3);
+plot(time,100*xall(:,1:7)/Nreceptor,'LineWidth',3);
 legend('x1','x2','x3','x4','x5','x6','x7');
-title('Stochastic Dynamics of Receptors vs. time')
+title('Monte Carlos Stochastic Dynamics of 10000 Receptors vs. time')
 xlabel('time (min)'); 
-ylabel('%');
+ylabel('% of receptors');
 % 
 % %plot phosphorylated vs non-phosphorylated
 % figure(2)
