@@ -1,7 +1,7 @@
 \documentclass[fleqn,10pt]{wlscirep}
-\title{Stochastic Dynamics of RNA interference: A Single-Molecule Time-based Perspective}
+\title{Stochastic Dynamics of RNA interference: A Single-Molecule Time-based Approach}
 
-\author[1,*]{Baihan Lin}
+\author[1*]{Baihan Lin}
 \affil[1]{Department of Applied Mathematics, University of Washington, Seattle, WA 98195, USA}
 \affil[*]{doerlbh@gmail.com}
 
@@ -9,15 +9,16 @@
 
 \begin{abstract}
 Example Abstract. Abstract must be under 200 words and not include subheadings or citations. Example Abstract. Abstract must be under 200 words and not include subheadings or citations. Example Abstract. Abstract must be under 200 words and not include subheadings or citations. Example Abstract. Abstract must be under 200 words and not include subheadings or citations. Example Abstract. Abstract must be under 200 words and not include subheadings or citations. Example Abstract. Abstract must be under 200 words and not include subheadings or citations. Example Abstract. Abstract must be under 200 words and not include subheadings or citations. Example Abstract. Abstract must be under 200 words and not include subheadings or citations. 
+
+Under a general mechanistic understanding of RNA interference, we present a stochastic model for the cellular dynamics of gene expression involved in RNA interference in a single-molecule time-based approach.
+
+ 
+
 \end{abstract}
 \begin{document}
 
 \flushbottom
 \maketitle
-% * <john.hammersley@gmail.com> 2015-02-09T12:07:31.197Z:
-%
-%  Click the title above to edit the author information and abstract
-%
 \thispagestyle{empty}
 
 \noindent Please note: Abbreviations should be introduced at the first mention in the main text – no abbreviations lists. Suggested structure of main text (not enforced) is provided below.
@@ -28,9 +29,23 @@ The Introduction section, of referenced text\cite{Figueredo:2009dg} expands on t
 
 \section*{Results}
 
-Up to three levels of \textbf{subheading} are permitted. Subheadings should not be numbered.
+To simply the model, I used iRNA to represent microRNA and siRNA, which are similar RNA interference agents. Below is the proposed model on gene expression. Instead of producing transcription factor to bind with DNA, iRNA tends to bind with mRNA and form a complex to inhibit the translation. I made several assumptions, including same degradation rate for iRNA and mRNA, irreversible inhibition f = 0, etc..
+ 
+Here is what I got so far (attached images 1~4):
+ 
+As you can see from my calculation (page 4), the transition diagram is in 3D instead of 2D (as Qian 2010), and I am having trouble figuring out the initial steady state distribution to put into the PGF. Apparently, mRNA and iRNA doesn’t fit Poisson distribution any more as they are intercorrelated instead of simply happens by chance sporadically.
+
+
+
 
 \subsection*{Subsection}
+
+\begin{equation}
+\ x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\end{equation}
+
+
+
 
 Example text under a subsection. Bulleted lists may be used where appropriate, e.g.
 
