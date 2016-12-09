@@ -14,7 +14,7 @@ Tmax=80;
 p = [p1 p2 p3 p4 p5 p6 p7];
 x0 = [0, 1, 0, 0, 0, 0, 0];
 tot = zeros(Tmax/delta+1,7);
-dwell=zeros(Tmax/delta+1,1000);
+dwell=zeros(Tmax/delta+1,100);
 y=zeros(Tmax/delta+1,7);
 
 for receptors=1:1000
