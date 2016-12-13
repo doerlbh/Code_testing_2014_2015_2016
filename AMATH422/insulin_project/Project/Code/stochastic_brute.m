@@ -17,7 +17,7 @@ tot = zeros(Tmax/delta+1,7);
 dwell=zeros(Tmax/delta+1,100);
 y=zeros(Tmax/delta+1,7);
 
-for receptors=1:1000
+for receptors=1:10000
     y = bruteS(x0, p);
     tot = tot + y;
     
@@ -31,7 +31,7 @@ end
 figure
 set(gca,'FontSize',16)
 plot(0:delta:Tmax, tot/10,'LineWidth',3);
-title('1000 receptors')
+title('10000 receptors')
 xlabel('time (min)'); 
 ylabel('% of receptors');
 legend('x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7');
@@ -46,7 +46,7 @@ list5=[];
 list6=[];
 list7=[];
 
-for receptors=1:1000
+for receptors=1:10000
     value=dwell(1,receptors);
     time=1;
     for t=1:(Tmax/delta)
@@ -103,7 +103,7 @@ for index=2:7
     [nlist,centerlist]=hist(dwelltimes(index,pIndex),50);
     ymax=max(nlist);
     
-    figure(1)
+    figure(2)
     subplot(3,2,index-1)
     bar(centerlist,nlist)
     axis([0.1 xmax+1 0 ymax])
