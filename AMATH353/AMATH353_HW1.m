@@ -20,14 +20,14 @@ time = [0,1,2];
 % corresponding value of time
 figure(1)
 for j = 1:length(time)
-    u = exp(-(x-time(j)).^2);
+    u = exp(-(x-time(j)).^2) + exp(-(x+time(j)).^2);
     subplot(3,1,j)
     plot(x,u,'k-','LineWidth',1.5)
     hold all
     plot([x(1),x(end)],[0,0],'k--')
     plot([0,0],[-.1,1.1],'k--')
     title(sprintf('t = %d',time(j)))
-    ylim([-.1,1.1])
+    ylim([-.1,2.1])
     axis on
 end
 
@@ -40,7 +40,7 @@ t = linspace(0,2,11);
 
 % Create a grid, and define the z component as the function u
 [X,T] = meshgrid(x,t);
-Z = exp(-(X-T).^2);
+Z = exp(-(X-T).^2) + exp(-(X+T).^2);
 
 figure(2)
 clf
@@ -59,7 +59,7 @@ t = linspace(0,2,101);
 
 % Create a grid, and define the z component as the function u
 [X,T] = meshgrid(x,t);
-Z = exp(-(X-T).^2);
+Z = exp(-(X-T).^2) + exp(-(X+T).^2);
 
 figure(3)
 clf
@@ -76,7 +76,7 @@ t = linspace(0,2,101);
 
 % Create a grid, and define the z component as the function u
 [X,T] = meshgrid(x,t);
-Z = exp(-(X-T).^2);
+Z = exp(-(X-T).^2) + exp(-(X+T).^2);
 
 figure(4)
 clf
