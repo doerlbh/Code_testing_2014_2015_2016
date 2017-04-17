@@ -367,98 +367,117 @@ while(norm(g) > 1e-10)
 end
 fprintf('k is: %d\n', k);
 
-%% Old starter
-
-% homework 3 starter script 
-
-% generate system 1
-clear all;
-m1 = 300;
-n1 = 50; 
-x1 = randn(n1,1); 
-SysOne = rand(m1, n1); 
-bOne = SysOne*x1 + 0.1*randn(m1,1);
-alphaOne = 1/(svds(SysOne, 1)^2);
-
-
-m2 = 2000;
-n2 = 200; 
-x2 = randn(n2, 1);
-SysTwo = rand(m2, n2); 
-bTwo = SysTwo*x2 + 0.1*randn(m2,1);
-alphaTwo = 1/(svds(SysTwo, 1)^2);
-
-tol = 10e-8;
-x(1) = 0; %set
-grad(1) = A.'*(A.'*x(1)-b);
-for j = 2:1000
-    x(j) = x(j-1) - alphaOne*grad(j-1);
-    grad(j) = A.'*(A.'*x(j)-b);
-    if grad < tol;
-         break;
-    end
-    j = j + 1;
-end
-
-
-tol = 10e-8;
-x(1) = 0; 
-r(1) = 0;
-p(1) = 0;
-k = 0;
-a(1) = r(1)^2/(A*p(1))^2;
-for j = 2:1000
-    x(j) = x(j-1) + alphaOne*p(j-1);
-    r(j) = r(j) - alphaOne*A.'*A*p(j-1);
-    if r(j) < tol;
-         break;
-    end
-    beta(j) = r(j+1)^2/r(j)^2;
-    k = k + 1;
-    a(j) = r(j)^2/(A*p(j))^2;
-    j = j + 1;
-end
-
 
 %% Problem 1a
 
-m1 = 300;
-n1 = 50;
-x1 = randn(n1,1);
-SysOne = rand(m1, n1);
-bOne = SysOne*x1 + 0.1*randn(m1,1);
-alphaOne = 1/(svds(SysOne, 1)^2);
-SysOneTranspose= SysOne.';
-gradientOne=500;
-error = 1e-3;
-iterations = 0;
-while abs(norm(gradientOne)) > error
-    gradientOne = SysOneTranspose*(SysOne *x1 - bOne);
-    x1 = x1 - alphaOne*gradientOne;
-    iterations = iterations+1
+fprintf('=================\n');
+
+rng(1);
+
+for n = 3:10
+    
+    %sys1
+    
+    m1 = 300;
+    n1 = 50;
+    x1 = randn(n1,1);
+    SysOne = rand(m1, n1);
+    bOne = SysOne*x1 + 0.1*randn(m1,1);
+    alphaOne = 1/(svds(SysOne, 1)^2);
+    
+    tol = 10^(-n);
+    g=10000;
+    k = 0;
+    
+    while norm(g) > tol
+        g = SysOne.'*(SysOne *x1 - bOne);
+        x1 = x1 - alphaOne*g;
+        k = k + 1;
+    end
+    fprintf('Sys1 Steepest: tol=10e-%d, k=%d\n', -log10(tol), k);
+    
+    % sys2
+    
+    m2 = 2000;
+    n2 = 200;
+    x2 = randn(n2, 1);
+    SysTwo = rand(m2, n2);
+    bTwo = SysTwo*x2 + 0.1*randn(m2,1);
+    alphaTwo = 1/(svds(SysTwo, 1)^2);
+    
+    tol = 10^(-n);
+    g=10000;
+    k = 0;
+    
+    while norm(g) > tol
+        g = SysTwo.'*(SysTwo * x2 - bTwo);
+        x2 = x2 - alphaTwo*g;
+        k = k + 1;
+    end
+    fprintf('Sys2 Steepest: tol=10e-%d, k=%d\n', -log10(tol), k);
+    
 end
 
 %% Problem 1b
 
-Your code:
-m1 = 300;
-n1 = 50;
-x1 = zeros(n1,1);
-SysOne = rand(m1, n1);
-bOne = SysOne*x1 + 0.1*randn(m1,1);
-SysOneTranspose= SysOne.?;
-cOne = SysOneTranspose*bOne;
-p0=cOne;
-r0=cOne;
-error = 1e-3;
-iterations = 0;
-while abs(norm(r0)) > error
-    SysOneP=SysOne*p0;
-    alphaK=norm(r0)^2/norm(SysOneP)^2;
-    x1 = x1 +alphaK*p0;
-    rold=r0;
-    r0 = r0 -alphaK*SysOneTranspose*SysOneP;
-    betaK = norm(r0)^2/norm(rold)^2;
-    p0=r0+betaK*p0;
-    iterations=iterations+1
+fprintf('=================\n');
+
+rng(1);
+
+for n = 3:10
+    
+    %sys1
+    
+    m1 = 300;
+    n1 = 50;
+    x1 = randn(n1,1);
+    SysOne = rand(m1, n1);
+    bOne = SysOne*x1 + 0.1*randn(m1,1);
+    alphaOne = 1/(svds(SysOne, 1)^2);
+    
+    tol = 10^(-n);
+    cOne = SysOne.'*bOne;
+    p0=cOne;
+    r0=cOne;
+    k = 0;
+    
+    while norm(r0) > tol
+        alphaK = norm(r0)^2 / norm(SysOne * p0)^2;
+        x1 = x1 + alphaK * p0;
+        r1 = r0 - alphaK * SysOne.' * SysOne * p0;
+        betaK = norm(r1)^2/norm(r0)^2;
+        r0 = r1;
+        p0 = r0 + betaK * p0;
+        k = k+1;
+    end
+    
+    fprintf('Sys1 Conj: tol=10e-%d, k=%d\n', -log10(tol), k);
+    
+    % sys2
+    
+    m2 = 2000;
+    n2 = 200;
+    x2 = randn(n2, 1);
+    SysTwo = rand(m2, n2);
+    bTwo = SysTwo*x2 + 0.1*randn(m2,1);
+    alphaTwo = 1/(svds(SysTwo, 1)^2);
+    
+    tol = 10^(-n);
+    cTwo = SysTwo.'*bTwo;
+    p0=cTwo;
+    r0=cTwo;
+    k = 0;
+    
+    while norm(r0) > tol
+        alphaK = norm(r0)^2 / norm(SysTwo * p0)^2;
+        x2 = x2 + alphaK * p0;
+        r1 = r0 - alphaK * SysTwo.' * SysTwo * p0;
+        betaK = norm(r1)^2/norm(r0)^2;
+        r0 = r1;
+        p0 = r0 + betaK * p0;
+        k = k+1;
+    end
+    
+    fprintf('Sys2 Conj: tol=10e-%d, k=%d\n', -log10(tol), k);
+    
 end
