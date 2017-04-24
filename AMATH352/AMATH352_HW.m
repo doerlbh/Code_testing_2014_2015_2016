@@ -481,3 +481,21 @@ for n = 3:10
     fprintf('Sys2 Conj: tol=10e-%d, k=%d\n', -log10(tol), k);
     
 end
+
+%% HW 4
+
+F = Fertility
+One = ones(length(F), 1)
+V = [One, Agriculture, Examination, Education, Catholic, InfantMortality]
+X_cor = V.' * V \ V.'
+X_hat = X_cor * F
+
+lambda = 1
+x_l_1 = (V.' * V + eye(6) * lambda) \ V.' * F
+lambda = 10
+x_l_10 = (V.' * V + eye(6) * lambda) \ V.' * F
+lambda = 50
+x_l_50 = (V.' * V + eye(6) * lambda) \ V.' * F
+result = [x_l_1, x_l_10, x_l_50]
+
+
