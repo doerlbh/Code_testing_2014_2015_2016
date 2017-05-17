@@ -245,16 +245,17 @@ hold off
 
 close all
 x = linspace(0,1,101)';
-y = x.^2; % The true function 
+y = 1-x.^2; % The true function 
 
 S = zeros(101,11);
 % S(j) will be the (j-1)-th partial sum 
 
-S(:,1) = 1/3*ones(101,1); % Constant term
+S(:,1) = 0; % Constant term
 for j = 2:11
     % Recall that x^2 has a Fourier cosine series since it is an even
     % function. Further, a_n = 4*(-1)^n /(n*pi)^2
-    S(:,j) = S(:,j-1) - 4*cos((j-1)*pi*x)/((j-1)^2*pi^2);
+    C=pi^2*(j-1)^2-2*pi*(j-1)*sin(pi*(j-1))-2*cos(pi*(j-1))+2;
+    S(:,j) = S(:,j-1) + 2*C*sin((j-1)*pi*x)/((j-1)^3*pi^3);
 end
 
 figure(1)
@@ -267,3 +268,4 @@ plot(x,S(:,6),'g*-','LineWidth',1)
 plot(x,S(:,11),'c.-','LineWidth',1)
 legend('f(x)','S_1','S_2','S_5','S_{10}')
 hold off
+
