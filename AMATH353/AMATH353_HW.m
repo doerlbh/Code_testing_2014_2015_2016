@@ -244,7 +244,7 @@ hold off
 % Plotting Fourier partial sums for the function $f(x) = x^2, x in [-1,1]
 
 close all
-x = linspace(-1,1,101)';
+x = linspace(0,1,101)';
 y = x.^2; % The true function 
 
 S = zeros(101,11);
