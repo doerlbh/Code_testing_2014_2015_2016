@@ -189,3 +189,81 @@ y1=0.5*(exp(-(x1-5+ct).^2)+exp(-(-x1-5+ct).^2))
 y2=0.5*(exp(-(x2-5+ct).^2)+exp(-(x2-5-ct).^2))
 plot([x1 x2],[y1 y2]);title('Problem 3b: t = 3')
 saveas(gcf, '/Users/DoerLBH/Dropbox/git/Code_testing/AMATH353/p3b3','png');
+
+%% HW 5
+
+x = linspace(0, 2);
+y = x;
+y(51:100)=2-x(51:100);
+plot(x, y)
+xlabel('x')
+ylabel('y')
+
+%%
+
+x = linspace(-2, 2, 200);
+y = x;
+y(151:200)=2-x(151:200);
+y(1:100)= y(101:200);
+y(1:100) = - y(1:100);
+plot(x, y)
+xlabel('x')
+ylabel('y')
+
+%%
+
+% Plotting Fourier partial sums for the function $f(x) = x^2, x in [-1,1]
+
+close all
+x = linspace(-1,1,101)';
+y = x; % The true function 
+
+S = zeros(101,11);
+% S(j) will be the (j-1)-th partial sum 
+
+S(:,1) = 0; % Constant term
+for j = 2:11
+    % Recall that x^2 has a Fourier cosine series since it is an even
+    % function. Further, a_n = 4*(-1)^n /(n*pi)^2
+    S(:,j) = S(:,j-1) + 2*(1-cos(pi*(j-1)))*sin((j-1)*pi*x)/((j-1)*pi);
+end
+
+figure(1)
+clf
+hold on
+plot(x,y,'k','LineWidth',1.5)
+plot(x,S(:,2),'ro-','LineWidth',1)
+plot(x,S(:,3),'b+-','LineWidth',1)
+plot(x,S(:,6),'g*-','LineWidth',1)
+plot(x,S(:,11),'c.-','LineWidth',1)
+legend('f(x)','S_1','S_2','S_5','S_{10}')
+hold off
+
+%%
+
+% Plotting Fourier partial sums for the function $f(x) = x^2, x in [-1,1]
+
+close all
+x = linspace(-1,1,101)';
+y = x.^2; % The true function 
+
+S = zeros(101,11);
+% S(j) will be the (j-1)-th partial sum 
+
+S(:,1) = 1/3*ones(101,1); % Constant term
+for j = 2:11
+    % Recall that x^2 has a Fourier cosine series since it is an even
+    % function. Further, a_n = 4*(-1)^n /(n*pi)^2
+    S(:,j) = S(:,j-1) - 4*cos((j-1)*pi*x)/((j-1)^2*pi^2);
+end
+
+figure(1)
+clf
+hold on
+plot(x,y,'k','LineWidth',1.5)
+plot(x,S(:,2),'ro-','LineWidth',1)
+plot(x,S(:,3),'b+-','LineWidth',1)
+plot(x,S(:,6),'g*-','LineWidth',1)
+plot(x,S(:,11),'c.-','LineWidth',1)
+legend('f(x)','S_1','S_2','S_5','S_{10}')
+hold off
