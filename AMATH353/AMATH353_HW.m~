@@ -34,7 +34,7 @@ end
 
 %% Slice Plot
 % Plots of u at different time shots stacked next to each other
-% Discretize both space and time 
+% Discretize both space and time
 x = linspace(-4,4,201);
 t = linspace(0,2,11);
 
@@ -53,7 +53,7 @@ ylabel('t','FontSize',15)
 %% Surface Plot
 % Create a 3D figure with x as x-axis, t as y-axis and u as z-axis.
 
-% Discretize both space and time 
+% Discretize both space and time
 x = linspace(-4,4,201);
 t = linspace(0,2,101);
 
@@ -70,7 +70,7 @@ ylabel('t','FontSize',15)
 
 
 %% Density Plot or xt-plane plots
-% Discretize both space and time 
+% Discretize both space and time
 x = linspace(-4,4,201);
 t = linspace(0,2,101);
 
@@ -89,15 +89,15 @@ ylabel('t','FontSize',15)
 % %% Animation
 % % Plot the function at each time-step in consecutive frames to create a
 % % movie showing how the function evolves in time
-% 
-% % Discretize both space and time 
+%
+% % Discretize both space and time
 % x = linspace(-4,4,201);
 % t = linspace(0,2,101);
-% 
+%
 % % Create a grid, and define the z component as the function u
 % [X,T] = meshgrid(x,t);
 % Z = exp(-(X-T).^2);
-% 
+%
 % figure(5)
 % M = moviein(length(t));
 % for j = 1:length(t)
@@ -112,14 +112,14 @@ c=2;
 n=20;
 x=linspace(0,n);
 
-t=0; 
+t=0;
 ct=c*t; %0
 y=0.5*(exp(-(x-5+ct).^2)+exp(-(x-5-ct).^2))
 plot(x,y);
 title('Problem 3a: t = 0');
 saveas(gcf, '/Users/DoerLBH/Dropbox/git/Code_testing/AMATH353/p3a0','png');
 
-t=1; 
+t=1;
 ct=c*t; %2
 x1=linspace(0,ct);
 x2=linspace(ct,n);
@@ -129,7 +129,7 @@ plot([x1 x2],[y1 y2]);
 title('Problem 3a: t = 1');
 saveas(gcf, '/Users/DoerLBH/Dropbox/git/Code_testing/AMATH353/p3a1','png');
 
-t=2; 
+t=2;
 ct=c*t; %4
 x1=linspace(0,ct);
 x2=linspace(ct,n);
@@ -139,7 +139,7 @@ plot([x1 x2],[y1 y2]);
 title('Problem 3a: t = 2')
 saveas(gcf, '/Users/DoerLBH/Dropbox/git/Code_testing/AMATH353/p3a2','png');
 
-t=3; 
+t=3;
 ct=c*t; %6
 x1=linspace(0,ct);
 x2=linspace(ct,n);
@@ -154,14 +154,14 @@ c=2;
 n=20;
 x=linspace(0,n);
 
-t=0; 
+t=0;
 ct=c*t; %0
 y=0.5*(exp(-(x-5+ct).^2)+exp(-(x-5-ct).^2))
 plot(x,y);
 title('Problem 3b: t = 0');
 saveas(gcf, '/Users/DoerLBH/Dropbox/git/Code_testing/AMATH353/p3b0','png');
 
-t=1; 
+t=1;
 ct=c*t; %2
 x1=linspace(0,ct);
 x2=linspace(ct,n);
@@ -171,7 +171,7 @@ plot([x1 x2],[y1 y2]);
 title('Problem 3b: t = 1');
 saveas(gcf, '/Users/DoerLBH/Dropbox/git/Code_testing/AMATH353/p3b1','png');
 
-t=2; 
+t=2;
 ct=c*t; %4
 x1=linspace(0,ct);
 x2=linspace(ct,n);
@@ -181,7 +181,7 @@ plot([x1 x2],[y1 y2]);
 title('Problem 3b: t = 2')
 saveas(gcf, '/Users/DoerLBH/Dropbox/git/Code_testing/AMATH353/p3b2','png');
 
-t=3; 
+t=3;
 ct=c*t; %6
 x1=linspace(0,ct);
 x2=linspace(ct,n);
@@ -216,10 +216,10 @@ ylabel('y')
 
 close all
 x = linspace(-1,1,101)';
-y = x; % The true function 
+y = x; % The true function
 
 S = zeros(101,11);
-% S(j) will be the (j-1)-th partial sum 
+% S(j) will be the (j-1)-th partial sum
 
 S(:,1) = 0; % Constant term
 for j = 2:11
@@ -245,10 +245,10 @@ hold off
 
 close all
 x = linspace(0,1,101)';
-y = 1-x.^2; % The true function 
+y = 1-x.^2; % The true function
 
 S = zeros(101,11);
-% S(j) will be the (j-1)-th partial sum 
+% S(j) will be the (j-1)-th partial sum
 
 S(:,1) = 0; % Constant term
 for j = 2:11
@@ -271,19 +271,84 @@ hold off
 
 %%
 
+xt=0:0.1:10;
+u=zeros(101,4);
+for t = 0:3
+    for x = 0:100
+        xr = x/10;
+        if xr >2*t
+            u(x+1,t+1)=0;
+        else
+            u(x+1,t+1)=(t-xr/2)/(1+(t-xr/2).^2);
+        end
+    end
+end
 figure(1)
 clf
 hold on
-x = linspace(0,10)
-for t = 0:3
-    u=
-end
-plot(x,u(:,2),'ro-','LineWidth',1)
-plot(x,u(:,3),'b+-','LineWidth',1)
-plot(x,S(:,6),'g*-','LineWidth',1)
-plot(x,S(:,11),'c.-','LineWidth',1)
+plot(xt,u(:,1),'ro-','LineWidth',1)
+plot(xt,u(:,2),'b+-','LineWidth',1)
+plot(xt,u(:,3),'g*-','LineWidth',1)
+plot(xt,u(:,4),'c.-','LineWidth',1)
 legend('t=0','t=1','t=2','t=3')
 xlabel('x')
 ylabel('u')
 
 hold off
+
+%%
+
+t=0:0.01:2;
+
+figure(1)
+clf
+hold on
+
+for x0=-5:5;
+    x = x0*exp(t.^2/2);
+    plot(x,t,'c.-','LineWidth',1)
+end
+xlabel('x')
+ylabel('t')
+
+hold off
+
+%%
+
+t=0:0.01:1;
+
+figure(1)
+clf
+hold on
+
+for x0=-1:0.1:2;
+    x = x0+t/(1+x0^2)^2;
+    plot(x,t,'b.-','LineWidth',1)
+end
+plot([-1 linspace(-1,2.5)],0.9*ones(101,1), 'r--','LineWidth',1)
+xlabel('x')
+ylabel('t')
+
+hold off
+
+%%
+
+xt=0:0.1:10;
+t=0:0.01:1;
+x=zeros(101,4);
+for t0 = 0:3
+    x(:,t0+1)=2*(t-t0);
+end
+figure(1)
+clf
+hold on
+plot(x,t,'ro-','LineWidth',1)
+plot(x,t(:,2),'b+-','LineWidth',1)
+plot(xt,t(:,3),'g*-','LineWidth',1)
+plot(xt,t(:,4),'c.-','LineWidth',1)
+legend('t=0','t=1','t=2','t=3')
+xlabel('x')
+ylabel('u')
+
+hold off
+

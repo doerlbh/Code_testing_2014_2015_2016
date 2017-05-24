@@ -312,3 +312,22 @@ xlabel('x')
 ylabel('t')
 
 hold off
+
+%%
+
+t=0:0.01:1;
+
+figure(1)
+clf
+hold on
+
+for x0=-1:0.1:2;
+    x = x0+t/(1+x0^2)^2;
+    plot(x,t,'b.-','LineWidth',1)
+end
+plot([-1 linspace(-1,2.5)],0.9*ones(101,1), 'r--','LineWidth',1)
+xlabel('x')
+ylabel('t')
+
+hold off
+
