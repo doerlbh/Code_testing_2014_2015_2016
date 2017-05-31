@@ -416,6 +416,7 @@ plot(xt,u(:,11),'LineWidth',1)
 legend('t=0','t=1/2','t=1','t=2','t=5')
 xlabel('x');
 ylabel('u');
+set(ax,'ylim',-1:2);
 
 hold off
 
