@@ -380,16 +380,16 @@ hold off
 
 %%
 
-xt=-5:0.1:5;
-u=zeros(101,11);
+xt=-3.5:0.1:3.5;
+u=zeros(61,11);
 for t = 0:10
-    for x = 0:100
-        xr = x/10 - 5;
+    for x = 0:70
+        xr = x/10 - 3.5;
         tr = t/2;
         if tr < 1
             if xr < tr
                 u(x+1,t+1)=1;
-            else if xr > tr && x < 1
+            else if xr < 1
                     u(x+1,t+1)=(1-xr)/(1-tr);
                 else
                     u(x+1,t+1)=0;
@@ -412,7 +412,8 @@ plot(xt,u(:,1),'ro-','LineWidth',1)
 plot(xt,u(:,2),'b+-','LineWidth',1)
 plot(xt,u(:,3),'g*-','LineWidth',1)
 plot(xt,u(:,5),'c.-','LineWidth',1)
-plot(xt,u(:,11),'LineWidth',1)
+plot(xt,u(:,11),'kp','LineWidth',1)
+plot(2.99:0.002:3.01,0:0.1:1,'kp','LineWidth',1)
 legend('t=0','t=1/2','t=1','t=2','t=5')
 xlabel('x');
 ylabel('u');
