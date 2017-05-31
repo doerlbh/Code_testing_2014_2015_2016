@@ -331,3 +331,24 @@ ylabel('t')
 
 hold off
 
+%% HW 8
+
+t=0:0.01:1;
+
+figure(1)
+clf
+hold on
+
+for x0=-2:0.1:2;
+    if x0 <= 0
+        x = x0+4*t;
+    else
+        x = x0+1*t;
+    end
+    plot(x,t,'b.-','LineWidth',1)
+end
+plot([-1 linspace(-1,2.5)],0.9*ones(101,1), 'r--','LineWidth',1)
+xlabel('x')
+ylabel('t')
+
+hold off
