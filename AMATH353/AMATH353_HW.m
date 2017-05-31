@@ -420,3 +420,63 @@ ylabel('u');
 
 hold off
 
+
+%%
+
+t=0:0.01:1;
+
+figure(1)
+clf
+hold on
+
+for x0=-2:0.1:2
+    if x0 <= -1
+        x = x0;
+    else if x0 <= 0
+            x = x0+t*(1+x0);
+        else if x0 < 1
+                x = x0+t*(1-x0);
+            else
+                x = x0;
+            end
+        end
+    end
+    plot(x,t,'b.-','LineWidth',1)
+end
+% plot([-1 linspace(-1,2.5)],0.9*ones(101,1), 'r--','LineWidth',1)
+xlabel('x')
+ylabel('t')
+
+hold off
+
+%%
+
+xt=-5:0.1:5;
+u=zeros(101,11);
+for t = 0:10
+    for x = 0:70
+        xr = x/10 - 5;
+        tr = t/2;
+        if xr > -1 && 2(tr+1) < (x+1)^2
+            u(x+1,t+1)=(1+xr)/(1+tr);
+        else
+            u(x+1,t+1)=0;
+        end
+    end
+end
+
+figure(1)
+clf
+hold on
+plot(xt,u(:,1),'ro-','LineWidth',1)
+plot(xt,u(:,2),'b+-','LineWidth',1)
+plot(xt,u(:,3),'g*-','LineWidth',1)
+plot(xt,u(:,5),'c.-','LineWidth',1)
+plot(xt,u(:,11),'kp','LineWidth',1)
+% plot(2.99:0.002:3.01,0:0.1:1,'kp','LineWidth',1)
+legend('t=0','t=1/2','t=1','t=2','t=5')
+xlabel('x');
+ylabel('u');
+
+hold off
+
