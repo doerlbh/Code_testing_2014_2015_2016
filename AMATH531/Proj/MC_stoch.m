@@ -22,7 +22,7 @@ f = 0.3;
 p = [gm1, gm2, gm3, K1, K2, K3, H, f];
 x0 = [0; 0; 0; 0];
 
-rng(1);
+% rng(1);
 
 Nstep=50000;
 stptime = zeros(Nstep,1);
